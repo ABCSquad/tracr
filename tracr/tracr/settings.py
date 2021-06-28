@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'frontend.apps.FrontendConfig',
 
-    # 'rest_framework',
+    'corsheaders',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
