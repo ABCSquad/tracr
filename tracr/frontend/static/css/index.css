@@ -1,0 +1,13 @@
+:root {
+  --gainsboro: #d9d9d9;
+  --davys-grey: #545454;
+  --jonquil: #f4d040;
+}
+
+body {
+  background-color: var(--gainsboro);
+}
+
+.nav-color {
+  background-color: var(--davys-grey);
+}
