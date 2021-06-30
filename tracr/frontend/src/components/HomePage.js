@@ -14,26 +14,20 @@ const NavBar = (props) => {
     return (
         <div> 
             <Container>
-                <Navbar className='nav-color' fixed='top'>
-                    <Col md={{ span:2, offset: 1}}>
+                <Navbar variant='dark' className='nav-color' fixed='top'>
+                    <Col sm={{ span:10, offset:1 }}>
                         <Row>
-                            <Navbar.Brand href='/'>
-                                <img src='../../static/images/logo.png' alt='tracr'/>
-                            </Navbar.Brand>
+                            <Nav className='mr-auto'>
+                                <Navbar.Brand href='/'>
+                                    <img src='../../static/images/logo.png' alt='tracr'/>
+                                </Navbar.Brand>
+                                <Nav.Link href='/'>Home</Nav.Link>
+                                <Nav.Link>Login</Nav.Link>
+                            </Nav>
                             <Nav>
-                                <Nav.Link>Home</Nav.Link>
+                                <Button variant='outline-warning' className='mikado-btn'>Get Started</Button>
                             </Nav>
                         </Row>
-                    </Col>
-                    <Col md={{ span:2, offset: 6}}>
-                        <Nav className='justify-content-end'>
-                            <Nav.Item>
-                                <Nav.Link>Login</Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
-                                <Button variant='outline-warning'>Get Started</Button>
-                            </Nav.Item>
-                        </Nav>
                     </Col>
                 </Navbar>
             </Container>

@@ -1,7 +1,9 @@
 :root {
   --gainsboro: #d9d9d9;
-  --davys-grey: #545454;
+  --davys: #545454;
+  --jet: #2A2A2A;
   --jonquil: #f4d040;
+  --mikado: #FFC107;
 }
 
 body {
@@ -9,5 +11,13 @@ body {
 }
 
 .nav-color {
-  background-color: var(--davys-grey);
+  background-color: var(--davys);
+}
+
+.mikado-btn:hover {
+  color: var(--jet);
+}
+
+.mikado-btn:active {
+  color: var(--jet) !important;
 }
