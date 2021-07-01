@@ -1,38 +1,27 @@
-import React from "react";
-import { Navbar, Nav, Col, Button, Container, Row } from "react-bootstrap";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import React from 'react';
+import { Col} from 'react-bootstrap';
+import Lottie from 'react-lottie';
+import animationData from '../../static/lotties/maths-homepage';
 
 const HomePage = (props) => {
     return (
         <div>
-            <NavBar />
+            <Col md={{ span:8, offset:2 }} style={{ marginTop: 100 }}>
+                <h1 className='text-center'>Assisted teaching using gestures and OCR.</h1>
+                <p className='text-center'>tracr makes use of gesture recognition and OCR to make teaching simpler.</p>
+                <Lottie options={defaultOptions} height={500} width={800} />
+            </Col>
         </div>
     );
 }
 
-const NavBar = (props) => {
-    return (
-        <div> 
-            <Container>
-                <Navbar variant='dark' className='nav-color' fixed='top'>
-                    <Col sm={{ span:10, offset:1 }}>
-                        <Row>
-                            <Nav className='mr-auto'>
-                                <Navbar.Brand href='/'>
-                                    <img src='../../static/images/logo.png' alt='tracr'/>
-                                </Navbar.Brand>
-                                <Nav.Link href='/'>Home</Nav.Link>
-                                <Nav.Link>Login</Nav.Link>
-                            </Nav>
-                            <Nav>
-                                <Button variant='outline-warning' className='mikado-btn'>Get Started</Button>
-                            </Nav>
-                        </Row>
-                    </Col>
-                </Navbar>
-            </Container>
-        </div>
-    );
-}
+const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      // preserveAspectRatio: "xMidYMid slice"
+    }
+  };
 
 export default HomePage;
