@@ -1,5 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Col, Button, Row } from "react-bootstrap";
+import logo from "../static/images/logo.png";
 
 const NavBar = (props) => {
     return (
@@ -9,7 +10,7 @@ const NavBar = (props) => {
                     <Row>
                         <Nav className='mr-auto'>
                             <Navbar.Brand href='/'>
-                                <img src='../../static/images/logo.png' alt='tracr'/>
+                                <img src={logo} alt='tracr'/>
                             </Navbar.Brand>
                             <Nav.Link href='/'>Home</Nav.Link>
                             <Nav.Link>Login</Nav.Link>

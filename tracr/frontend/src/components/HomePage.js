@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col} from 'react-bootstrap';
 import Lottie from 'react-lottie';
-import animationData from '../../static/lotties/maths-homepage';
+import animationData from '../static/lotties/maths-homepage';
 
 const HomePage = (props) => {
     return (
