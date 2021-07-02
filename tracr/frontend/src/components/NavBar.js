@@ -5,7 +5,7 @@ import logo from "../static/images/logo.png";
 const NavBar = (props) => {
     return (
         <div> 
-            <Navbar variant='dark' className='nav-style' sticky='top'>
+            <Navbar variant='dark' className='davys-bg' sticky='top'>
                 <Col md={{ span:8, offset:2 }}>
                     <Row>
                         <Nav className='mr-auto'>

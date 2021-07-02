@@ -6,7 +6,7 @@
   --mikado: #FFC107;
 }
 
-.nav-style {
+.davys-bg {
   background-color: var(--davys);
 }
 
@@ -26,8 +26,15 @@ h2 {
 
 h3 {
   font-size: 32px;
+  color: var(--mikado);
   font-weight: bold;
   text-decoration-line: underline;
+  text-decoration-color: black;
+
+}
+
+h6 {
+  color: var(--gainsboro);
 }
 
 p {
@@ -52,4 +59,15 @@ text-center {
 hr {
   height: 1px;
   background: black;
+}
+
+.thicc-border {
+  border-width: 3px;
+  border-color: black;
+  color: black;
+}
+
+.social {
+  filter: invert(85%) sepia(12%) saturate(6762%) hue-rotate(349deg) brightness(100%) contrast(106%);
+  width: 28px;
 }
