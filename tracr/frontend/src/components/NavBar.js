@@ -16,7 +16,7 @@ const NavBar = (props) => {
                             <Nav.Link>Login</Nav.Link>
                         </Nav>
                         <Nav>
-                            <Button variant='outline-warning' className='mikado-btn'>Get Started</Button>
+                            <Button variant='outline-warning'>Sign up for free</Button>
                         </Nav>
                     </Row>
                 </Col>
