@@ -44,12 +44,11 @@ const Step = (props) => {
         stepText=`After you're done with your session you can save it in the form of a PDF which you 
         can download and refer to at any time.`
         break;
-        case 4: 
+        default:
         stepTitle='Step IV'
         lottieName=stepIV;
         stepText=`Finally, you or anyone you wish to, can refer to your past sessions to track your
         learning and download their respective PDFs.`
-        break;
     }
 
     if (props.no%2===0) {

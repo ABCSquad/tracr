@@ -19,15 +19,3 @@ const Landing = (props) => {
 }
 
 export default Landing;
-
-const getOptions = (name) => {
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: name,
-        rendererSettings: {
-        // preserveAspectRatio: "xMidYMid slice"
-        }
-    };
-    return defaultOptions;
-}
