@@ -85,3 +85,8 @@ hr {
 .link-button:hover {
   text-decoration: underline;
 }
+
+.login-padding {
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
