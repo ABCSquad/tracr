@@ -17,7 +17,7 @@ const Footer = (props) => {
                     <a href='https://www.linkedin.com/' target="_blank" rel="noreferrer"><img src={linkedin} className='social m-3' alt='linkedin'/></a>
                     <a href='https://github.com/ABCSquad/tracr' target="_blank" rel="noreferrer"><img src={github} className='social m-3' alt='github'/></a>
                 </Row>
-                <h6 className='text-center mb-md-4'>Copyright &copy; 2021 CRAB Inc. All rights reserved.</h6>
+                <h6 className='text-center mb-md-4 gainsboro-color'>Copyright &copy; 2021 CRAB Inc. All rights reserved.</h6>
             </Col>
         </div>
     );

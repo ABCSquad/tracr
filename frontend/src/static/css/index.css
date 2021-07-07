@@ -14,6 +14,10 @@
   background-color: var(--gainsboro);
 }
 
+.gainsboro-color {
+  color: var(--gainsboro);
+}
+
 h1 {
   font-size: 80px;
   font-weight: bold;
@@ -30,11 +34,6 @@ h3 {
   font-weight: bold;
   text-decoration-line: underline;
   text-decoration-color: black;
-
-}
-
-h6 {
-  color: var(--gainsboro);
 }
 
 p {
@@ -56,6 +55,11 @@ text-center {
   padding-bottom: 30px;
 }
 
+.step-paddingx2 {
+  padding-top: 62px;
+  padding-bottom: 62px;
+}
+
 hr {
   height: 1px;
   background: black;
@@ -70,4 +74,14 @@ hr {
 .social {
   filter: invert(85%) sepia(12%) saturate(6762%) hue-rotate(349deg) brightness(100%) contrast(106%);
   width: 28px;
+}
+.link-button {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  text-decoration: underline;
 }
