@@ -5,21 +5,21 @@ const SignIn = (props) => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
     const handleSignin = (e) => {
         e.preventDefault()
         const credentials = {
             username: username,
             password: password
         }
-        console.log(credentials);
         fetch('http://127.0.0.1:8000/auth/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(credentials)
         })
         .then(data => data.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
+        .then(data => props.userLogin(data.token))
+        .catch(err => console.log(err));
     }
 
     return (

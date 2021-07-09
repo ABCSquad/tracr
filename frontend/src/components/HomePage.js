@@ -6,7 +6,14 @@ import SignIn from "./SignIn";
 import Steps from "./Steps";
 
 const HomePage = (props) => {
-    const [isSignIn, setIsSignIn] = useState(false)
+
+    const [isSignIn, setIsSignIn] = useState(false);
+    const [token, setToken] = useState('');
+
+    const userLogin = (tok) => {
+        setToken(tok);
+    }
+
     return (
         <div>
             <Landing />
@@ -17,7 +24,7 @@ const HomePage = (props) => {
                         {isSignIn?'Log in to tracr.':'Try tracr for free.'}
                     </h2>
                     <Row>
-                        {isSignIn?<SignIn />:<SignUp />}
+                        {isSignIn?<SignIn userLogin={userLogin} />:<SignUp />}
                     </Row>
                     <Row className='centered'>
                         <button className='link-button' onClick={() => setIsSignIn(!isSignIn)}>
