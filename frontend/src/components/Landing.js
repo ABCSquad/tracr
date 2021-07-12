@@ -10,7 +10,9 @@ const Landing = (props) => {
                 <h1 className='text-center'>Using solutions from tomorrow to solve problems of today</h1>
                 <h4 className='text-center mb-md-4'>tracr makes use of gesture recognition and OCR to assist you in solving math effortlessly.</h4>
                 <div className='centered' style={{ marginBottom: 15 }}>
-                    <Button variant='warning' size='lg'>Get Started</Button>
+                    {props.token?
+                    <Button variant='warning' size='lg'>Go to App</Button>:
+                    <Button variant='warning' size='lg' href="#accounts" >Get Started</Button>}
                 </div>
                 <LottieComp name={mathsAnimation} height={500} />
             </Col>

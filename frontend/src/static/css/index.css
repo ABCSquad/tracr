@@ -90,3 +90,7 @@ hr {
   padding-top: 5px;
   padding-bottom: 10px;
 }
+
+html {
+  scroll-behavior: smooth;
+}

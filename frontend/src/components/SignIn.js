@@ -11,14 +11,19 @@ const SignIn = (props) => {
         const credentials = {
             username: username,
             password: password
-        }
+        };
         fetch('http://127.0.0.1:8000/auth/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(credentials)
         })
         .then(data => data.json())
-        .then(data => props.userLogin(data.token))
+        .then(
+            data => {
+                props.tokenizer(data.token);
+                const navbar = document.querySelector('#navbar');
+                navbar.scrollIntoView();
+            })
         .catch(err => console.log(err));
     }
 

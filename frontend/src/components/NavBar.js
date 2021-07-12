@@ -4,7 +4,7 @@ import logo from "../static/images/logo.png";
 
 const NavBar = (props) => {
     return (
-        <div> 
+        <div id='navbar'> 
             <Navbar variant='dark' className='davys-bg' sticky='top'>
                 <Col md={{ span:8, offset:2 }}>
                     <Row>
@@ -13,10 +13,14 @@ const NavBar = (props) => {
                                 <img src={logo} alt='tracr'/>
                             </Navbar.Brand>
                             <Nav.Link href='/'>Home</Nav.Link>
-                            <Nav.Link>Login</Nav.Link>
+                            {props.token?
+                            <Nav.Link>Account</Nav.Link>:
+                            <Nav.Link href='#accounts'>Login</Nav.Link>}
                         </Nav>
                         <Nav>
-                            <Button variant='outline-warning'>Sign up for free</Button>
+                            {props.token?
+                            <Button variant='outline-warning' onClick={() => props.tokenizer('')}>Logout</Button>:
+                            <Button variant='outline-warning' href='#accounts'>Sign up for free</Button>}
                         </Nav>
                     </Row>
                 </Col>
