@@ -1,0 +1,97 @@
+:root {
+  --gainsboro: #d9d9d9;
+  --davys: #545454;
+  --jet: #2a2a2a;
+  --jonquil: #f4d040;
+  --mikado: #ffc107;
+}
+
+.davys-bg {
+  background-color: var(--davys);
+}
+
+.gainsboro-bg {
+  background-color: var(--gainsboro);
+}
+
+.gainsboro-color {
+  color: var(--gainsboro);
+}
+
+h1 {
+  font-size: 80px;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 32px;
+  color: var(--mikado);
+  font-weight: bold;
+  text-decoration-line: underline;
+  text-decoration-color: black;
+}
+
+p {
+  font-size: 20px;
+}
+
+text-center {
+  text-align: center;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.step-padding {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.step-paddingx2 {
+  padding-top: 62px;
+  padding-bottom: 62px;
+}
+
+hr {
+  height: 1px;
+  background: black;
+}
+
+.thicc-border {
+  border-width: 3px;
+  border-color: black;
+  color: black;
+}
+
+.social {
+  filter: invert(85%) sepia(12%) saturate(6762%) hue-rotate(349deg)
+    brightness(100%) contrast(106%);
+  width: 28px;
+}
+.link-button {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+
+.login-padding {
+  padding-top: 5px;
+  padding-bottom: 10px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
