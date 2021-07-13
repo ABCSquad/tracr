@@ -1,12 +1,10 @@
-import cv2 
+import cv2  
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from tensorflow import keras
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-import math
-from scipy import ndimage
-from tensorflow.python.keras.layers.serialization import deserialize
+
 
 dict_clean_img = {} #BINARY IMAGE DICTIONAY
 dict_img = {} #ORIGINAL IMAGE DICTIONARY
@@ -289,7 +287,8 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
             cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
             if i!=0:
                 x1,y1,w1,h1 = bounding_boxes[i-1]
-                if y+h < (y1+h1*(1/2)) and y < bounding_boxes[i-1][1] and h < bounding_boxes[i-1][3]:
+                # if y+h < (L_H*(1/2)) and y < bounding_boxes[i-1][1] and h < bounding_boxes[i-1][3]:
+                if y+h < (L_H*(1/2)):
                     exp = 1
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
             i = i+1
@@ -354,20 +353,49 @@ def symbol(ind):
     symb = symbols[ind.argmax()]
     return symb
 
+
 image = cv2.imread('eq.png')  
 data = get_roi(image)
-print("Number of equations", len(data))
 
+numbers = list(map(str, range(10)))
+variables = ['A', 'b', 'C', 'd', 'e', 'f', 'G', 'H', 'M', 'N', 'R', 'S', 'X', 'i', 'j', 'k', 'l', 'o', 'p', 'q', 'u', 'v', 'w', 'y', 'z']
+operators = ['+', '-', 'div', 'times']
+
+string_list = []
 for i in range(len(data)):
     arr = []
-    print("Symbols of equation "+str(i+1))
-    for index, row in data[i].iterrows():        
+    prev_exp = 0
+    prev_pred = ""
+    for index, row in data[i].iterrows():  
         roi = image[row['Y1']:row['Y2'], row['X1']:row['X2']]        
         pred = process(roi)
-        arr.append(symbol(pred))
+        if row['exp'] == 1 and prev_exp!=1:
+            arr.append("**("+str(symbol(pred)))
+            data[i].at[index,'pred'] = symbol(pred)
+        elif row['exp']==1 and prev_exp==1:
+            arr.append(str(symbol(pred)))
+            data[i].at[index,'pred'] = symbol(pred)
+        elif row['exp']!=1 and prev_exp==1:
+            arr.append(")")
+        
+        if row['exp']==2:
+            data[i].at[index,'pred'] = "-"
+            arr.append("-")
+        elif row['exp']==3:
+            data[i].at[index,'pred'] = "="
+            arr.append("=")
+        elif row['exp']==0:
+            if (prev_pred in variables or numbers) and (str(symbol(pred)) in variables or numbers):
+               arr.append("*") 
+            arr.append(str(symbol(pred)))
+            data[i].at[index,'pred'] = symbol(pred)
+        prev_exp = row['exp']
+        prev_pred = str(symbol(pred))
         cv2.putText(image, str(symbol(pred)), (row['X1'], row['Y1']), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
-    data[i]['pred'] = arr
+    string_list.append("".join(arr))    
+
+print(string_list)
 print(data)
 cv2.imshow("Result45",image)
-cv2.waitKey(0)
+
         
