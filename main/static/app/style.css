@@ -1,0 +1,118 @@
+body {
+  margin: 0px;
+  padding: 30px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  overflow: hidden;
+}
+
+canvas {
+  border: solid 3px;
+  cursor: pointer;
+}
+
+.tools {
+  display: flex;
+  justify-self: center;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+#video {
+  display: none;
+  margin: auto;
+}
+
+.tools .color-field {
+  height: 40px;
+  width: 40px;
+  min-height: 40px;
+  min-width: 40px;
+  cursor: pointer;
+  display: inline-block;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2px solid white;
+  align-self: center;
+  margin-bottom: 20px;
+}
+
+.tools .button {
+  height: 40px;
+  width: 40px;
+  min-height: 40px;
+  min-width: 40px;
+  cursor: pointer;
+  display: inline-block;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2px solid white;
+  align-self: center;
+  margin-bottom: 20px;
+}
+
+.color-picker {
+  align-self: center;
+  margin: 0 10px;
+  height: 50px;
+}
+
+.pen-range {
+  align-self: center;
+  margin: 0 10px;
+}
+
+redChalk_button {
+  cursor: pointer;
+  position: absolute;
+  z-index: 99999;
+  top: 620px;
+  left: 160px;
+}
+greenChalk_button {
+  cursor: pointer;
+  position: absolute;
+  z-index: 99999;
+  top: 620px;
+  left: 400px;
+}
+blueChalk_button {
+  cursor: pointer;
+  position: absolute;
+  z-index: 99999;
+  top: 620px;
+  left: 480px;
+}
+yellowChalk_button {
+  cursor: pointer;
+  position: absolute;
+  z-index: 99999;
+  top: 620px;
+  left: 320px;
+}
+orangeChalk_button {
+  cursor: pointer;
+  position: absolute;
+  z-index: 99999;
+  top: 620px;
+  left: 240px;
+}
+pinkChalk_button {
+  cursor: pointer;
+  position: absolute;
+  z-index: 99999;
+  top: 620px;
+  left: 560px;
+}
+whiteChalk_button {
+  cursor: pointer;
+  position: absolute;
+  z-index: 99999;
+  top: 620px;
+  left: 80px;
+}
+
+.graph {
+  z-index: 998;
+}
