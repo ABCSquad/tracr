@@ -1,6 +1,8 @@
-import cv2  
+import cv2
+from numpy.core.fromnumeric import var  
 from utils import *
 from sympytest import *
+import ast
 
 image = cv2.imread('eq.png')  
 data = get_roi(image)
@@ -21,9 +23,13 @@ for i in range(len(data)):
         if row['exp'] == 1 and prev_exp!=1:
             arr.append("**("+str(symbol(pred)))
             data[i].at[index,'pred'] = symbol(pred)
+            if index == len(data[i])-1:
+                arr.append(")")
         elif row['exp']==1 and prev_exp==1:
             arr.append(str(symbol(pred)))
             data[i].at[index,'pred'] = symbol(pred)
+            if index == len(data[i])-1:
+                arr.append(")")
         elif row['exp']!=1 and prev_exp==1:
             arr.append(")")
         
@@ -33,24 +39,50 @@ for i in range(len(data)):
         elif row['exp']==3:
             data[i].at[index,'pred'] = "="
             arr.append("=")
+        elif row['exp']==4:
+            data[i].at[index,'pred'] = "."
+            arr.append(".")
+        elif row['exp']==5:
+            data[i].at[index,'pred'] = "1"
+            arr.append("1")
         elif row['exp']==0:
-            if (prev_pred in variables or prev_pred in numbers) and (str(symbol(pred)) in variables or str(symbol(pred)) in numbers):
+            if prev_exp in [0,1] and (((str(symbol(pred))) in variables and prev_pred in variables+numbers) or ((str(symbol(pred))) in numbers and prev_pred in variables)):
                arr.append("*") 
             arr.append(str(symbol(pred)))
             data[i].at[index,'pred'] = symbol(pred)
         prev_exp = row['exp']
         prev_pred = str(symbol(pred))
-        cv2.putText(image, str(symbol(pred)), (row['X1'], row['Y1']), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
+        if row['exp'] in [0,1]:
+            cv2.putText(image, str(symbol(pred)), (row['X1'], row['Y1']), cv2.FONT_HERSHEY_SIMPLEX, 1, (255,0,0), 2)
     string_list.append("".join(arr))
 
-print([x.lower() for x in string_list])
-for i in range(len(string_list)):
-    if string_list[i][-1]=='=':
-        res = solution(string_list[i][:-1])
-        string_list[i]+=str(res[i]*(-1))
-        
-print("Equation string", string_list)
 print(data)
+# print([x.lower() for x in string_list])
+for i in range(len(string_list)):
+    if '=' in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==1:
+        if string_list[i][-1]!='=':
+            string_split = string_list[i].split("=")
+            if (string_split[1][0]=='-'):
+                new_string = string_split[0]+"+"+string_split[1][1:]
+            else:
+                new_string = string_split[0]+"-"+string_split[1]
+            res, var = one_variable(new_string)
+            print("Equation predicted:", new_string)
+            print(str(var) + " = " + str(res))
+        else:
+            res, var = one_variable(string_list[i][:-1])
+            print("Equation predicted:", string_list[i])
+            print(str(var) + " = " + str(res))
+
+    elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==0:
+        new_string = 'X-'+string_list[i]
+        res = no_variables(new_string)
+        print("Equation predicted:", string_list[i])
+        print("Result: " + str(res))
+    
+    else:
+        print("Equation invalid")
+
 cv2.imshow("Result45",image)
 cv2.waitKey(0)
 

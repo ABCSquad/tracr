@@ -10,7 +10,7 @@ dict_img = {} #ORIGINAL IMAGE DICTIONARY
 
 # Loading model
 try:
-    model = keras.models.load_model('deModel_v2min')
+    model = keras.models.load_model('deModel_v3min')
 except:
     print('Model could not be loaded')
 
@@ -39,15 +39,7 @@ def sort_contours(cnts, method="left-to-right"):
     return (cnts, boundingBoxes)
 
 def find_good_contours_thres(conts, alpha = 0.002):
-    '''
-    Function to find threshold of good contours on basis of 10% of maximum area
-    Input: Contours, threshold for removing noises
-    Output: Contour area threshold
-    
-    For image dim 3307*4676
-    alpha(text_segment) = 0.01
-    alpha(extract_line) = 0.002
-    '''
+
     # Calculating areas of contours in a list
     areas = []
     
@@ -59,19 +51,6 @@ def find_good_contours_thres(conts, alpha = 0.002):
     return thres
 
 def extract_line(image, beta=0.7, alpha=0.00001, show = True):
-    '''
-    Function to extracts the line from the image   
-    Assumption : Sufficient gap b/w lines
-    
-    argument:
-        img (array): image array
-        beta (0-1) : Parameter to differentiate line
-        alpha (0-1) : Parameter to select good contours
-        show(bool) : to show figures or not
-    output:
-        uppers[diff_index]  : Upper points (x,y)
-        lowers[diff_index]  : lower points(x,y)
-    '''
     
     img = image.copy()                                                                                  # Creating copy of the image
 
@@ -169,19 +148,7 @@ def extract_line(image, beta=0.7, alpha=0.00001, show = True):
 
 def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
                  acc_thresh = 0.60, show = True):
-    '''
-    text_segment : Function to segment the characters
-    Input:
-        Box coordinates -X1,Y1,X2,Y2
-        box_num - name of box
-        line_name - name of line
-        model - Deep Learning model to be used for prediction
-        dict_clean - dictionary of clean box images
-    Output :
-        box_num - name of box
-        line_name -name of line
-        df_char - Dataframe of characters of that particular line
-    '''
+
     img = dict_clean[box_num][Y1:Y2,X1:X2].copy()
     L_H = Y2-Y1
     ## apply some dilation and erosion to join the gaps
@@ -216,7 +183,7 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
 
     '''
     Meaning of exp integers
-    exp = {0:'default', 1:'exponent', 2:'minus', 3:'equal'}
+    exp = {0:'default', 1:'exponent', 2:'minus', 3:'equal', 4:'point', 5:'one'}
     '''
     # Iterating through sorted contours
     while i in range(0, len(contours_sorted)):
@@ -237,7 +204,24 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
                     x,y,w,h = x,y,x11-x,y11-y
                     i = i+2
                     continue
-            
+
+            if(h<0.10*L_H and w<0.10*L_H):
+                exp = 4
+                cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,255),2)
+                char_type.append(exp)
+                char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
+                i=i+1
+                continue
+
+            if(w<h/3) and (h>w*3):
+                exp = 5
+                cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
+                char_type.append(exp)
+                char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
+                i=i+1
+                continue
+
+
             # Checking for equal sign using contour properties
             if(h<w/3) and equal==False:
                 if i+1 != len(contours_sorted):
@@ -252,19 +236,16 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
                         i=i+2
                         continue
                     else:
+                        #char_locs.append([x,y,x+w,y+h])     
                         exp = 2
                         cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,255),2)
                         char_type.append(exp)
                         char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
-                        print("Minus")
+                        # print("Minus")
                         i=i+1
                         continue
 
-            #char_locs.append([x,y,x+w,y+h])     
-            if(h<0.12*L_H and w<0.12*L_H):
-                print('Too small')
-                i=i+1
-                continue
+            
 
 
             char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h]) #Normalised location of char w.r.t box image
@@ -315,17 +296,11 @@ def get_roi(image):
                     row['x1'],row['x2'], row['box_num'],row['line_name'], \
                     show=True), axis=1))
 
-
     return list_chars
 
 def process(img):
-    # print("Original shape", img.shape)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    # kernel = np.ones((3,3), np.uint8)
-    # new = cv2.erode(new, kernel, iterations=6)
     img = cv2.resize(img, (45, 45), interpolation=cv2.INTER_CUBIC)
-    # cv2.imshow("Img",img)
-    # cv2.waitKey(0)
     norm_image = cv2.normalize(img, None, alpha = 0, beta = 1, norm_type = cv2.NORM_MINMAX, dtype = cv2.CV_32F)
     norm_image = norm_image.reshape((norm_image.shape[0], norm_image.shape[1], 1))
     case = np.asarray([norm_image])
@@ -334,6 +309,7 @@ def process(img):
     return pred
 
 def symbol(ind):
-    symbols = ['(', ')', '+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '=', 'A', 'C', 'G', 'H', 'M', 'N', 'R', 'S', 'X', '[', ']', 'b', 'cos', 'd', 'div', 'e', 'f', 'geq', 'gt', 'i', 'infty', 'j', 'k', 'l', 'leq', 'log', 'lt', 'neq', 'o', 'p', 'pi', 'q', 'sin', 'sqrt', 'tan', 'theta', 'times', 'u', 'v', 'w', 'y', 'z', '{', '}']
+    symbols = ['(', ')', '+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '=', 'A', 'C', 'H', 'M', 'N', 'R', 'S', 'X', '[', ']', 'b', 'cos', 'd', 'div', 'e', 'f', 'geq', 'gt', 'i', 'infty', 'j', 'k', 'l', 'leq', 'log', 'lt', 'neq', 'o', 'p', 'pi', 'q', 'sin', 'sqrt', 'tan', 'theta', 'times', 'u', 'v', 'w', 'y', '{', '}']
     symb = symbols[ind.argmax()]
     return symb
+
