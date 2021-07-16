@@ -83,7 +83,7 @@
                     </a>
                   </div>
                   <div class="navbar-nav" >
-                   <a href="#" style="margin-right: 10px;" class="btn btn-outline-warning"
+                   <a href="#" class="btn btn-outline-warning"
                       >Export as PDF</a
                     >
                     <a href="{% url 'home' %}" class="btn btn-outline-warning"
@@ -102,6 +102,9 @@
        <!-- Tools start -->
         <div class="col-md-1 bg-secondary" >
           <div class="tools">
+        <button id="test"'>bye</button>
+        <button id="testt"'>hello</button>
+
         <button onclick="undo_last()" type="button" class="button"><i class="fa fa-solid fa-undo"></i></button>
         <button onclick="clear_canvas()" type="button" class="button">
          <i class="fa fa-solid fa-trash"></i>
@@ -151,45 +154,46 @@
           oninput="draw_width = this.value"
         />
       </div>
-        </div>
-        <!-- Tools end -->
-
-        <!-- Canvas start -->
-        <div class="col-md-7 ">
-         <div class="wrapper">
+      
+    </div>
+    <!-- Tools end -->
+    
+    <!-- Canvas start -->
+    <div class="col-md-7 ">
+      <div class="wrapper">
         <canvas id="draw" ></canvas>
         <canvas id="canvas" ></canvas>
       </div>
       <video id="video"></video>
-        </div>
-        <!-- Canvas end -->
-
-        <!-- Graph start -->
-        <div class="col-md-4 graph ">
-          <div id="calculator" style="width: auto; height:74vh;" ></div>
-        
-        </div>
-        <!-- Graph end -->
-
-      </div>
-
-      <!-- misc start -->
-      <div class="row" style="height: 20vh;">
-        
-      </div>
-      <!-- misc end -->
     </div>
-  </body>
-  <!-- Main import -->
-  <script src="{% static 'app/app.js' %}"></script>
-  <script>
-    var elt = document.getElementById('calculator');
-    var options = { keypad:false,expressions:false };
-    var calculator = Desmos.GraphingCalculator(elt, options);
-
-    calculator.setExpression({ id: 'graph1', latex: 'y=x^2' });
-    calculator.expressions = false
+    <!-- Canvas end -->
+    
+    <!-- Graph start -->
+    <div class="col-md-4 graph ">
+      <div id="calculator" style="width: auto; height:74vh;" ></div>
+      
+    </div>
+    <!-- Graph end -->
+    
+  </div>
+  
+  <!-- misc start -->
+  <div class="row" style="height: 20vh;">
+    
+  </div>
+  <!-- misc end -->
+</div>
+</body>
+<!-- Main import -->
+<script>
+  var elt = document.getElementById('calculator');
+  var options = { keypad:false,expressions:false,slider:true };
+  var calculator = Desmos.GraphingCalculator(elt, options);
+  
+  calculator.setExpression({ id: 'graph1', latex: 'y=x^2' });
+  calculator.expressions = false
   </script>
+  <script src="{% static 'app/app.js' %}"></script>
   <!-- Bootstrap imports -->
   <script
     src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -201,4 +205,30 @@
     integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
     crossorigin="anonymous"
   ></script>
+  <script>
+    var test = document.getElementById('test');
+    test.onclick = function () {
+      console.log('helloo')
+      const video = document.querySelector('video');
+      const mediaStream = video.srcObject;
+      const tracks = mediaStream.getTracks();
+      tracks[0].stop();
+      tracks.forEach(track => track.stop())
+      document.getElementById("canvas").style.opacity = "0";
+    };
+
+    var testt = document.getElementById('testt');
+    testt.onclick = function () {
+      console.log('bye')
+     const camera = new Camera(video, {
+  onFrame: async () => {
+    await hands.send({ image: video });
+  },
+  width: 1280,
+  height: 720,
+});
+camera.start();
+document.getElementById("canvas").style.opacity = "1";
+    };
+  </script>
 </html>
