@@ -94,9 +94,6 @@ className = [
 
 //Drawing canvas initialization
 const canvas = document.getElementById('draw');
-canvas.width = 1280;
-canvas.height = 720;
-const context = canvas.getContext('2d');
 
 //Camera canvas initialization
 const cam = document.getElementById('canvas');

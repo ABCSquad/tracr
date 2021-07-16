@@ -179,7 +179,11 @@
   
   <!-- misc start -->
   <div class="row" style="height: 20vh;">
-    
+    <form method="POST" id="form1">
+      {% csrf_token %}
+        <input type="hidden" id="captured_image" name="captured_image">
+        <input id="upload_image"  type="submit" onclick="save()" value="Upload the image">
+    </form>
   </div>
   <!-- misc end -->
 </div>
@@ -205,6 +209,8 @@
     integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
     crossorigin="anonymous"
   ></script>
+
+  <!-- Camera hi and bye -->
   <script>
     var test = document.getElementById('test');
     test.onclick = function () {
@@ -230,5 +236,15 @@
 camera.start();
 document.getElementById("canvas").style.opacity = "1";
     };
+  </script>
+
+  <!-- Send image data -->
+  <script>
+    var canva;
+    function save(){
+      canva = document.getElementById('draw');
+      document.getElementById('captured_image').value = canva.toDataURL('image/png');
+      console.log(canva)    
+        }
   </script>
 </html>
