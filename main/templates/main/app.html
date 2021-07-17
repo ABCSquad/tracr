@@ -1,1 +1,250 @@
-THIS IS THE APP PAGE
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App</title>
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+
+    <!-- jquery imports -->
+   <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- end -->
+    <link rel="stylesheet" href="{% static 'main/main.css' %}" />
+    <link rel="stylesheet" href="{% static 'app/style.css' %}" />
+    <style>
+      body{
+       padding: 0;
+      }
+      #wrapper {
+        position: relative;
+        width: auto;
+        height: 74vh;
+      }
+      #draw,
+      #canvas {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: auto;
+        height: 74vh;
+      }
+      #draw {
+        z-index: 997;
+      }
+    </style>
+  </head>
+  <body>
+          <!-- header start -->
+          <header >
+            <nav class="davys-bg navbar navbar-expand navbar-dark sticky-top" style="z-index: 999;">
+              <div class="col-md-8 offset-md-2">
+                <div class="row">
+                  <div class="mr-auto navbar-nav">
+                    <a class="navbar-brand" href="{% url 'home' %}">
+                      <img
+                        src="{% static 'main/tracr.png' %}"
+                        class="d-inline-block align-top"
+                        width="75px"
+                        alt="tracr"
+                      />
+                    </a>
+                  </div>
+                  <div class="navbar-nav" >
+                   <a href="#" class="btn btn-outline-warning"
+                      >Export as PDF</a
+                    >
+                    <a href="{% url 'home' %}" class="btn btn-outline-warning"
+                      >Home</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </header>
+          <!-- end of header -->
+
+
+      <div class="row" style="height: 74vh;">
+
+       <!-- Tools start -->
+        <div class="col-md-1 bg-secondary" >
+          <div class="tools">
+        <button id="test"'>bye</button>
+        <button id="testt"'>hello</button>
+
+        <button onclick="undo_last()" type="button" class="button"><i class="fa fa-solid fa-undo"></i></button>
+        <button onclick="clear_canvas()" type="button" class="button">
+         <i class="fa fa-solid fa-trash"></i>
+        </button>
+
+        <div
+          onclick="change_color(this, 'red')"
+          class="color-field"
+          style="background: red"
+        ></div>
+        <div
+          onclick="change_color(this,'blue')"
+          class="color-field"
+          style="background: blue"
+        ></div>
+        <div
+          onclick="change_color(this,'orange')"
+          class="color-field"
+          style="background: orange"
+        ></div>
+        <div
+          onclick="change_color(this,'green')"
+          class="color-field"
+          style="background: green"
+        ></div>
+        <div
+          onclick="change_color(this,'yellow')"
+          class="color-field"
+          style="background: yellow"
+        ></div>
+        <div
+          onclick="change_color(this,'violet')"
+          class="color-field"
+          style="background: violet"
+        ></div>
+
+        <input
+          oninput="draw_color = this.value"
+          type="color"
+          class="color-picker"
+        />
+        <input
+          type="range"
+          min="1"
+          max="100"
+          class="pen-range"
+          oninput="draw_width = this.value"
+        />
+      </div>
+      
+    </div>
+    <!-- Tools end -->
+    
+    <!-- Canvas start -->
+    <div class="col-md-7 ">
+      <div class="wrapper">
+        <canvas id="draw" ></canvas>
+        <canvas id="canvas" ></canvas>
+      </div>
+      <video id="video"></video>
+    </div>
+    <!-- Canvas end -->
+    
+    <!-- Graph start -->
+    <div class="col-md-4 graph ">
+      <div id="calculator" style="width: auto; height:74vh;" ></div>
+      
+    </div>
+    <!-- Graph end -->
+    
+  </div>
+  
+  <!-- misc start -->
+  <div class="row" style="height: 20vh;">
+    <form method="POST" id="form1">
+      {% csrf_token %}
+        <input type="hidden" id="captured_image" name="captured_image">
+        <input id="upload_image"  type="submit" onclick="save()" value="Upload the image">
+    </form>
+  </div>
+  <!-- misc end -->
+</div>
+</body>
+<!-- Main import -->
+<script>
+  var elt = document.getElementById('calculator');
+  var options = { keypad:false,expressions:false,slider:true };
+  var calculator = Desmos.GraphingCalculator(elt, options);
+  
+  calculator.setExpression({ id: 'graph1', latex: 'y=x^2' });
+  calculator.expressions = false
+  </script>
+  <script src="{% static 'app/app.js' %}"></script>
+  <!-- Bootstrap imports -->
+  <script
+    src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+    crossorigin="anonymous"
+  ></script>
+
+  <!-- Camera hi and bye -->
+  <script>
+    var test = document.getElementById('test');
+    test.onclick = function () {
+      console.log('helloo')
+      const video = document.querySelector('video');
+      const mediaStream = video.srcObject;
+      const tracks = mediaStream.getTracks();
+      tracks[0].stop();
+      tracks.forEach(track => track.stop())
+      document.getElementById("canvas").style.opacity = "0";
+    };
+
+    var testt = document.getElementById('testt');
+    testt.onclick = function () {
+      console.log('bye')
+     const camera = new Camera(video, {
+  onFrame: async () => {
+    await hands.send({ image: video });
+  },
+  width: 1280,
+  height: 720,
+});
+camera.start();
+document.getElementById("canvas").style.opacity = "1";
+    };
+  </script>
+
+  <!-- Send image data -->
+  <script>
+    var canva;
+    function save(){
+      canva = document.getElementById('draw');
+      document.getElementById('captured_image').value = canva.toDataURL('image/png');
+      console.log(canva)    
+        }
+  </script>
+</html>
