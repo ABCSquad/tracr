@@ -1,100 +1,12 @@
-const model_path = './models/model.json';
-const numChannels = 3;
-const numClasses = 82;
-let LABEL;
-let CONFIDENCE;
-let CONF_THRESH = 50;
-let STACK = [];
-className = [
-  '!',
-  '(',
-  ')',
-  '+',
-  ',',
-  '-',
-  '0',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '=',
-  'A',
-  'C',
-  'Delta',
-  'G',
-  'H',
-  'M',
-  'N',
-  'R',
-  'S',
-  'T',
-  'X',
-  '[',
-  ']',
-  'alpha',
-  'ascii_124',
-  'b',
-  'beta',
-  'cos',
-  'd',
-  'div',
-  'e',
-  'exists',
-  'f',
-  'forall',
-  'forward_slash',
-  'gamma',
-  'geq',
-  'gt',
-  'i',
-  'in',
-  'infty',
-  'int',
-  'j',
-  'k',
-  'l',
-  'lambda',
-  'ldots',
-  'leq',
-  'lim',
-  'log',
-  'lt',
-  'mu',
-  'neq',
-  'o',
-  'p',
-  'phi',
-  'pi',
-  'pm',
-  'prime',
-  'q',
-  'rightarrow',
-  'sigma',
-  'sin',
-  'sqrt',
-  'sum',
-  'tan',
-  'theta',
-  'times',
-  'u',
-  'v',
-  'w',
-  'y',
-  'z',
-  '{',
-  '}',
-]; /*
+/*
 -----------------Initialization of elements-----------------
 */
 
 //Drawing canvas initialization
 const canvas = document.getElementById('draw');
-
+canvas.width = 1280;
+canvas.height = 720;
+const context = canvas.getContext('2d');
 //Camera canvas initialization
 const cam = document.getElementById('canvas');
 cam.width = 1280;
@@ -165,7 +77,6 @@ const camera = new Camera(video, {
   width: 1280,
   height: 720,
 });
-camera.start();
 
 /*
 -----------------Drawing section start-----------------
