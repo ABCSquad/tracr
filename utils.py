@@ -254,7 +254,7 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
             if i!=0:
                 x1,y1,w1,h1 = bounding_boxes[i-1]
                 # if y+h < (L_H*(1/2)) and y < bounding_boxes[i-1][1] and h < bounding_boxes[i-1][3]:
-                if y+h < (L_H*(1/2)):
+                if y+h < (L_H*(1/2)) or y+h < y1+(h1/2):
                     exp = 1
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
             i = i+1
