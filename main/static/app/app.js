@@ -1,99 +1,13 @@
-const model_path = './models/model.json';
-const numChannels = 3;
-const numClasses = 82;
-let LABEL;
-let CONFIDENCE;
-let CONF_THRESH = 50;
-let STACK = [];
-className = [
-  '!',
-  '(',
-  ')',
-  '+',
-  ',',
-  '-',
-  '0',
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '=',
-  'A',
-  'C',
-  'Delta',
-  'G',
-  'H',
-  'M',
-  'N',
-  'R',
-  'S',
-  'T',
-  'X',
-  '[',
-  ']',
-  'alpha',
-  'ascii_124',
-  'b',
-  'beta',
-  'cos',
-  'd',
-  'div',
-  'e',
-  'exists',
-  'f',
-  'forall',
-  'forward_slash',
-  'gamma',
-  'geq',
-  'gt',
-  'i',
-  'in',
-  'infty',
-  'int',
-  'j',
-  'k',
-  'l',
-  'lambda',
-  'ldots',
-  'leq',
-  'lim',
-  'log',
-  'lt',
-  'mu',
-  'neq',
-  'o',
-  'p',
-  'phi',
-  'pi',
-  'pm',
-  'prime',
-  'q',
-  'rightarrow',
-  'sigma',
-  'sin',
-  'sqrt',
-  'sum',
-  'tan',
-  'theta',
-  'times',
-  'u',
-  'v',
-  'w',
-  'y',
-  'z',
-  '{',
-  '}',
-]; /*
+console.log('page refreshed');
+/*
 -----------------Initialization of elements-----------------
 */
 
 //Drawing canvas initialization
 const canvas = document.getElementById('draw');
+canvas.width = 1280;
+canvas.height = 720;
+const context = canvas.getContext('2d');
 
 //Camera canvas initialization
 const cam = document.getElementById('canvas');
@@ -101,7 +15,8 @@ cam.width = 1280;
 cam.height = 720;
 const ctx = cam.getContext('2d');
 
-const video = document.querySelector('video');
+//Video element
+const video = document.getElementById('video');
 
 /*
 -----------------Mediapipe Hands start-----------------
@@ -165,14 +80,13 @@ const camera = new Camera(video, {
   width: 1280,
   height: 720,
 });
-camera.start();
 
 /*
 -----------------Drawing section start-----------------
 */
 
 let draw_color = 'black';
-let draw_width = '2';
+let draw_width = '3';
 let is_drawing = false;
 
 let restore_array = [];
@@ -302,4 +216,58 @@ function undo_last() {
     restore_array.pop();
     context.putImageData(restore_array[index], 0, 0);
   }
+}
+
+////////////////////CAM ON/OFF + FORM PART///////////////////////////////
+
+//Turn on the camera
+var test = document.getElementById('test');
+test.onclick = function () {
+  console.log('helloo');
+  const video = document.querySelector('video');
+  const mediaStream = video.srcObject;
+  const tracks = mediaStream.getTracks();
+  tracks[0].stop();
+  tracks.forEach((track) => track.stop());
+  document.getElementById('canvas').style.opacity = '0';
+};
+
+//Closes the camera
+var testt = document.getElementById('testt');
+testt.onclick = function () {
+  console.log('bye');
+  const camera = new Camera(video, {
+    onFrame: async () => {
+      await hands.send({ image: video });
+    },
+    width: 1280,
+    height: 720,
+  });
+  camera.start();
+  document.getElementById('canvas').style.opacity = '1';
+};
+
+// Submit post on submit
+$(document).on('submit', '#form1', function (e) {
+  var canva;
+  canva = document.getElementById('draw');
+  document.getElementById('captured_image').value =
+    canva.toDataURL('image/png');
+  dataUrl = document.getElementById('captured_image').value;
+  e.preventDefault();
+  $.ajax({
+    type: 'POST',
+    url: '',
+    data: {
+      dataURL: $('#captured_image').val(),
+      csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    },
+    success: function () {},
+  });
+});
+
+//Send the image data
+var canva;
+function save() {
+  console.log('in');
 }

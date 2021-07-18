@@ -17,6 +17,7 @@
     />
 
     <!-- jquery imports -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
    <script
       src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
       crossorigin="anonymous"
@@ -33,11 +34,6 @@
       src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
       crossorigin="anonymous"
     ></script>
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
     <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -50,16 +46,17 @@
       }
       #wrapper {
         position: relative;
-        width: auto;
-        height: 74vh;
+        width: 1280px;
+        height: 720px;
       }
       #draw,
       #canvas {
         position: absolute;
         top: 0px;
         left: 0px;
-        width: auto;
-        height: 74vh;
+        width: 1280px;
+        height: 720px;
+        
       }
       #draw {
         z-index: 997;
@@ -159,17 +156,17 @@
     <!-- Tools end -->
     
     <!-- Canvas start -->
-    <div class="col-md-7 ">
+    <div class="col-md-9 ">
       <div class="wrapper">
         <canvas id="draw" ></canvas>
-        <canvas id="canvas" ></canvas>
+        <canvas id="canvas"  ></canvas>
       </div>
       <video id="video"></video>
     </div>
     <!-- Canvas end -->
     
     <!-- Graph start -->
-    <div class="col-md-4 graph ">
+    <div class="col-md-2 graph ">
       <div id="calculator" style="width: auto; height:74vh;" ></div>
       
     </div>
@@ -179,10 +176,11 @@
   
   <!-- misc start -->
   <div class="row" style="height: 20vh;">
-    <form method="POST" id="form1">
+  <!-- Canvas post form -->
+    <form  id="form1" >
       {% csrf_token %}
         <input type="hidden" id="captured_image" name="captured_image">
-        <input id="upload_image"  type="submit" onclick="save()" value="Upload the image">
+        <input id="upload_image"  type="submit"   value="Upload the image">
     </form>
   </div>
   <!-- misc end -->
@@ -199,52 +197,12 @@
   </script>
   <script src="{% static 'app/app.js' %}"></script>
   <!-- Bootstrap imports -->
-  <script
-    src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"
-  ></script>
+  
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
     crossorigin="anonymous"
   ></script>
 
-  <!-- Camera hi and bye -->
-  <script>
-    var test = document.getElementById('test');
-    test.onclick = function () {
-      console.log('helloo')
-      const video = document.querySelector('video');
-      const mediaStream = video.srcObject;
-      const tracks = mediaStream.getTracks();
-      tracks[0].stop();
-      tracks.forEach(track => track.stop())
-      document.getElementById("canvas").style.opacity = "0";
-    };
 
-    var testt = document.getElementById('testt');
-    testt.onclick = function () {
-      console.log('bye')
-     const camera = new Camera(video, {
-  onFrame: async () => {
-    await hands.send({ image: video });
-  },
-  width: 1280,
-  height: 720,
-});
-camera.start();
-document.getElementById("canvas").style.opacity = "1";
-    };
-  </script>
-
-  <!-- Send image data -->
-  <script>
-    var canva;
-    function save(){
-      canva = document.getElementById('draw');
-      document.getElementById('captured_image').value = canva.toDataURL('image/png');
-      console.log(canva)    
-        }
-  </script>
 </html>
