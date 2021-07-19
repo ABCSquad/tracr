@@ -1,3 +1,4 @@
+console.log('page refreshed');
 /*
 -----------------Initialization of elements-----------------
 */
@@ -13,7 +14,8 @@ cam.width = 1280;
 cam.height = 720;
 const ctx = cam.getContext('2d');
 
-const video = document.querySelector('video');
+//Video element
+const video = document.getElementById('video');
 
 /*
 -----------------Mediapipe Hands start-----------------
@@ -83,7 +85,7 @@ const camera = new Camera(video, {
 */
 
 let draw_color = 'black';
-let draw_width = '2';
+let draw_width = '3';
 let is_drawing = false;
 
 let restore_array = [];
@@ -213,4 +215,72 @@ function undo_last() {
     restore_array.pop();
     context.putImageData(restore_array[index], 0, 0);
   }
+}
+
+////////////////////CAM ON/OFF + FORM PART///////////////////////////////
+
+document.addEventListener('DOMContentLoaded', function () {
+  var checkbox = document.querySelector('input[type="checkbox"]');
+
+  checkbox.addEventListener('change', function () {
+    if (checkbox.checked) {
+      // do this
+      camon();
+      console.log('Checked');
+    } else {
+      // do that
+      camoff();
+      console.log('Not checked');
+    }
+  });
+});
+
+//Turn off the camera
+function camoff() {
+  console.log('helloo');
+  const video = document.querySelector('#video');
+  const mediaStream = video.srcObject;
+  const tracks = mediaStream.getTracks();
+  tracks[0].stop();
+  tracks.forEach((track) => track.stop());
+  document.getElementById('canvas').style.opacity = '0';
+}
+
+//Turn on the camera
+function camon() {
+  console.log('bye');
+  const camera = new Camera(video, {
+    onFrame: async () => {
+      await hands.send({ image: video });
+    },
+    width: 1280,
+    height: 720,
+  });
+  camera.start();
+  document.getElementById('canvas').style.opacity = '1';
+}
+
+// Submit post on submit
+$(document).on('submit', '#form1', function (e) {
+  var canva;
+  canva = document.getElementById('draw');
+  document.getElementById('captured_image').value =
+    canva.toDataURL('image/png');
+  dataUrl = document.getElementById('captured_image').value;
+  e.preventDefault();
+  $.ajax({
+    type: 'POST',
+    url: '',
+    data: {
+      dataURL: $('#captured_image').val(),
+      csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+    },
+    success: function () {},
+  });
+});
+
+//Send the image data
+var canva;
+function save() {
+  console.log('in');
 }
