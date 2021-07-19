@@ -7,6 +7,7 @@ import io
 import numpy as np
 from PIL import Image
 from main import equation
+import json
 
 
 # Create your views here.
@@ -35,9 +36,8 @@ def app(request):
         success= 'received image'
         # bg.show()
         bg_opencv = convert_from_image_to_cv2(bg)
-        res_img = equation.equation(bg_opencv)  
-        return HttpResponse(success) 
-           
+        res_img, equation_dict_list = equation.equation(bg_opencv)  
+        return HttpResponse(json.dumps(equation_dict_list))     
 
     return render(request, 'main/app.html')
 

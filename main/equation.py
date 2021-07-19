@@ -11,6 +11,7 @@ def equation(image):
     operators = ['+', '-', 'div', 'times']
 
     string_list = []
+    res_list = []
     latex_list = []
     for i in range(len(data)):
         arr = []
@@ -67,22 +68,33 @@ def equation(image):
                     new_string = string_split[0]+"-"+string_split[1]
                 res, var = one_variable(new_string)
                 print("Equation predicted:", string_list[i])
+                res_list.append(str(var) + " = " + str(res))
                 print(str(var) + " = " + str(res))
             else:
                 res, var = one_variable(string_list[i][:-1])
                 print("Equation predicted:", string_list[i])
+                res_list.append(str(var) + " = " + str(res))
                 print(str(var) + " = " + str(res))
 
         elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==0:
             new_string = 'X-'+string_list[i]
             res = no_variables(new_string)
             print("Equation predicted:", string_list[i])
+            res_list.append(str(var) + " = " + str(res))
             print("Result: " + str(res))
         
         else:
             print("Equation invalid:", string_list[i])
+            res_list.append("Invalid")
 
+    # List of dictionaries with equations and results
+    return_list = []
+    for i, val in enumerate(string_list):
+        return_list.append({
+            'equation': val,
+            'result': res_list[i]
+        })
     # cv2.imshow("Result45",image)
-    return image
+    return image, return_list
 
         
