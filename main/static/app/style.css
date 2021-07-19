@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
 body {
   background-color: azure;
+  font-family: 'Roboto', sans-serif;
   margin: 0px;
   padding: 0px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
   overflow: hidden;
 }
 #wrapper {
@@ -144,9 +146,11 @@ whiteChalk_button {
   margin: 0 17px 0 10px;
 }
 
-/* BUTTON TOGGLE */
+/* ------------------------------BUTTON TOGGLE----------------- */
 .onoffswitch {
+  transform: scale(0.8);
   position: relative;
+  margin-left: 25px;
   width: 100px;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -190,6 +194,7 @@ whiteChalk_button {
   background-color: #eeeeee;
   color: #34a7c1;
 }
+
 .onoffswitch-inner:after {
   content: 'OFF';
   padding-right: 14px;
@@ -199,7 +204,7 @@ whiteChalk_button {
 }
 .onoffswitch-switch {
   display: block;
-  width: 38px;
+  width: 40px;
   margin: 1.5px;
   background: #a1a1a1;
   position: absolute;
@@ -210,6 +215,14 @@ whiteChalk_button {
   border-radius: 50px;
   transition: all 0.3s ease-in 0s;
 }
+
+.toggle-icon {
+  display: inline-block;
+  /* float:left;  remove */
+  margin: 5px 5px 0 0;
+  padding: 5px 9px;
+}
+
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
   margin-left: 0;
 }

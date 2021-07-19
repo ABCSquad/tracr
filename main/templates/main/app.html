@@ -88,21 +88,22 @@
     >
       <!-- tools section -->
       <div class="p-3 bd-highlight all-tools" style="border: 1px solid #ccc">
+        <div class="onoffswitch">
+          <input
+            type="checkbox"
+            name="onoffswitch"
+            class="onoffswitch-checkbox"
+            id="myonoffswitch"
+            tabindex="0"
+          />
+          <label class="onoffswitch-label" for="myonoffswitch">
+            <span class="onoffswitch-inner"></span>
+            <span class="onoffswitch-switch"
+              ><i class="fa fas fa-video toggle-icon"></i
+            ></span>
+          </label>
+        </div>
         <div class="tools">
-          <div class="onoffswitch">
-            <input
-              type="checkbox"
-              name="onoffswitch"
-              class="onoffswitch-checkbox"
-              id="myonoffswitch"
-              tabindex="0"
-            />
-            <label class="onoffswitch-label" for="myonoffswitch">
-              <span class="onoffswitch-inner"></span>
-              <span class="onoffswitch-switch"></span>
-            </label>
-          </div>
-
           <button onclick="undo_last()" type="button" class="button">
             <i class="fa fa-solid fa-undo"></i>
           </button>
