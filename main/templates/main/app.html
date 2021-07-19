@@ -8,7 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>App</title>
     <!-- CSS only -->
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -17,8 +22,12 @@
     />
 
     <!-- jquery imports -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-   <script
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script
       src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
       crossorigin="anonymous"
     ></script>
@@ -40,169 +49,195 @@
     <!-- end -->
     <link rel="stylesheet" href="{% static 'main/main.css' %}" />
     <link rel="stylesheet" href="{% static 'app/style.css' %}" />
-    <style>
-      body{
-       padding: 0;
-      }
-      #wrapper {
-        position: relative;
-        width: 1280px;
-        height: 720px;
-      }
-      #draw,
-      #canvas {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-        width: 1280px;
-        height: 720px;
-        
-      }
-      #draw {
-        z-index: 997;
-      }
-    </style>
+    <style></style>
   </head>
   <body>
-          <!-- header start -->
-          <header >
-            <nav class="davys-bg navbar navbar-expand navbar-dark sticky-top" style="z-index: 999;">
-              <div class="col-md-8 offset-md-2">
-                <div class="row">
-                  <div class="mr-auto navbar-nav">
-                    <a class="navbar-brand" href="{% url 'home' %}">
-                      <img
-                        src="{% static 'main/tracr.png' %}"
-                        class="d-inline-block align-top"
-                        width="75px"
-                        alt="tracr"
-                      />
-                    </a>
-                  </div>
-                  <div class="navbar-nav" >
-                   <a href="#" class="btn btn-outline-warning"
-                      >Export as PDF</a
-                    >
-                    <a href="{% url 'home' %}" class="btn btn-outline-warning"
-                      >Home</a
-                    >
-                  </div>
-                </div>
+    <!-- header start -->
+    <header>
+      <nav
+        class="davys-bg navbar navbar-expand navbar-dark sticky-top"
+        style="z-index: 999"
+      >
+        <div class="col-md-8 offset-md-2">
+          <div class="row">
+            <div class="mr-auto navbar-nav">
+              <a class="navbar-brand" href="{% url 'home' %}">
+                <img
+                  src="{% static 'main/tracr.png' %}"
+                  class="d-inline-block align-top"
+                  width="75px"
+                  alt="tracr"
+                />
+              </a>
+            </div>
+            <div class="navbar-nav">
+              <a href="#" class="btn btn-outline-warning">Export as PDF</a>
+              <a href="{% url 'home' %}" class="btn btn-outline-warning"
+                >Home</a
+              >
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- end of header -->
+
+    <div
+      class="d-flex flex-row bd-highlight"
+      style="height: auto; border: 2px solid #ccc"
+    >
+      <!-- tools section -->
+      <div class="p-3 bd-highlight all-tools" style="border: 1px solid #ccc">
+        <div class="tools">
+          <div class="onoffswitch">
+            <input
+              type="checkbox"
+              name="onoffswitch"
+              class="onoffswitch-checkbox"
+              id="myonoffswitch"
+              tabindex="0"
+            />
+            <label class="onoffswitch-label" for="myonoffswitch">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"></span>
+            </label>
+          </div>
+
+          <button onclick="undo_last()" type="button" class="button">
+            <i class="fa fa-solid fa-undo"></i>
+          </button>
+          <button onclick="clear_canvas()" type="button" class="button">
+            <i class="fa fa-solid fa-trash"></i>
+          </button>
+
+          <div
+            onclick="change_color(this, 'red')"
+            class="color-field"
+            style="background: red"
+          ></div>
+          <div
+            onclick="change_color(this,'blue')"
+            class="color-field"
+            style="background: blue"
+          ></div>
+          <div
+            onclick="change_color(this,'orange')"
+            class="color-field"
+            style="background: orange"
+          ></div>
+          <div
+            onclick="change_color(this,'green')"
+            class="color-field"
+            style="background: green"
+          ></div>
+          <div
+            onclick="change_color(this,'yellow')"
+            class="color-field"
+            style="background: yellow"
+          ></div>
+          <div
+            onclick="change_color(this,'violet')"
+            class="color-field"
+            style="background: violet"
+          ></div>
+
+          <input
+            oninput="draw_color = this.value"
+            type="color"
+            class="color-picker"
+          />
+          <input
+            type="range"
+            min="1"
+            max="100"
+            class="pen-range"
+            oninput="draw_width = this.value"
+          />
+        </div>
+      </div>
+      <!-- end of tools -->
+
+      <!-- canvas section -->
+      <div class="d-flex flex-column bd-highlight">
+        <div
+          class="p-1 expression"
+          style="width: 1282px; height: 14vh; border: 1px solid #ccc"
+        >
+          <h4 class="latex">Expression:</h4>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex
+            laudantium laborum est blanditiis dignissimos, repellendus suscipit
+            voluptas at iste maiores corrupti veniam perspiciatis ratione
+            voluptates, ipsa, illum quam facilis odit?
+          </p>
+        </div>
+        <div class="bd-highlight">
+          <div class="wrapper">
+            <canvas id="draw"></canvas>
+            <canvas id="canvas"></canvas>
+            <!-- Canvas post form -->
+            <form id="form1">
+              {% csrf_token %}
+              <input type="hidden" id="captured_image" name="captured_image" />
+              <div class="submit-button">
+                <input
+                  id="upload_image"
+                  class="m-1 pr-1 btn btn-warning"
+                  type="submit"
+                  value="Upload the image"
+                />
               </div>
-            </nav>
-          </header>
-          <!-- end of header -->
-
-
-      <div class="row" style="height: 74vh;">
-
-       <!-- Tools start -->
-        <div class="col-md-1 bg-secondary" >
-          <div class="tools">
-        <button id="test"'>bye</button>
-        <button id="testt"'>hello</button>
-
-        <button onclick="undo_last()" type="button" class="button"><i class="fa fa-solid fa-undo"></i></button>
-        <button onclick="clear_canvas()" type="button" class="button">
-         <i class="fa fa-solid fa-trash"></i>
-        </button>
-
-        <div
-          onclick="change_color(this, 'red')"
-          class="color-field"
-          style="background: red"
-        ></div>
-        <div
-          onclick="change_color(this,'blue')"
-          class="color-field"
-          style="background: blue"
-        ></div>
-        <div
-          onclick="change_color(this,'orange')"
-          class="color-field"
-          style="background: orange"
-        ></div>
-        <div
-          onclick="change_color(this,'green')"
-          class="color-field"
-          style="background: green"
-        ></div>
-        <div
-          onclick="change_color(this,'yellow')"
-          class="color-field"
-          style="background: yellow"
-        ></div>
-        <div
-          onclick="change_color(this,'violet')"
-          class="color-field"
-          style="background: violet"
-        ></div>
-
-        <input
-          oninput="draw_color = this.value"
-          type="color"
-          class="color-picker"
-        />
-        <input
-          type="range"
-          min="1"
-          max="100"
-          class="pen-range"
-          oninput="draw_width = this.value"
-        />
+            </form>
+          </div>
+          <div class="streamer">
+            <video id="video" width="100%"></video>
+          </div>
+        </div>
       </div>
-      
-    </div>
-    <!-- Tools end -->
-    
-    <!-- Canvas start -->
-    <div class="col-md-9 ">
-      <div class="wrapper">
-        <canvas id="draw" ></canvas>
-        <canvas id="canvas"  ></canvas>
+      <!-- end of canvas -->
+
+      <!-- graph section -->
+      <div class="d-flex flex-column bd-highlight" z>
+        <div
+          class="p-1 expression"
+          style="height: 14vh; border: 1px solid #ccc"
+        >
+          <h4 class="latex">Latex:</h4>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex
+            laudantium laborum est blanditiis dignissimos, repellendus suscipit
+            voluptas at iste maiores corrupti veniam perspiciatis ratione
+            voluptates, ipsa, illum quam facilis odit?
+          </p>
+        </div>
+        <div class="bd-highlight">
+          <div
+            id="calculator"
+            style="height: 79vh; border: 1px solid #ccc"
+          ></div>
+        </div>
       </div>
-      <video id="video"></video>
+
+      <!-- end of graph section -->
     </div>
-    <!-- Canvas end -->
-    
-    <!-- Graph start -->
-    <div class="col-md-2 graph ">
-      <div id="calculator" style="width: auto; height:74vh;" ></div>
-      
-    </div>
-    <!-- Graph end -->
-    
-  </div>
-  
-  <!-- misc start -->
-  <div class="row" style="height: 20vh;">
-  <!-- Canvas post form -->
-    <form  id="form1" >
-      {% csrf_token %}
-        <input type="hidden" id="captured_image" name="captured_image">
-        <input id="upload_image"  type="submit"   value="Upload the image">
-    </form>
-  </div>
-  <!-- misc end -->
-</div>
-</body>
-<!-- Main import -->
-<script>
-  var elt = document.getElementById('calculator');
-  var options = { keypad:false,expressions:false,slider:true };
-  var calculator = Desmos.GraphingCalculator(elt, options);
-  
-  calculator.setExpression({ id: 'graph1', latex: 'y=x^2' });
-  calculator.expressions = false
+
+    <!------------------------EXTRAAAAAAAAAAA-------------------->
+  </body>
+  <!-- Main import -->
+  <script>
+    var elt = document.getElementById('calculator');
+    var options = { keypad: false, expressions: false, slider: true };
+    var calculator = Desmos.GraphingCalculator(elt, options);
+
+    calculator.setExpression({ id: 'graph1', latex: 'y=x^2' });
+    calculator.expressions = false;
   </script>
   <script src="{% static 'app/app.js' %}"></script>
   <!-- Bootstrap imports -->
-  
+
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
     crossorigin="anonymous"
   ></script>
-
-
 </html>

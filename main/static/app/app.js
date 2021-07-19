@@ -220,21 +220,35 @@ function undo_last() {
 
 ////////////////////CAM ON/OFF + FORM PART///////////////////////////////
 
-//Turn on the camera
-var test = document.getElementById('test');
-test.onclick = function () {
+document.addEventListener('DOMContentLoaded', function () {
+  var checkbox = document.querySelector('input[type="checkbox"]');
+
+  checkbox.addEventListener('change', function () {
+    if (checkbox.checked) {
+      // do this
+      camon();
+      console.log('Checked');
+    } else {
+      // do that
+      camoff();
+      console.log('Not checked');
+    }
+  });
+});
+
+//Turn off the camera
+function camoff() {
   console.log('helloo');
-  const video = document.querySelector('video');
+  const video = document.querySelector('#video');
   const mediaStream = video.srcObject;
   const tracks = mediaStream.getTracks();
   tracks[0].stop();
   tracks.forEach((track) => track.stop());
   document.getElementById('canvas').style.opacity = '0';
-};
+}
 
-//Closes the camera
-var testt = document.getElementById('testt');
-testt.onclick = function () {
+//Turn on the camera
+function camon() {
   console.log('bye');
   const camera = new Camera(video, {
     onFrame: async () => {
@@ -245,7 +259,7 @@ testt.onclick = function () {
   });
   camera.start();
   document.getElementById('canvas').style.opacity = '1';
-};
+}
 
 // Submit post on submit
 $(document).on('submit', '#form1', function (e) {
