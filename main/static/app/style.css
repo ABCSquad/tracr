@@ -42,25 +42,25 @@ body {
 }
 
 .tools .color-field {
-  height: 40px;
-  width: 40px;
-  min-height: 40px;
-  min-width: 40px;
+  height: 50px;
+  width: 50px;
+  min-height: 50px;
+  min-width: 50px;
   cursor: pointer;
   display: inline-block;
   cursor: pointer;
   box-sizing: border-box;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 2px solid #ccc;
   align-self: center;
   margin-bottom: 10px;
 }
 
 .tools .button {
-  height: 40px;
-  width: 40px;
-  min-height: 40px;
-  min-width: 40px;
+  height: 50px;
+  width: 50px;
+  min-height: 50px;
+  min-width: 50px;
   cursor: pointer;
   display: inline-block;
   cursor: pointer;
