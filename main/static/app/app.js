@@ -149,7 +149,6 @@ function stop_mouse(event) {
     restore_array.push(context.getImageData(0, 0, canvas.width, canvas.height));
     index += 1;
   }
-  console.log(restore_array);
 }
 
 function draw_hand(results, x1, y1) {
@@ -205,6 +204,7 @@ function clear_canvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   restore_array = [];
   index = -1;
+  clear();
 }
 
 function undo_last() {
@@ -275,16 +275,27 @@ $(document).on('submit', '#form1', function (e) {
       dataURL: $('#captured_image').val(),
       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
     },
-    success : function(json) {
+    success: function (json) {
       console.log(json); // log the returned json to the console
-      console.log("success"); // another sanity check
+      json_obj = JSON.parse(json);
+      //desmos function
+      dem(json_obj[0]['latex']);
+      console.log(json_obj[0]['latex']);
+      //expression function
+      showe(json_obj[0]['latex']);
+      showl(json_obj[0]['latex']);
+
+      console.log('success'); // another sanity check
     },
 
     // handle a non-successful response
-    error : function(xhr,errmsg,err) {
-        $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-            " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-        console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+    error: function (xhr, errmsg, err) {
+      $('#results').html(
+        "<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: " +
+          errmsg +
+          " <a href='#' class='close'>&times;</a></div>"
+      ); // add the error to the dom
+      console.log(xhr.status + ': ' + xhr.responseText); // provide a bit more info about the error to the console
     },
   });
 });
@@ -296,9 +307,41 @@ function save() {
 }
 
 // Desmos
+
 var elt = document.getElementById('calculator');
 var options = { keypad: false, expressions: false, slider: true };
 var calculator = Desmos.GraphingCalculator(elt, options);
 
-calculator.setExpression({ id: 'graph1', latex: 'x+1' });
+calculator.setExpression({ id: 'graph1', latex: '' });
 calculator.expressions = false;
+
+function dem(latex_exp) {
+  console.log('desmossssssssssssssssssssssssssssssssss');
+  calculator.setExpression({ id: 'graph1', latex: latex_exp });
+}
+
+// ------------------------------SHOW EXPRESSION------------------
+
+function showe(latex_expression) {
+  let exp = '\\(' + latex_expression + '\\)';
+  console.log(exp);
+  document.getElementById('get-latexed-expression').innerHTML = exp;
+}
+
+function showl(latex_expression) {
+  document.getElementById('get-latex').innerHTML = latex_expression;
+}
+
+const elementToObserve = document.querySelector('#get-latexed-expression');
+
+const observer = new MutationObserver(function () {
+  MathJax.typeset();
+});
+//dont know what this line does tbh
+observer.observe(elementToObserve, { subtree: true, childList: true });
+
+function clear() {
+  showe('');
+  showl('');
+  dem('');
+}
