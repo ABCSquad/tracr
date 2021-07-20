@@ -62,10 +62,7 @@ def equation(image):
         if '=' in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==1:
             if string_list[i][-1]!='=':
                 string_split = string_list[i].split("=")
-                if (string_split[1][0]=='-'):
-                    new_string = string_split[0]+"+"+string_split[1][1:]
-                else:
-                    new_string = string_split[0]+"-"+string_split[1]
+                new_string = string_split[0]+'-('+string_split[1]+')'
                 res, var = one_variable(new_string)
                 print("Equation predicted:", string_list[i])
                 res_list.append(str(var) + " = " + str(res))
@@ -80,7 +77,7 @@ def equation(image):
             new_string = 'X-'+string_list[i]
             res = no_variables(new_string)
             print("Equation predicted:", string_list[i])
-            res_list.append(str(var) + " = " + str(res))
+            res_list.append(str(res))
             print("Result: " + str(res))
         
         else:
