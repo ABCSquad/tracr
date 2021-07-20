@@ -59,21 +59,28 @@ def equation(image):
     print(data)
     # print([x.lower() for x in string_list])
     for i in range(len(string_list)):
-        if '=' in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==1:
-            if string_list[i][-1]!='=':
+        if '=' in list(string_list[i]):
+            if len(list(set(string_list[i]) & set(variables)))==1:
+                if string_list[i][-1]!='=':
+                    string_split = string_list[i].split("=")
+                    new_string = string_split[0]+'-('+string_split[1]+')'
+                    res, var = one_variable(new_string)
+                    print("Equation predicted:", string_list[i])
+                    res_list.append(str(var) + " = " + str(res))
+                    latex_list.append(string_to_latex(string_split[0])+'='+string_to_latex(string_split[1]))
+                    print(str(var) + " = " + str(res))
+                else:
+                    res, var = one_variable(string_list[i][:-1])
+                    print("Equation predicted:", string_list[i])
+                    res_list.append(str(var) + " = " + str(res))
+                    latex_list.append(string_to_latex(string_split[0])+'='+string_to_latex(string_split[1]))
+                    print(str(var) + " = " + str(res))
+            elif len(list(set(string_list[i]) & set(variables)))==2:
                 string_split = string_list[i].split("=")
-                new_string = string_split[0]+'-('+string_split[1]+')'
-                res, var = one_variable(new_string)
                 print("Equation predicted:", string_list[i])
-                res_list.append(str(var) + " = " + str(res))
+                res_list.append("double variable")
                 latex_list.append(string_to_latex(string_split[0])+'='+string_to_latex(string_split[1]))
-                print(str(var) + " = " + str(res))
-            else:
-                res, var = one_variable(string_list[i][:-1])
-                print("Equation predicted:", string_list[i])
-                res_list.append(str(var) + " = " + str(res))
-                latex_list.append(string_to_latex(string_split[0])+'='+string_to_latex(string_split[1]))
-                print(str(var) + " = " + str(res))
+
 
         elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==0:
             new_string = 'X-'+string_list[i]
@@ -94,7 +101,7 @@ def equation(image):
         return_dict_list.append({
             'equation': val.lower(),
             'result': res_list[i].lower(),
-            'latex': latex_list[i]
+            'latex': latex_list[i].replace(" ", "")
         })
     # cv2.imshow("Result45",image)
     return image, return_dict_list
