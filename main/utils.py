@@ -12,11 +12,11 @@ import sympy
 # Global variables
 dict_clean_img = {} #BINARY IMAGE DICTIONAY
 dict_img = {} #ORIGINAL IMAGE DICTIONARY
-variables = ['A', 'b', 'C', 'd', 'e', 'f', 'G', 'H', 'M', 'N', 'R', 'S', 'X', 'i', 'j', 'k', 'l', 'o', 'p', 'q', 'u', 'v', 'w', 'y', 'z']
+variables = ['A', 'M', 'N', 'R', 'X', 'b', 'y']
 
 # Loading model
 try:
-    model = keras.models.load_model('deModel_v3min')
+    model = keras.models.load_model('deModel_v4ultramin')
 except:
     print('Model could not be loaded')
 
@@ -260,7 +260,7 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
             if i!=0:
                 x1,y1,w1,h1 = bounding_boxes[i-1]
                 # if y+h < (L_H*(1/2)) and y < bounding_boxes[i-1][1] and h < bounding_boxes[i-1][3]:
-                if y+h < (L_H*(1/2)) or y+h < y1+(h1/2):
+                if y+h < (L_H*(1/2)) and y+h < y1+(h1/2):
                     exp = 1
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
             i = i+1
@@ -315,7 +315,7 @@ def process(img):
     return pred
 
 def symbol(ind):
-    symbols = ['(', ')', '+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '=', 'A', 'C', 'H', 'M', 'N', 'R', 'S', 'X', '[', ']', 'b', 'cos', 'd', 'div', 'e', 'f', 'geq', 'gt', 'i', 'infty', 'j', 'k', 'l', 'leq', 'log', 'lt', 'neq', 'o', 'p', 'pi', 'q', 'sin', 'sqrt', 'tan', 'theta', 'times', 'u', 'v', 'w', 'y', '{', '}']
+    symbols = ['+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'M', 'N', 'R', 'X', 'cos', 'e', 'gt', 'infty', 'log', 'lt', 'neq', 'pi', 'sin', 'tan', 'y']
     symb = symbols[ind.argmax()]
     return symb
 

@@ -280,7 +280,6 @@ $(document).on('submit', '#form1', function (e) {
       json_obj = JSON.parse(json);
       //desmos function
       dem(json_obj[0]['latex']);
-      console.log(json_obj[0]['latex']);
       //expression function
       showe(json_obj[0]['latex']);
       showl(json_obj[0]['latex']);
@@ -316,7 +315,6 @@ calculator.setExpression({ id: 'graph1', latex: '' });
 calculator.expressions = false;
 
 function dem(latex_exp) {
-  console.log('desmossssssssssssssssssssssssssssssssss');
   calculator.setExpression({ id: 'graph1', latex: latex_exp });
 }
 
@@ -324,7 +322,6 @@ function dem(latex_exp) {
 
 function showe(latex_expression) {
   let exp = '\\(' + latex_expression + '\\)';
-  console.log(exp);
   document.getElementById('get-latexed-expression').innerHTML = exp;
 }
 

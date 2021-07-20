@@ -36,7 +36,14 @@ def app(request):
         success= 'received image'
         # bg.show()
         bg_opencv = convert_from_image_to_cv2(bg)
-        res_img, equation_dict_list = equation.equation(bg_opencv)  
+        try:
+            res_img, equation_dict_list = equation.equation(bg_opencv)  
+        except:
+            equation_dict_list = [{
+                'equation': 'Invalid',
+                'result': 'Invalid',
+                'latex': 'Invalid'
+            }]
         return HttpResponse(json.dumps(equation_dict_list))     
 
     return render(request, 'main/app.html')
