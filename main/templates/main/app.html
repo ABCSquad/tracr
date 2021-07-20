@@ -117,7 +117,11 @@
           <button onclick="clear_canvas()" type="button" class="button">
             <i class="fa fa-solid fa-trash"></i>
           </button>
-
+          <div
+            onclick="change_color(this, 'black')"
+            class="color-field"
+            style="background: black"
+          ></div>
           <div
             onclick="change_color(this, 'red')"
             class="color-field"
@@ -178,9 +182,15 @@
           style="width: 1282px; height: 14vh; border: 1px solid #ccc"
         >
           <div class="d-flex flex-row justify-content-between copy-button">
-            <h4 class="latex">Expression:</h4>
-            <button style="position: absolute; top: 80px; right: 465px">
-              <i class="fa fas fa-copy"></i>
+            <h4 class="pt-1 pl-1 expression">Expression:</h4>
+            <button style="position: absolute; top: 67px; right: 465px">
+              <img
+                src="{% static 'main/copy.svg' %}"
+                class="social m-3"
+                alt="github"
+                width="25"
+                height="25"
+              />
             </button>
           </div>
 
@@ -242,16 +252,22 @@
           style="height: 14vh; border: 1px solid #ccc"
         >
           <div class="d-flex flex-row justify-content-between copy-button">
-            <h4 class="latex">Latex:</h4>
-            <button style="position: absolute; top: 80px; right: 10px">
-              <i class="fa fas fa-copy"></i>
+            <h4 class="pt-1 pl-1 latex">Latex:</h4>
+            <button style="position: absolute; top: 67px; right: 6px">
+              <img
+                src="{% static 'main/copy.svg' %}"
+                class="social m-3"
+                alt="github"
+                width="25"
+                height="25"
+              />
             </button>
           </div>
           <p
             style="width: 23vw; display: flex; justify-content: center"
             id="get-latex"
           >
-            Latex
+            <i class="text-muted">Latex of expression</i>
           </p>
         </div>
         <div class="bd-highlight">

@@ -54,6 +54,11 @@ body {
   border: 2px solid #545454;
   align-self: center;
   margin-bottom: 10px;
+  transition: all 0.5s ease;
+}
+
+.tools .color-field:hover {
+  border: 3px solid yellow;
 }
 
 .tools .button {
@@ -81,20 +86,13 @@ body {
 }
 
 button {
-  background-color: #545454;
-  color: #fff;
-  height: 50px;
-  width: 50px;
-  min-height: 50px;
-  min-width: 50px;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
   cursor: pointer;
-  display: inline-block;
-  cursor: pointer;
-  box-sizing: border-box;
-  border-radius: 50%;
-  border: 2px solid yellow;
-  align-self: center;
-  margin-bottom: 20px;
+  outline: inherit;
 }
 
 .color-picker {
