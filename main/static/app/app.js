@@ -86,7 +86,7 @@ const camera = new Camera(video, {
 */
 
 let draw_color = 'black';
-let draw_width = '3';
+let draw_width = '4';
 let is_drawing = false;
 
 let restore_array = [];
@@ -131,8 +131,8 @@ function draw_mouse(event) {
     );
     context.strokeStyle = draw_color;
     context.lineWidth = draw_width;
-    context.lineCap = 'round';
-    context.lineJoin = 'round';
+    context.lineCap = 'butt';
+    context.lineJoin = 'butt';
     context.stroke();
   }
   event.preventDefault();
