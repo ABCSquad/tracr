@@ -11,7 +11,7 @@ def equation(image):
     variables = ['M', 'N', 'R', 'X', 'y']
     operators = ['+', '-']
     constants = ['e', 'pi']
-    graphing = ['gt', 'lt', 'neq']
+    graphing = ['>', '<', 'neq']
 
     string_list = []
     res_list = []
@@ -100,7 +100,7 @@ def equation(image):
                 print("More than two variables not supported")
 
 
-        elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==0:
+        elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==0 and len(list(set(string_list[i]) & set(graphing)))==0:
             new_string = 'X-'+string_list[i]
             res = no_variables(new_string)
             print("Equation predicted:", string_list[i])
@@ -109,7 +109,15 @@ def equation(image):
             print("Result: " + str(res))
 
         elif len(list(set(string_list[i]) & set(graphing)))==1:
-            pass
+            new_string = string_list[i]
+            string_split = string_list[i].split(str(set(string_list[i]) & set(graphing)))
+            op = ''.join(set(string_list[i]) & set(graphing))
+            string_split = string_list[i].split(op)
+            res_list.append(new_string)
+            latex_list.append(string_to_latex(string_split[0])+op+string_to_latex(string_split[1]))
+            res_list.append("No result")
+
+
         
         else:
             print("Equation invalid:", string_list[i])
