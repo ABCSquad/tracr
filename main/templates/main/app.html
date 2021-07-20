@@ -181,18 +181,7 @@
           class="p-1 expression"
           style="width: 1282px; height: 14vh; border: 1px solid #ccc"
         >
-          <div class="d-flex flex-row justify-content-between copy-button">
-            <h4 class="pt-1 pl-1 expression">Expression:</h4>
-            <button style="position: absolute; top: 67px; right: 465px">
-              <img
-                src="{% static 'main/copy.svg' %}"
-                class="social m-3"
-                alt="github"
-                width="25"
-                height="25"
-              />
-            </button>
-          </div>
+          <h4 class="pt-1 pl-1 expression">Expression:</h4>
 
           <div
             style="
@@ -203,7 +192,7 @@
             "
           >
             <p id="get-latexed-expression">
-              <i class="text-muted"> List of supported vars, nums.</i>
+              <i class="text-muted copy-eq"> List of supported vars, nums.</i>
             </p>
             <div
               style="
@@ -223,6 +212,7 @@
         <div class="bd-highlight">
           <div class="wrapper">
             <canvas id="draw"></canvas>
+            <canvas id="draw-lines" width="1280" height="720"></canvas>
             <canvas id="canvas"></canvas>
             <!-- Canvas post form -->
             <form id="form1">
@@ -253,7 +243,11 @@
         >
           <div class="d-flex flex-row justify-content-between copy-button">
             <h4 class="pt-1 pl-1 latex">Latex:</h4>
-            <button style="position: absolute; top: 67px; right: 6px">
+            <button
+              id="copy-button"
+              data-clipboard-target="#get-latex"
+              style="position: absolute; top: 67px; right: 6px"
+            >
               <img
                 src="{% static 'main/copy.svg' %}"
                 class="social m-3"
@@ -267,7 +261,7 @@
             style="width: 23vw; display: flex; justify-content: center"
             id="get-latex"
           >
-            <i class="text-muted">Latex of expression</i>
+            <i id="deLatex" class="text-muted">Latex of expression</i>
           </p>
         </div>
         <div class="bd-highlight">
@@ -285,4 +279,20 @@
   </body>
   <!-- Main import -->
   <script src="{% static 'app/app.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+
+  <script>
+    $('#copy-button').click(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+    var clipboard = new ClipboardJS('#copy-button');
+
+    clipboard.on('success', function (e) {
+      console.log(e);
+    });
+
+    clipboard.on('error', function (e) {
+      console.log(e);
+    });
+  </script>
 </html>

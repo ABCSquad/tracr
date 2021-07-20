@@ -83,6 +83,25 @@ const camera = new Camera(video, {
 /*
 -----------------Drawing section start-----------------
 */
+var bw = 1280;
+var bh = 720;
+var p = 0;
+var cw = bw + p * 2 + 1;
+var ch = bh + p * 2 + 1;
+
+var drawl = document.getElementById('canvas');
+var lines = drawl.getContext('2d');
+function drawBoard() {
+  for (var x = 0; x <= bh; x += 150) {
+    lines.moveTo(p, 0.5 + x + p);
+    lines.lineTo(bw + p, 0.5 + x + p);
+  }
+
+  lines.strokeStyle = '#ccc';
+  lines.stroke();
+}
+
+drawBoard();
 
 let draw_color = 'black';
 let draw_width = '4';
@@ -130,8 +149,8 @@ function draw_mouse(event) {
     );
     context.strokeStyle = draw_color;
     context.lineWidth = draw_width;
-    context.lineCap = 'butt';
-    context.lineJoin = 'butt';
+    context.lineCap = 'round';
+    context.lineJoin = 'round';
     context.stroke();
   }
   event.preventDefault();
@@ -350,3 +369,5 @@ function clear() {
   showl('');
   dem('');
 }
+
+//---------------------COPY FUNC-------------------------------
