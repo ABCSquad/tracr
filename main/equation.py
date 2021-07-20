@@ -66,11 +66,13 @@ def equation(image):
                 res, var = one_variable(new_string)
                 print("Equation predicted:", string_list[i])
                 res_list.append(str(var) + " = " + str(res))
+                latex_list.append(string_to_latex(string_split[0])+'='+string_to_latex(string_split[1]))
                 print(str(var) + " = " + str(res))
             else:
                 res, var = one_variable(string_list[i][:-1])
                 print("Equation predicted:", string_list[i])
                 res_list.append(str(var) + " = " + str(res))
+                latex_list.append(string_to_latex(string_split[0])+'='+string_to_latex(string_split[1]))
                 print(str(var) + " = " + str(res))
 
         elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==0:
@@ -78,20 +80,23 @@ def equation(image):
             res = no_variables(new_string)
             print("Equation predicted:", string_list[i])
             res_list.append(str(res))
+            latex_list.append(string_to_latex(new_string))
             print("Result: " + str(res))
         
         else:
             print("Equation invalid:", string_list[i])
             res_list.append("Invalid")
+            latex_list.append("Invalid")
 
     # List of dictionaries with equations and results
-    return_list = []
+    return_dict_list = []
     for i, val in enumerate(string_list):
-        return_list.append({
-            'equation': val,
-            'result': res_list[i]
+        return_dict_list.append({
+            'equation': val.lower(),
+            'result': res_list[i].lower(),
+            'latex': latex_list[i]
         })
     # cv2.imshow("Result45",image)
-    return image, return_list
+    return image, return_dict_list
 
         

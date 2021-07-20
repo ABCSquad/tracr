@@ -294,3 +294,11 @@ var canva;
 function save() {
   console.log('in');
 }
+
+// Desmos
+var elt = document.getElementById('calculator');
+var options = { keypad: false, expressions: false, slider: true };
+var calculator = Desmos.GraphingCalculator(elt, options);
+
+calculator.setExpression({ id: 'graph1', latex: 'x+1' });
+calculator.expressions = false;

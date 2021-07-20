@@ -1,10 +1,13 @@
+import string
 import cv2  
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from tensorflow import keras
 from sympy.solvers import solve
+from sympy import latex
 from sympy import Symbol
+import sympy
 
 # Global variables
 dict_clean_img = {} #BINARY IMAGE DICTIONAY
@@ -320,6 +323,7 @@ def one_variable(equation_string):
     equation_chars = [char for char in equation_string]
     # Get variable of equation
     var = [value for value in equation_chars if value in variables][0]
+    print("Single variable equation detected")
     var = Symbol(var)
     return solve(equation_string, var), var
 
@@ -327,3 +331,7 @@ def no_variables(equation_string):
     # Get variable of equation
     x = Symbol('X')
     return solve(equation_string, x)
+
+def string_to_latex(string):
+    latex_string = latex(sympy.sympify(string, evaluate=False))
+    return latex_string.lower()
