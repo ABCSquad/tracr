@@ -231,14 +231,6 @@
     <!------------------------EXTRAAAAAAAAAAA-------------------->
   </body>
   <!-- Main import -->
-  <script>
-    var elt = document.getElementById('calculator');
-    var options = { keypad: false, expressions: false, slider: true };
-    var calculator = Desmos.GraphingCalculator(elt, options);
-
-    calculator.setExpression({ id: 'graph1', latex: 'y=x^2' });
-    calculator.expressions = false;
-  </script>
   <script src="{% static 'app/app.js' %}"></script>
   <!-- Bootstrap imports -->
 
