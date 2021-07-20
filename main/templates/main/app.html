@@ -178,12 +178,30 @@
           style="width: 1282px; height: 14vh; border: 1px solid #ccc"
         >
           <h4 class="latex">Expression:</h4>
-          <p
-            style="font-size: 30px; display: flex; justify-content: center"
-            id="get-latexed-expression"
+          <div
+            style="
+              font-size: 40px;
+              display: flex;
+              justify-content: center;
+              flex-direction: row;
+            "
           >
-            List of supported vars, nums.
-          </p>
+            <p id="get-latexed-expression">
+              <i class="text-muted"> List of supported vars, nums.</i>
+            </p>
+            <div
+              style="
+                margin-left: 20px;
+                display: flex;
+                justify-content: left;
+                flex-direction: row;
+              "
+              id="result-container"
+            >
+              <p id="right-arrow" class="pr-3 align-item-center"></p>
+              <p id="get-result"></p>
+            </div>
+          </div>
         </div>
         <div class="bd-highlight">
           <div class="wrapper">

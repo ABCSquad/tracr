@@ -205,6 +205,7 @@ function clear_canvas() {
   restore_array = [];
   index = -1;
   clear();
+  document.getElementById('right-arrow').innerHTML = '';
 }
 
 function undo_last() {
@@ -283,6 +284,7 @@ $(document).on('submit', '#form1', function (e) {
       console.log(json_obj[0]['latex']);
       //expression function
       showe(json_obj[0]['latex']);
+      showr(json_obj[0]['result']);
       showl(json_obj[0]['latex']);
 
       console.log('success'); // another sanity check
@@ -322,12 +324,22 @@ function dem(latex_exp) {
 
 // ------------------------------SHOW EXPRESSION------------------
 
+//show expression
 function showe(latex_expression) {
   let exp = '\\(' + latex_expression + '\\)';
   console.log(exp);
   document.getElementById('get-latexed-expression').innerHTML = exp;
 }
 
+function showr(latex_expression) {
+  let exp = '\\(' + latex_expression + '\\)';
+  console.log(exp);
+  document.getElementById('get-result').innerText = exp;
+  document.getElementById('right-arrow').innerHTML =
+    '<i class="fa fas fa-long-arrow-alt-right"></i>';
+}
+
+//show latex
 function showl(latex_expression) {
   document.getElementById('get-latex').innerHTML = latex_expression;
 }
@@ -342,6 +354,7 @@ observer.observe(elementToObserve, { subtree: true, childList: true });
 
 function clear() {
   showe('');
+  showr('');
   showl('');
   dem('');
 }
