@@ -87,7 +87,7 @@ def equation(image):
             res = no_variables(new_string)
             print("Equation predicted:", string_list[i])
             res_list.append(str(res))
-            latex_list.append(string_to_latex(new_string))
+            latex_list.append(string_to_latex(string_list[i]))
             print("Result: " + str(res))
         
         else:

@@ -177,7 +177,13 @@
           class="p-1 expression"
           style="width: 1282px; height: 14vh; border: 1px solid #ccc"
         >
-          <h4 class="latex">Expression:</h4>
+          <div class="d-flex flex-row justify-content-between copy-button">
+            <h4 class="latex">Expression:</h4>
+            <button style="position: absolute; top: 80px; right: 465px">
+              <i class="fa fas fa-copy"></i>
+            </button>
+          </div>
+
           <div
             style="
               font-size: 40px;
@@ -203,6 +209,7 @@
             </div>
           </div>
         </div>
+
         <div class="bd-highlight">
           <div class="wrapper">
             <canvas id="draw"></canvas>
@@ -229,12 +236,17 @@
       <!-- end of canvas -->
 
       <!-- graph section -->
-      <div class="d-flex flex-column bd-highlight" z>
+      <div class="d-flex flex-column bd-highlight">
         <div
           class="p-1 expression"
           style="height: 14vh; border: 1px solid #ccc"
         >
-          <h4 class="latex">Latex:</h4>
+          <div class="d-flex flex-row justify-content-between copy-button">
+            <h4 class="latex">Latex:</h4>
+            <button style="position: absolute; top: 80px; right: 10px">
+              <i class="fa fas fa-copy"></i>
+            </button>
+          </div>
           <p
             style="width: 23vw; display: flex; justify-content: center"
             id="get-latex"

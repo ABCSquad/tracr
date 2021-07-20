@@ -51,12 +51,38 @@ body {
   cursor: pointer;
   box-sizing: border-box;
   border-radius: 50%;
-  border: 2px solid #ccc;
+  border: 2px solid #545454;
   align-self: center;
   margin-bottom: 10px;
 }
 
 .tools .button {
+  background-color: #545454;
+  color: #fff;
+
+  height: 50px;
+  width: 50px;
+  min-height: 50px;
+  min-width: 50px;
+  cursor: pointer;
+  display: inline-block;
+  cursor: pointer;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2px solid yellow;
+  align-self: center;
+  margin-bottom: 20px;
+  transition: background-color, color 0.5s;
+}
+
+.tools .button:hover {
+  background-color: #acacac;
+  color: #000;
+}
+
+button {
+  background-color: #545454;
+  color: #fff;
   height: 50px;
   width: 50px;
   min-height: 50px;

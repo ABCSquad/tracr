@@ -37,6 +37,7 @@ def app(request):
         # bg.show()
         bg_opencv = convert_from_image_to_cv2(bg)
         res_img, equation_dict_list = equation.equation(bg_opencv)  
+        print('t================================',equation_dict_list)
         return HttpResponse(json.dumps(equation_dict_list))     
 
     return render(request, 'main/app.html')
