@@ -7,8 +7,8 @@ def equation(image):
     data = get_roi(image)
 
     numbers = list(map(str, range(10)))
-    variables = ['A', 'b', 'C', 'd', 'e', 'f', 'G', 'H', 'M', 'N', 'R', 'S', 'X', 'i', 'j', 'k', 'l', 'o', 'p', 'q', 'u', 'v', 'w', 'y', 'z']
-    operators = ['+', '-', 'div', 'times']
+    variables = ['M', 'N', 'R', 'X', 'e', 'y']
+    operators = ['+', '-']
 
     string_list = []
     res_list = []
@@ -73,13 +73,15 @@ def equation(image):
                     res, var = one_variable(string_list[i][:-1])
                     print("Equation predicted:", string_list[i])
                     res_list.append(str(var) + " = " + str(res))
-                    latex_list.append(string_to_latex(string_split[0])+'='+string_to_latex(string_split[1]))
+                    latex_list.append(string_to_latex(string_list[i][:-1])+'=0')
                     print(str(var) + " = " + str(res))
             elif len(list(set(string_list[i]) & set(variables)))==2:
                 string_split = string_list[i].split("=")
                 print("Equation predicted:", string_list[i])
                 res_list.append("double variable")
                 latex_list.append(string_to_latex(string_split[0])+'='+string_to_latex(string_split[1]))
+            else:
+                print("More than two variables not supported")
 
 
         elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==0:
