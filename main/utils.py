@@ -12,11 +12,11 @@ import sympy
 # Global variables
 dict_clean_img = {} #BINARY IMAGE DICTIONAY
 dict_img = {} #ORIGINAL IMAGE DICTIONARY
-variables = ['A', 'M', 'N', 'R', 'X', 'b', 'y']
+variables = ['A', 'b', 'C', 'd', 'e', 'f', 'G', 'H', 'M', 'N', 'R', 'S', 'X', 'i', 'j', 'k', 'l', 'o', 'p', 'q', 'u', 'v', 'w', 'y', 'z']
 
 # Loading model
 try:
-    model = keras.models.load_model('deModel_v4ultramin')
+    model = keras.models.load_model('deModel_v3min')
 except:
     print('Model could not be loaded')
 
@@ -182,21 +182,31 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
     
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
 
+    # Calculating average of the center line of all contours
+    center_y = 0
+    for i in range(len(contours_sorted)):
+        x,y,w,h = bounding_boxes[i]
+        center_y += y+(h/2)
+    center_y = center_y/len(contours_sorted)
+
     i = 0
     char_type = []
     char_locs = []
     equal = False
+    ones = []
 
     '''
     Meaning of exp integers
     exp = {0:'default', 1:'exponent', 2:'minus', 3:'equal', 4:'point', 5:'one'}
     '''
+
     # Iterating through sorted contours
     while i in range(0, len(contours_sorted)):
             # Get coordinates of current bounding box
             x,y,w,h = bounding_boxes[i]
             # Setting default char type to variable/number (exp=0)
             exp = 0
+            ones.append(0)
 
             # Combining contours too close to each other
             if i+1 != len(contours_sorted):
@@ -219,13 +229,13 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
                 i=i+1
                 continue
 
-            if(w<h/3) and (h>w*3):
-                exp = 5
-                cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
-                char_type.append(exp)
-                char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
-                i=i+1
-                continue
+            # if(w<h/3) and (h>w*3):
+            #     exp = 5
+            #     cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
+            #     char_type.append(exp)
+            #     char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
+            #     i=i+1
+            #     continue
 
 
             # Checking for equal sign using contour properties
@@ -251,18 +261,26 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
                         i=i+1
                         continue
 
-            
-
-
-            char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h]) #Normalised location of char w.r.t box image
-            
-            cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
             if i!=0:
                 x1,y1,w1,h1 = bounding_boxes[i-1]
                 # if y+h < (L_H*(1/2)) and y < bounding_boxes[i-1][1] and h < bounding_boxes[i-1][3]:
-                if y+h < (L_H*(1/2)) and y+h < y1+(h1/2):
+                if y+h < center_y or y+h < y1+(h1/2):
                     exp = 1
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
+                    if (w<h/3) and (h>w*3):
+                        ones.pop()
+                        ones.append(1)
+                    char_type.append(exp)
+                    char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
+                    i = i+1
+                    continue
+            
+            if(w<h/3) and (h>w*3):
+                exp = 5
+                    
+
+            char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h]) #Normalised location of char w.r.t box image            
+            cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
             i = i+1
             char_type.append(exp)
     
@@ -278,6 +296,7 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
     print(df_char)
     df_char['line_name'] = line_name
     df_char['box_num'] = box_num
+    df_char['ones'] = ones
 
     return df_char
 
@@ -315,7 +334,7 @@ def process(img):
     return pred
 
 def symbol(ind):
-    symbols = ['+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'M', 'N', 'R', 'X', 'cos', 'e', 'gt', 'infty', 'log', 'lt', 'neq', 'pi', 'sin', 'tan', 'y']
+    symbols = ['(', ')', '+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '=', 'A', 'C', 'H', 'M', 'N', 'R', 'S', 'X', '[', ']', 'b', 'cos', 'd', 'div', 'e', 'f', 'geq', 'gt', 'i', 'infty', 'j', 'k', 'l', 'leq', 'log', 'lt', 'neq', 'o', 'p', 'pi', 'q', 'sin', 'sqrt', 'tan', 'theta', 'times', 'u', 'v', 'w', 'y', '{', '}']
     symb = symbols[ind.argmax()]
     return symb
 
