@@ -12,7 +12,7 @@ import sympy
 # Global variables
 dict_clean_img = {} #BINARY IMAGE DICTIONAY
 dict_img = {} #ORIGINAL IMAGE DICTIONARY
-variables = ['A', 'M', 'N', 'R', 'X', 'b', 'y']
+variables = ['m', 'n', 'r', 'x', 'y']
 
 # Loading model
 try:
@@ -192,7 +192,6 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
     i = 0
     char_type = []
     char_locs = []
-    equal = False
     ones = []
 
     '''
@@ -202,87 +201,91 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
 
     # Iterating through sorted contours
     while i in range(0, len(contours_sorted)):
-            # Get coordinates of current bounding box
-            x,y,w,h = bounding_boxes[i]
-            # Setting default char type to variable/number (exp=0)
-            exp = 0
-            ones.append(0)
+        # Get coordinates of current bounding box
+        x,y,w,h = bounding_boxes[i]
+        # Setting default char type to variable/number (exp=0)
+        exp = 0
+        ones.append(0)
 
-            # Combining contours too close to each other
-            if i+1 != len(contours_sorted):
-                x1,y1,w1,h1 = bounding_boxes[i+1]
-                if abs(x-x1) < 10 and (h1+h) < 70 and h>w/3:
-                    minX = min(x,x1)
-                    minY = min(y,y1)
-                    maxX = max(x+w, x1+w1)
-                    maxY = max(y+h, y1+h1)
-                    x,y,x11,y11 = minX, minY, maxX, maxY
-                    x,y,w,h = x,y,x11-x,y11-y
-                    i = i+2
-                    continue
-
-            if(h<0.10*L_H and w<0.10*L_H):
-                exp = 4
-                cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,255),2)
-                char_type.append(exp)
-                char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
-                i=i+1
+        # Combining contours too close to each other
+        if i+1 != len(contours_sorted):
+            x1,y1,w1,h1 = bounding_boxes[i+1]
+            if abs(x-x1) < 10 and (h1+h) < 70 and h>w/3:
+                minX = min(x,x1)
+                minY = min(y,y1)
+                maxX = max(x+w, x1+w1)
+                maxY = max(y+h, y1+h1)
+                x,y,x11,y11 = minX, minY, maxX, maxY
+                x,y,w,h = x,y,x11-x,y11-y
+                i = i+2
                 continue
 
-            # if(w<h/3) and (h>w*3):
-            #     exp = 5
-            #     cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
-            #     char_type.append(exp)
-            #     char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
-            #     i=i+1
-            #     continue
+        if(h<0.10*L_H and w<0.10*L_H):
+            exp = 4
+            cv2.rectangle(img,(x,y),(x+w,y+h),(255,0,255),2)
+            char_type.append(exp)
+            char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
+            i=i+1
+            continue
+
+        # if(w<h/3) and (h>w*3):
+        #     exp = 5
+        #     cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
+        #     char_type.append(exp)
+        #     char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
+        #     i=i+1
+        #     continue
 
 
-            # Checking for equal sign using contour properties
-            if(h<w/3) and equal==False:
-                if i+1 != len(contours_sorted):
-                    x1,y1,w1,h1 = bounding_boxes[i+1]
-                    if(h1<w1/3):
-                        exp = 3
-                        cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),2)
-                        cv2.rectangle(img,(x1,y1),(x1+w1,y1+h1),(0,0,255),2)
-                        char_type.append(exp)
-                        char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
-                        equal=True
-                        i=i+2
-                        continue
-                    else:
-                        #char_locs.append([x,y,x+w,y+h])     
-                        exp = 2
-                        cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,255),2)
-                        char_type.append(exp)
-                        char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
-                        # print("Minus")
-                        i=i+1
-                        continue
-
-            if i!=0:
-                x1,y1,w1,h1 = bounding_boxes[i-1]
-                # if y+h < (L_H*(1/2)) and y < bounding_boxes[i-1][1] and h < bounding_boxes[i-1][3]:
-                if y+h < center_y or y+h < y1+(h1/2):
-                    exp = 1
-                    cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
-                    if (w<h/3) and (h>w*3):
-                        ones.pop()
-                        ones.append(1)
+        # Checking for equal sign using contour properties
+        if(h<w/3):
+            if i+1 != len(contours_sorted):
+                x1,y1,w1,h1 = bounding_boxes[i+1]
+                if(h1<w1/3):
+                    exp = 3
+                    cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),2)
+                    cv2.rectangle(img,(x1,y1),(x1+w1,y1+h1),(0,0,255),2)
                     char_type.append(exp)
                     char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
-                    i = i+1
+                    i=i+2
                     continue
-            
-            if(w<h/3) and (h>w*3):
-                exp = 5
-                    
+                else:
+                    #char_locs.append([x,y,x+w,y+h])     
+                    exp = 2
+                    cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,255),2)
+                    char_type.append(exp)
+                    char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
+                    # print("Minus")
+                    i=i+1
+                    continue
 
-            char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h]) #Normalised location of char w.r.t box image            
-            cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
-            i = i+1
+        if i!=0:
+            x1,y1,w1,h1 = bounding_boxes[i-1]
+            # if y+h < (L_H*(1/2)) and y < bounding_boxes[i-1][1] and h < bounding_boxes[i-1][3]:
+            if y+h < (center_y) or y+h < y1+(h1/3):
+                exp = 1
+                cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
+                if (w<h/3) and (h>w*3):
+                    ones.pop()
+                    ones.append(1)
+                char_type.append(exp)
+                char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
+                i = i+1
+                continue
+        
+        if(w<h/3) and (h>w*3):
+            exp = 5
+            cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0),2)
             char_type.append(exp)
+            char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
+            i = i+1
+            continue
+                
+
+        char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h]) #Normalised location of char w.r.t box image            
+        cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
+        i = i+1
+        char_type.append(exp)
     
     if(show == True):        
         plt.figure(figsize=(15,8))    
@@ -297,7 +300,6 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
     df_char['line_name'] = line_name
     df_char['box_num'] = box_num
     df_char['ones'] = ones
-
     return df_char
 
 
@@ -334,21 +336,21 @@ def process(img):
     return pred
 
 def symbol(ind):
-    symbols = ['+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'M', 'N', 'R', 'X', 'cos', 'e', '>', 'infty', 'log', '<', 'neq', 'pi', 'sin', 'tan', 'y']    
+    symbols = ['+', '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'm', 'n', 'r', 'x', 'cos', 'e', '>', 'infty', 'log', '<', 'neq', 'pi', 'sin', 'tan', 'y']    
     symb = symbols[ind.argmax()]
     return symb
 
 def one_variable(equation_string):
+    print("Single variable equation detected", equation_string)
     equation_chars = [char for char in equation_string]
     # Get variable of equation
-    var = [value for value in equation_chars if value in variables][0]
-    print("Single variable equation detected")
-    var = Symbol(var)
-    return solve(equation_string, var), var
+    var = [value for value in equation_chars if value in variables][0]    
+    var_sym = Symbol(var)
+    return solve(equation_string, var_sym), var
 
 def no_variables(equation_string):
     # Get variable of equation
-    x = Symbol('X')
+    x = Symbol('x')
     return solve(equation_string, x)
 
 def string_to_latex(string):
