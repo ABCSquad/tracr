@@ -299,11 +299,26 @@ $(document).on('submit', '#form1', function (e) {
       console.log(json); // log the returned json to the console
       json_obj = JSON.parse(json);
       //desmos function
-      dem(json_obj[0]['latex']);
+      // dem(json_obj[0]['latex']);
       //expression function
-      showe(json_obj[0]['latex']);
-      showr(json_obj[0]['result']);
-      showl(json_obj[0]['latex']);
+      
+      let latex = '';
+      let result = '';
+      let graph = '';
+      for(let i=0; i<json_obj.length; i++){
+        dem(json_obj[i]['latex']);
+        graph = json_obj[i]['latex']
+        latex +=json_obj[i]['latex']+' \\quad\\rightarrow ';
+        if(json_obj.length>1 && i!=json_obj.length-1){
+          latex+= ' \\\\ ';
+        }
+        result+=json_obj[i]['result']+' \\\\ ';
+      }
+      console.log(latex, result);
+
+      showe(latex);
+      showr(result);
+      showl(graph);
 
       console.log('success'); // another sanity check
     },
@@ -338,16 +353,14 @@ function dem(latex_exp) {
 
 //show expression
 function showe(latex_expression) {
-  let exp = '\\(' + latex_expression + '\\)';
+  let exp = '\\(\\begin{align*} ' + latex_expression + '\\end{align*}\\)';
   document.getElementById('get-latexed-expression').innerHTML = exp;
 }
 
 function showr(latex_expression) {
-  let exp = '\\(' + latex_expression + '\\)';
+  let exp = '\\(\\begin{align*}' + latex_expression + '\\end{align*}\\)';
   console.log(exp);
   document.getElementById('get-result').innerText = exp;
-  document.getElementById('right-arrow').innerHTML =
-    '<i class="fa fas fa-long-arrow-alt-right"></i>';
 }
 
 //show latex
