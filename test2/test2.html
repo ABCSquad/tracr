@@ -39,7 +39,6 @@
   ></script>
   <script>
     let pageNo = 1;
-    let pageArr = []
     let ideez = []
     page = document.querySelector('#addpage');
     page.addEventListener('click', function () {
@@ -49,18 +48,18 @@
       document.querySelector(
         '#pages'
       ).innerHTML += `<div class="col-md-3 parent" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
-        <span>page ${(pageNo)}</span>
-        <button class='del-button' id='remove-${pageNo}' onclick="removeDiv(this)"></button>
+        <span>page ${pageNo}</span>
+        <button name ='${pageNo}' id='remove-${pageNo}' onclick="removeDiv(this)"></button>
         <canvas style="border: 1px solid" width="400" height="300"></canvas>
       </div>`;
-      pageArr.push(pageArr[pageArr.length-1]++)
+      ideez.push(pageNo);
       pageNo += 1;
-      console.log('this is arr',pageArr)
+      console.log('this is arr', ideez);
     });
-
 
     function removeDiv(elem){
         $(elem).parent('div').remove();
+        let popped = ideez.pop(elem.name);
         pageNo -= 1
     }
   </script>
