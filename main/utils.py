@@ -1,4 +1,3 @@
-import string
 import cv2  
 import numpy as np
 import matplotlib.pyplot as plt
@@ -56,9 +55,9 @@ def find_good_contours_thres(conts, alpha = 0.002):
     
     return thres
 
-def extract_line(image, beta=0.7, alpha=0.00001, show = True):
+def extract_line(image, beta=0.001, alpha=0.00001, show = True):
     
-    img = image.copy()                                                                                  # Creating copy of the image
+    img = image.copy()     # Creating copy of the image
 
     # Converting image to gray
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -103,6 +102,7 @@ def extract_line(image, beta=0.7, alpha=0.00001, show = True):
     hist = cv2.reduce(dil_cleaned_img,1, cv2.REDUCE_AVG).reshape(-1)
 
     th = 1
+    hist[0]=1
     H,W = img.shape[:2]
     uppers = np.array([y for y in range(H-1) if hist[y]<=th and hist[y+1]>th])
     lowers = np.array([y for y in range(H-1) if hist[y]>th and hist[y+1]<=th])
@@ -115,8 +115,8 @@ def extract_line(image, beta=0.7, alpha=0.00001, show = True):
     
     #Extending uppers and lowers indexes to avoid cutting of chars of lines
     #Extended more uppers by 33% as exponential might lie above 
-    uppers[1:] = [i-int(j)/4 for i,j in zip(uppers[1:], diff_1[1:])]
-    lowers[:-1] = [i+int(j)/5 for i,j in zip(lowers[:-1], diff_1[:-1])]
+    uppers[1:] = [i-int(j)/10 for i,j in zip(uppers[1:], diff_1[1:])]
+    lowers[:-1] = [i+int(j)/6 for i,j in zip(lowers[:-1], diff_1[:-1])]
 
     diff_2 = np.array([j-i for i,j in zip(uppers,lowers)])
     diff_index_2 = np.array([True]*len(uppers))
@@ -147,8 +147,6 @@ def extract_line(image, beta=0.7, alpha=0.00001, show = True):
         ax2 = fig1.add_subplot(1,2,2)    
         ax2.axis("off")
         ax2.imshow(cv2.cvtColor(cleaned_orig_rec, cv2.COLOR_BGR2RGB))
-        
-        # plt.show()
     
     return cleaned_orig, uppers[diff_index], lowers[diff_index]    
 
@@ -227,15 +225,6 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
             char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
             i=i+1
             continue
-
-        # if(w<h/3) and (h>w*3):
-        #     exp = 5
-        #     cv2.rectangle(img,(x,y),(x+w,y+h),(153,180,255),2)
-        #     char_type.append(exp)
-        #     char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
-        #     i=i+1
-        #     continue
-
 
         # Checking for equal sign using contour properties
         if(h<w/3):
@@ -327,7 +316,7 @@ def get_roi(image):
 
 def process(img):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img = cv2.resize(img, (45, 45), interpolation=cv2.INTER_CUBIC)
+    img = cv2.resize(img, (45, 45), interpolation=cv2.INTER_AREA)
     norm_image = cv2.normalize(img, None, alpha = 0, beta = 1, norm_type = cv2.NORM_MINMAX, dtype = cv2.CV_32F)
     norm_image = norm_image.reshape((norm_image.shape[0], norm_image.shape[1], 1))
     case = np.asarray([norm_image])
