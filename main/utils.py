@@ -11,7 +11,7 @@ import sympy
 # Global variables
 dict_clean_img = {} #BINARY IMAGE DICTIONAY
 dict_img = {} #ORIGINAL IMAGE DICTIONARY
-variables = ['m', 'n', 'r', 'x', 'y']
+variables = ['m', 'r', 'x', 'y']
 
 # Loading model
 try:

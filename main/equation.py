@@ -66,6 +66,9 @@ def equation(image):
                 arr.append(".")
             elif row['exp']==5:
                 data[i].at[index,'pred'] = "1"
+                if prev_pred in special:
+                    special_flag = True
+                    arr.append('(')    
                 arr.append("1")
             elif row['exp']==0:
                 if (((str(symbol(pred))) in variables and prev_pred in variables+numbers) or ((str(symbol(pred))) in numbers and prev_pred in variables) or (str(symbol(pred))) in special+constants and prev_pred in variables+numbers):
