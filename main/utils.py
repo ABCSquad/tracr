@@ -20,19 +20,19 @@ except:
     print('Model could not be loaded')
 
 # Function to sort contours
-def sort_contours(cnts, method="left-to-right"):
+def sort_contours(cnts, method='left-to-right'):
     
     # Initialize the reverse flag and sort index
     reverse = False
     i = 0
 
     # If sorting is reversed
-    if method == "right-to-left" or method == "bottom-to-top":
+    if method == 'right-to-left' or method == 'bottom-to-top':
         reverse = True
 
     # handle if we are sorting against the y-coordinate rather than
     # the x-coordinate of the bounding box
-    if method == "top-to-bottom" or method == "bottom-to-top":
+    if method == 'top-to-bottom' or method == 'bottom-to-top':
         i = 1
 
     # List bounding boxes and sort them top to bottom
@@ -81,7 +81,7 @@ def extract_line(image, beta=0.001, alpha=0.00001, show = True):
     cont_thresh = find_good_contours_thres(contours, alpha=alpha)
 
     # Creating a mask of only ones    
-    mask = np.ones(dilation.shape[:2], dtype="uint8") * 255
+    mask = np.ones(dilation.shape[:2], dtype='uint8') * 255
 
     # Drawing those contours which are noises and then taking bitwise and
     for c in contours:
@@ -141,11 +141,11 @@ def extract_line(image, beta=0.001, alpha=0.00001, show = True):
         fig1 = plt.figure(figsize=(15,5))
         fig1.suptitle('Line Detection')
         ax1 = fig1.add_subplot(1,2,1)
-        ax1.axis("off")
+        ax1.axis('off')
         ax1.imshow(cv2.cvtColor(cleaned_orig,cv2.COLOR_BGR2RGB))
         
         ax2 = fig1.add_subplot(1,2,2)    
-        ax2.axis("off")
+        ax2.axis('off')
         ax2.imshow(cv2.cvtColor(cleaned_orig_rec, cv2.COLOR_BGR2RGB))
     
     return cleaned_orig, uppers[diff_index], lowers[diff_index]    
@@ -175,7 +175,7 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
             cnts.append(c)
     
     # Sorting contours from left to right
-    contours_sorted, bounding_boxes = sort_contours(cnts,method="left-to-right")
+    contours_sorted, bounding_boxes = sort_contours(cnts,method='left-to-right')
     
     
     img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
@@ -244,7 +244,7 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
                     cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,255),2)
                     char_type.append(exp)
                     char_locs.append([x-2,y+Y1-2,x+w+1,y+h+Y1+1,w*h])
-                    # print("Minus")
+                    # print('Minus')
                     i=i+1
                     continue
 
@@ -278,7 +278,7 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
     
     if(show == True):        
         plt.figure(figsize=(15,8))    
-        plt.axis("on")
+        plt.axis('on')
         plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
         # plt.show()
 
@@ -330,7 +330,7 @@ def symbol(ind):
     return symb
 
 def one_variable(equation_string):
-    print("Single variable equation detected", equation_string)
+    print('Single variable equation detected', equation_string)
     equation_chars = [char for char in equation_string]
     # Get variable of equation
     var = [value for value in equation_chars if value in variables][0]    
