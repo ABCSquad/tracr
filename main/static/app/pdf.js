@@ -32,11 +32,10 @@ function getImage(id) {
   });
 }
 
-function getImageToCanvas(id, img) {
+function getImageToCanvas(id, image) {
   // GET THE IMAGE.
-  console.log('func me hia', img, id);
   var img = new Image();
-  img.src = `${img}`;
+  img.src = `${image}`;
 
   // WAIT TILL IMAGE IS LOADED.
   img.onload = function () {
@@ -45,11 +44,12 @@ function getImageToCanvas(id, img) {
 
   function fill_canvas(id, img) {
     // CREATE CANVAS CONTEXT.
-    //console.log('oh lord why this not work', img);
-    var konva = document.querySelector(`#page-${id}`);
-    var cont = konva.getContext('2d');
-    console.log('heeeeeeeeeeeeeenoooooooooooooooo', img.src);
-    cont.drawImage(img, 0, 0); // DRAW THE IMAGE TO THE CANVAS.
+    let konva = document.querySelector(`#page-${id}`);
+    let cont = konva.getContext('2d');
+    img.height = cont.height;
+    img.width = cont.width;
+    cont.drawImage(img, 0, 0, 400, 300); // DRAW THE IMAGE TO THE CANVAS.
+    cont.save();
   }
 }
 
@@ -62,7 +62,7 @@ page.addEventListener('click', function () {
   document.querySelector(
     '#pages'
   ).innerHTML += `<div class="col-md-3" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
-        <span>page ${pageNo}</span>
+        <span>Page ${pageNo}</span>
         <canvas id='page-${pageNo}' style="border: 1px solid" width="400" height="300"></canvas>
       </div>`;
   getImage(pageNo);
