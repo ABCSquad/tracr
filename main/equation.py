@@ -8,7 +8,7 @@ def equation(image):
 
     numbers = list(map(str, range(10)))
     special = ['log', 'sin', 'cos', 'tan']
-    variables = ['m', 'n', 'r', 'x', 'y']
+    variables = ['m', 'r', 'x', 'y']
     operators = ['+', '-']
     constants = ['e', 'pi']
     graphing = ['>', '<', 'neq']
@@ -20,10 +20,10 @@ def equation(image):
         arr = []
         prev_exp = 0
         prev_pred = ""
+        special_flag = False
         for index, row in data[i].iterrows():  
             roi = image[row['Y1']:row['Y2'], row['X1']:row['X2']]        
             pred = process(roi)
-
             if row['exp']==1 and symbol(pred)=="+":
                 arr.append(str(symbol(pred)))
                 data[i].at[index,'exp'] = "0"
@@ -49,12 +49,17 @@ def equation(image):
                     arr.append(")")
             elif row['exp']!=1 and prev_exp==1:
                 arr.append(")")
-            
             if row['exp']==2:
                 data[i].at[index,'pred'] = "-"
+                if special_flag:
+                    arr.append(')')
+                    special_flag==False
                 arr.append("-")
             elif row['exp']==3:
                 data[i].at[index,'pred'] = "="
+                if special_flag:
+                    arr.append(')')
+                    special_flag=False
                 arr.append("=")
             elif row['exp']==4:
                 data[i].at[index,'pred'] = "."
@@ -63,12 +68,18 @@ def equation(image):
                 data[i].at[index,'pred'] = "1"
                 arr.append("1")
             elif row['exp']==0:
-                if (((str(symbol(pred))) in variables and prev_pred in variables+numbers) or ((str(symbol(pred))) in numbers and prev_pred in variables) or (str(symbol(pred))) in constants and prev_pred in variables+numbers):
+                if (((str(symbol(pred))) in variables and prev_pred in variables+numbers) or ((str(symbol(pred))) in numbers and prev_pred in variables) or (str(symbol(pred))) in special+constants and prev_pred in variables+numbers):
                     arr.append("*") 
+                if prev_pred in special:
+                    special_flag = True
+                    arr.append('(')                    
                 arr.append(str(symbol(pred)))
+                if (index == len(data[i])-1 and special_flag==True) or (special_flag==True and (symbol(pred) in operators+graphing)):
+                    arr.append(')')                                    
+                    special_flag = False
                 # if str(symbol(pred))=='e':
                 #     arr.pop()
-                #     arr.append('2.718')
+                #     arr.append('2.718')                
                 data[i].at[index,'pred'] = symbol(pred)
             prev_exp = data[i].at[index,'exp']                                                    
             prev_pred = data[i].at[index,'pred']
@@ -98,19 +109,25 @@ def equation(image):
             elif len(list(set(string_list[i]) & set(variables)))==2:
                 string_split = string_list[i].split("=")
                 print("Equation predicted:", string_list[i])
-                res_list.append("double variable")
+                res_list.append("Multiple variables")
                 latex_list.append(string_to_latex(string_split[0])+'='+string_to_latex(string_split[1]))
             else:
                 print("More than two variables not supported")
 
 
-        elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==0 and len(list(set(string_list[i]) & set(graphing)))==0:
-            new_string = 'x-'+string_list[i]
-            res = no_variables(new_string)
-            print("Equation predicted:", string_list[i])
-            res_list.append(str(res))
-            latex_list.append(string_to_latex(string_list[i]))
-            print("Result: " + str(res))
+        elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(graphing)))==0:
+            if len(list(set(string_list[i]) & set(variables)))==0:
+                new_string = 'x-'+string_list[i]
+                res = no_variables(new_string)
+                print("Equation predicted:", string_list[i])
+                res_list.append(str(res))
+                latex_list.append(string_to_latex(string_list[i]))
+                print("Result: " + str(res))
+            elif any(x in string_list[i] for x in special):
+                print("Equation predicted:", string_list[i])
+                res_list.append('Graph plotted')
+                latex_list.append(string_to_latex(string_list[i]))
+
 
         elif len(list(set(string_list[i]) & set(graphing)))==1:
             print("Equation invalid:", string_list[i])
@@ -122,7 +139,7 @@ def equation(image):
             latex_list.append(string_to_latex(string_split[0])+op+string_to_latex(string_split[1]))
             res_list.append("No result")
         
-        else:
+        else:   
             print("Equation invalid:", string_list[i])
             res_list.append("Invalid")
             latex_list.append("Invalid")

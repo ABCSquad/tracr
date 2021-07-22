@@ -147,9 +147,6 @@ def extract_line(image, beta=0.001, alpha=0.00001, show = True):
         ax2 = fig1.add_subplot(1,2,2)    
         ax2.axis("off")
         ax2.imshow(cv2.cvtColor(cleaned_orig_rec, cv2.COLOR_BGR2RGB))
-
-        cv2.imshow("Test", cleaned_orig_rec)
-        cv2.waitKey(0)
     
     return cleaned_orig, uppers[diff_index], lowers[diff_index]    
 
@@ -319,7 +316,7 @@ def get_roi(image):
 
 def process(img):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img = cv2.resize(img, (45, 45), interpolation=cv2.INTER_CUBIC)
+    img = cv2.resize(img, (45, 45), interpolation=cv2.INTER_AREA)
     norm_image = cv2.normalize(img, None, alpha = 0, beta = 1, norm_type = cv2.NORM_MINMAX, dtype = cv2.CV_32F)
     norm_image = norm_image.reshape((norm_image.shape[0], norm_image.shape[1], 1))
     case = np.asarray([norm_image])
