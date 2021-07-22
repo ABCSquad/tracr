@@ -54,18 +54,32 @@ function getImageToCanvas(id, image) {
 }
 
 let pageNo = 1;
-page = document.querySelector('#addpage');
+let page = document.querySelector('#addpage');
 page.addEventListener('click', function () {
   console.log('adding page');
   console.log(pageNo);
-
-  document.querySelector(
-    '#pages'
-  ).innerHTML += `<div class="col-md-3" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
+  var app = `<div class="col-md-3" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
         <span>Page ${pageNo}</span>
+        
         <canvas id='page-${pageNo}' style="border: 1px solid" width="400" height="300"></canvas>
       </div>`;
+  $('#pages').append(app);
+
+  // document.querySelector(
+  //   '#pages'
+  // ).innerHTML += `<div class="col-md-3" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
+  //       <span>Page ${pageNo}</span>
+  //       <canvas id='page-${pageNo}' style="border: 1px solid" width="400" height="300"></canvas>
+  //     </div>`;
   getImage(pageNo);
   // getImageToCanvas(pageNo, image);
   pageNo += 1;
 });
+
+// let page = document.querySelector('.removepage');
+// let getId = document.querySelector('.removepage').id;
+// console.log('getting id of remove element', getId);
+// page.addEventListener('click', function () {
+//   console.log('removing page');
+//   $('#pages').removeChild(page);
+// });
