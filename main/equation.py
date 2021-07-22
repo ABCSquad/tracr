@@ -105,7 +105,7 @@ def equation(image):
 
 
         elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(variables)))==0 and len(list(set(string_list[i]) & set(graphing)))==0:
-            new_string = 'X-'+string_list[i]
+            new_string = 'x-'+string_list[i]
             res = no_variables(new_string)
             print("Equation predicted:", string_list[i])
             res_list.append(str(res))
