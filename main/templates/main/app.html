@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>App</title>
+    
     <!-- CSS only -->
     <link
       rel="stylesheet"
@@ -58,6 +59,7 @@
       async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
     ></script>
+    
   </head>
   <body>
     <!-- header start -->
@@ -172,6 +174,12 @@
             <span class="pt-2" style="text-align: center; font-size: large"
               ><i class="fa fas fa-paint-brush"></i
             ></span>
+            <div class="row " style="flex-direction: column;">
+          <button style=" text-align: center; color: blueviolet" id="btnConvert">
+        HELLo
+      </button>
+        </div>
+        <button style="margin-left:20px" id="addpage" >Add page</button>
           </div>
         </div>
         <!-- end of tools -->
@@ -215,9 +223,11 @@
 
           <div class="bd-highlight">
             <div class="wrapper">
+              <div id='all-canvas'>
               <canvas id="draw"></canvas>
               <canvas id="draw-lines" width="1280" height="720"></canvas>
               <canvas id="canvas"></canvas>
+              </div>
               <!-- Canvas post form -->
               <form id="form1">
                 {% csrf_token %}
@@ -272,7 +282,7 @@
               <i id="deLatex" class="text-muted">Latex of expression</i>
             </p>
           </div>
-          <div class="bd-highlight">
+          <div class="bd-highlight grapher">
             <div
               id="calculator"
               style="height: 79vh; border: 1px solid #ccc"
@@ -283,16 +293,23 @@
         <!-- end of graph section -->
       </div>
 
-      <!-- ***********************ADD to canvas section *************************************
-      <button style="bottom: 0; right: 0; color: blueviolet" id="btnConvert">
-        HELLo
-      </button>
-      <div style="background-color: burlywood" id="container-canvas"></div>
-    </div> -->
+      <!-- ----------------------------PDF maker----------------- -->
+      <section class="pdf-maker">
+        
+     
+    <div  >
+      <div id="pages" class="row"</div>
+    </div>
+      <!-- <canvas style="margin-left:200px; border: 1px solid;" id="canvas-pdf" width="1280px" height="720px"></canvas> -->
+      </section>
+      
+  
+
     <!------------------------EXTRAAAAAAAAAAA-------------------->
   </body>
   <!-- Main import -->
   <script src="{% static 'app/app.js' %}"></script>
+  <script src="{% static 'app/pdf.js' %}"></script>
   <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"

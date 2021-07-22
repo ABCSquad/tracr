@@ -16,8 +16,8 @@
     <section id="toolbar">
       <button id="addpage">Add page</button>
     </section>
-    <section id="pages">
-      <div class="container"></div>
+    <section >
+      <div id="pages" class="row"</div>
     </section>
   </body>
   <script
@@ -31,18 +31,13 @@
     page.addEventListener('click', function () {
       console.log('adding page');
       console.log(pageNo);
-      document.querySelector('#pages').innerHTML += `<span>page ${pageNo}</span>
-        <canvas
-          style="
-          padding: 0;
-          margin: auto;
-          display: block;
-          border: 1px solid;
-          "
-          id="page-${pageNo}"
-          width="1280"
-          height="720"
-        ></canvas>`;
+
+      document.querySelector(
+        '#pages'
+      ).innerHTML += `<div class="col-md-3" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
+        <span>page ${pageNo}</span>
+        <canvas style="border: 1px solid" width="400" height="300"></canvas>
+      </div>`;
       pageNo += 1;
     });
   </script>
