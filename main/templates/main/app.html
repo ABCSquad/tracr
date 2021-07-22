@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>App</title>
+    
     <!-- CSS only -->
     <link
       rel="stylesheet"
@@ -45,6 +46,7 @@
     ></script>
     <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://unpkg.com/konva@8.1.1/konva.min.js"></script>
 
     <!-- end -->
     <link rel="stylesheet" href="{% static 'main/main.css' %}" />
@@ -57,6 +59,7 @@
       async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
     ></script>
+    
   </head>
   <body>
     <!-- header start -->
@@ -88,198 +91,232 @@
       </nav>
     </header>
     <!-- end of header -->
-
-    <div
-      class="d-flex flex-row bd-highlight"
-      style="height: auto; border: 2px solid #ccc"
-    >
-      <!-- tools section -->
-      <div class="p-3 bd-highlight all-tools" style="border: 1px solid #ccc">
-        <div class="onoffswitch">
-          <input
-            type="checkbox"
-            name="onoffswitch"
-            class="onoffswitch-checkbox"
-            id="myonoffswitch"
-            tabindex="0"
-          />
-          <label class="onoffswitch-label" for="myonoffswitch">
-            <span class="onoffswitch-inner"></span>
-            <span class="onoffswitch-switch"
-              ><i class="fa fas fa-video toggle-icon"></i
-            ></span>
-          </label>
-        </div>
-        <div class="tools">
-          <button onclick="undo_last()" type="button" class="button">
-            <i class="fa fa-solid fa-undo"></i>
-          </button>
-          <button onclick="clear_canvas()" type="button" class="button">
-            <i class="fa fa-solid fa-trash"></i>
-          </button>
-          <div
-            onclick="change_color(this, 'black')"
-            class="color-field"
-            style="background: black"
-          ></div>
-          <div
-            onclick="change_color(this, 'red')"
-            class="color-field"
-            style="background: red"
-          ></div>
-          <div
-            onclick="change_color(this,'blue')"
-            class="color-field"
-            style="background: blue"
-          ></div>
-          <div
-            onclick="change_color(this,'orange')"
-            class="color-field"
-            style="background: orange"
-          ></div>
-          <div
-            onclick="change_color(this,'green')"
-            class="color-field"
-            style="background: green"
-          ></div>
-          <div
-            onclick="change_color(this,'yellow')"
-            class="color-field"
-            style="background: yellow"
-          ></div>
-          <div
-            onclick="change_color(this,'violet')"
-            class="color-field"
-            style="background: violet"
-          ></div>
-
-          <input
-            oninput="draw_color = this.value"
-            type="color"
-            class="color-picker"
-          />
-          <span class="pt-2" style="text-align: center; font-size: large"
-            ><i class="fas fa-palette"></i
-          ></span>
-          <input
-            type="range"
-            min="1"
-            max="100"
-            class="mt-5 pen-range"
-            oninput="draw_width = this.value"
-          />
-          <span class="pt-2" style="text-align: center; font-size: large"
-            ><i class="fa fas fa-paint-brush"></i
-          ></span>
-        </div>
-      </div>
-      <!-- end of tools -->
-
-      <!-- canvas section -->
-      <div class="d-flex flex-column bd-highlight">
-        <div
-          class="p-1 expression"
-          style="width: 1282px; height: 14vh; border: 1px solid #ccc"
-        >
-          <h4 class="pt-1 pl-1 expression">Expression:</h4>
-
-          <div
-            style="
-              font-size: 40px;
-              display: flex;
-              justify-content: center;
-              flex-direction: row;
-            "
-          >
-            <p id="get-latexed-expression">
-              <i class="text-muted copy-eq"> List of supported vars, nums.</i>
-            </p>
+    <div class="d-flex flex-column">
+      <div
+        class="d-flex flex-row bd-highlight"
+        style="height: auto; border: 2px solid #ccc"
+      >
+        <!-- tools section -->
+        <div class="p-3 bd-highlight all-tools" style="border: 1px solid #ccc">
+          <div class="onoffswitch">
+            <input
+              type="checkbox"
+              name="onoffswitch"
+              class="onoffswitch-checkbox"
+              id="myonoffswitch"
+              tabindex="0"
+            />
+            <label class="onoffswitch-label" for="myonoffswitch">
+              <span class="onoffswitch-inner"></span>
+              <span class="onoffswitch-switch"
+                ><i class="fa fas fa-video toggle-icon"></i
+              ></span>
+            </label>
+          </div>
+          <div class="tools">
+            <button onclick="undo_last()" type="button" class="button">
+              <i class="fa fa-solid fa-undo"></i>
+            </button>
+            <button onclick="clear_canvas()" type="button" class="button">
+              <i class="fa fa-solid fa-trash"></i>
+            </button>
             <div
+              onclick="change_color(this, 'black')"
+              class="color-field"
+              style="background: black"
+            ></div>
+            <div
+              onclick="change_color(this, 'red')"
+              class="color-field"
+              style="background: red"
+            ></div>
+            <div
+              onclick="change_color(this,'blue')"
+              class="color-field"
+              style="background: blue"
+            ></div>
+            <div
+              onclick="change_color(this,'orange')"
+              class="color-field"
+              style="background: orange"
+            ></div>
+            <div
+              onclick="change_color(this,'green')"
+              class="color-field"
+              style="background: green"
+            ></div>
+            <div
+              onclick="change_color(this,'yellow')"
+              class="color-field"
+              style="background: yellow"
+            ></div>
+            <div
+              onclick="change_color(this,'violet')"
+              class="color-field"
+              style="background: violet"
+            ></div>
+
+            <input
+              oninput="draw_color = this.value"
+              type="color"
+              class="color-picker"
+            />
+            <span class="pt-2" style="text-align: center; font-size: large"
+              ><i class="fas fa-palette"></i
+            ></span>
+            <input
+              type="range"
+              min="1"
+              max="100"
+              class="mt-5 pen-range"
+              oninput="draw_width = this.value"
+            />
+            <span class="pt-2" style="text-align: center; font-size: large"
+              ><i class="fa fas fa-paint-brush"></i
+            ></span>
+            <div class="row " style="flex-direction: column;">
+          <button style=" text-align: center; color: blueviolet" id="btnConvert">
+        HELLo
+      </button>
+        </div>
+        <button style="margin-left:20px" id="addpage" >Add page</button>
+          </div>
+        </div>
+        <!-- end of tools -->
+
+        <!-- canvas section -->
+        <div class="d-flex flex-column bd-highlight">
+          <div
+            class="p-1 expression"
+            style="width: 1282px; height: 14vh; border: 1px solid #ccc"
+          >
+            <h4 class="pt-1 pl-1 expression">Expression:</h4>
+
+            <div
+              id="expression-block"
               style="
-                margin-left: 20px;
+                font-size: 40px;
                 display: flex;
-                justify-content: left;
+                justify-content: center;
                 flex-direction: row;
               "
-              id="result-container"
             >
-              <p id="right-arrow" class="pr-3 align-item-center"></p>
-              <p id="get-result"></p>
+              <p id="get-latexed-expression">
+                <span style="overflow: hidden" class="text-muted copy-eq">
+                  List of supported vars, nums.</span
+                >
+              </p>
+              <div
+                style="
+                  margin-left: 20px;
+                  display: flex;
+                  justify-content: left;
+                  flex-direction: row;
+                "
+                id="result-container"
+              >
+                <p id="right-arrow" class="pr-3 align-item-center"></p>
+                <p id="get-result"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bd-highlight">
+            <div class="wrapper">
+              <div id='all-canvas'>
+              <canvas id="draw"></canvas>
+              <canvas id="draw-lines" width="1280" height="720"></canvas>
+              <canvas id="canvas"></canvas>
+              </div>
+              <!-- Canvas post form -->
+              <form id="form1">
+                {% csrf_token %}
+                <input
+                  type="hidden"
+                  id="captured_image"
+                  name="captured_image"
+                />
+                <div class="submit-button">
+                  <input
+                    id="upload_image"
+                    class="m-1 pr-1 btn btn-warning"
+                    type="submit"
+                    value="Upload the image"
+                  />
+                </div>
+              </form>
+            </div>
+            <div class="streamer">
+              <video id="video" width="100%"></video>
             </div>
           </div>
         </div>
+        <!-- end of canvas -->
 
-        <div class="bd-highlight">
-          <div class="wrapper">
-            <canvas id="draw"></canvas>
-            <canvas id="draw-lines" width="1280" height="720"></canvas>
-            <canvas id="canvas"></canvas>
-            <!-- Canvas post form -->
-            <form id="form1">
-              {% csrf_token %}
-              <input type="hidden" id="captured_image" name="captured_image" />
-              <div class="submit-button">
-                <input
-                  id="upload_image"
-                  class="m-1 pr-1 btn btn-warning"
-                  type="submit"
-                  value="Upload the image"
-                />
-              </div>
-            </form>
-          </div>
-          <div class="streamer">
-            <video id="video" width="100%"></video>
-          </div>
-        </div>
-      </div>
-      <!-- end of canvas -->
-
-      <!-- graph section -->
-      <div class="d-flex flex-column bd-highlight">
-        <div
-          class="p-1 expression"
-          style="height: 14vh; border: 1px solid #ccc"
-        >
-          <div class="d-flex flex-row justify-content-between copy-button">
-            <h4 class="pt-1 pl-1 latex">Latex:</h4>
-            <button
-              id="copy-button"
-              data-clipboard-target="#get-latex"
-              style="position: absolute; top: 67px; right: 6px"
-            >
-              <img
-                src="{% static 'main/copy.svg' %}"
-                class="social m-3"
-                alt="github"
-                width="25"
-                height="25"
-              />
-            </button>
-          </div>
-          <p
-            style="width: 23vw; display: flex; justify-content: center"
-            id="get-latex"
-          >
-            <i id="deLatex" class="text-muted">Latex of expression</i>
-          </p>
-        </div>
-        <div class="bd-highlight">
+        <!-- graph section -->
+        <div class="d-flex flex-column bd-highlight">
           <div
-            id="calculator"
-            style="height: 79vh; border: 1px solid #ccc"
-          ></div>
+            class="p-1 expression"
+            style="height: 14vh; border: 1px solid #ccc"
+          >
+            <div class="d-flex flex-row justify-content-between copy-button">
+              <h4 class="pt-1 pl-1 latex">Latex:</h4>
+              <button
+                id="copy-button"
+                data-clipboard-target="#get-latex"
+                style="position: absolute; top: 67px; right: 6px"
+              >
+                <img
+                  src="{% static 'main/copy.svg' %}"
+                  class="social m-3"
+                  alt="github"
+                  width="25"
+                  height="25"
+                />
+              </button>
+            </div>
+            <p
+              style="width: 23vw; display: flex; justify-content: center"
+              id="get-latex"
+            >
+              <i id="deLatex" class="text-muted">Latex of expression</i>
+            </p>
+          </div>
+          <div class="bd-highlight grapher">
+            <div
+              id="calculator"
+              style="height: 79vh; border: 1px solid #ccc"
+            ></div>
+          </div>
         </div>
+
+        <!-- end of graph section -->
       </div>
 
-      <!-- end of graph section -->
+      <!-- ----------------------------PDF maker----------------- -->
+      <section class="pdf-maker">
+        
+     
+    <div  >
+      <div id="pages" class="row"</div>
     </div>
+      <!-- <canvas style="margin-left:200px; border: 1px solid;" id="canvas-pdf" width="1280px" height="720px"></canvas> -->
+      </section>
+      
+  
 
     <!------------------------EXTRAAAAAAAAAAA-------------------->
   </body>
   <!-- Main import -->
   <script src="{% static 'app/app.js' %}"></script>
+  <script src="{% static 'app/pdf.js' %}"></script>
   <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"
+    integrity="sha512-s/XK4vYVXTGeUSv4bRPOuxSDmDlTedEpMEcAQk0t/FMd9V6ft8iXdwSBxV0eD60c6w/tjotSlKu9J2AAW1ckTA=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
 
   <script>
     $('#copy-button').click(function () {

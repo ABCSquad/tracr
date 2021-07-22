@@ -89,7 +89,7 @@ var p = 0;
 var cw = bw + p * 2 + 1;
 var ch = bh + p * 2 + 1;
 
-var drawl = document.getElementById('canvas');
+var drawl = document.getElementById('draw-lines');
 var lines = drawl.getContext('2d');
 function drawBoard() {
   for (var x = 0; x <= bh; x += 150) {
@@ -301,18 +301,18 @@ $(document).on('submit', '#form1', function (e) {
       //desmos function
       // dem(json_obj[0]['latex']);
       //expression function
-      
+
       let latex = '';
       let result = '';
       let graph = '';
-      for(let i=0; i<json_obj.length; i++){
+      for (let i = 0; i < json_obj.length; i++) {
         dem(json_obj[i]['latex']);
-        graph = json_obj[i]['latex']
-        latex +=json_obj[i]['latex']+' \\quad\\rightarrow ';
-        if(json_obj.length>1 && i!=json_obj.length-1){
-          latex+= ' \\\\ ';
+        graph = json_obj[i]['latex'];
+        latex += json_obj[i]['latex'] + ' \\quad\\rightarrow ';
+        if (json_obj.length > 1 && i != json_obj.length - 1) {
+          latex += ' \\\\ ';
         }
-        result+=json_obj[i]['result']+' \\\\ ';
+        result += json_obj[i]['result'] + ' \\\\ ';
       }
       console.log(latex, result);
 
@@ -382,5 +382,3 @@ function clear() {
   showl('');
   dem('');
 }
-
-//---------------------COPY FUNC-------------------------------
