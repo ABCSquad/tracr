@@ -11,7 +11,17 @@
       crossorigin="anonymous"
     />
     <title>Document</title>
+    <style>
+      .parent .del-button{
+        position: relative;
+        width: 30px;
+        height: 30px;
+        top: 10px;
+        left: 300px;
+      }
+    </style>
   </head>
+
   <body>
     <section id="toolbar">
       <button id="addpage">Add page</button>
@@ -39,8 +49,8 @@
       document.querySelector(
         '#pages'
       ).innerHTML += `<div class="col-md-3 parent" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
-        <span>page ${pageNo}</span>
-        <button id='remove-${pageNo}' onclick="removeDiv(this)"></button>
+        <span>page ${(pageNo)}</span>
+        <button class='del-button' id='remove-${pageNo}' onclick="removeDiv(this)"></button>
         <canvas style="border: 1px solid" width="400" height="300"></canvas>
       </div>`;
       pageArr.push(pageArr[pageArr.length-1]++)
