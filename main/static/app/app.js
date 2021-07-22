@@ -89,7 +89,7 @@ var p = 0;
 var cw = bw + p * 2 + 1;
 var ch = bh + p * 2 + 1;
 
-var drawl = document.getElementById('canvas');
+var drawl = document.getElementById('draw-lines');
 var lines = drawl.getContext('2d');
 function drawBoard() {
   for (var x = 0; x <= bh; x += 150) {
@@ -301,18 +301,18 @@ $(document).on('submit', '#form1', function (e) {
       //desmos function
       // dem(json_obj[0]['latex']);
       //expression function
-      
+
       let latex = '';
       let result = '';
       let graph = '';
-      for(let i=0; i<json_obj.length; i++){
+      for (let i = 0; i < json_obj.length; i++) {
         dem(json_obj[i]['latex']);
-        graph = json_obj[i]['latex']
-        latex +=json_obj[i]['latex']+' \\quad\\rightarrow ';
-        if(json_obj.length>1 && i!=json_obj.length-1){
-          latex+= ' \\\\ ';
+        graph = json_obj[i]['latex'];
+        latex += json_obj[i]['latex'] + ' \\quad\\rightarrow ';
+        if (json_obj.length > 1 && i != json_obj.length - 1) {
+          latex += ' \\\\ ';
         }
-        result+=json_obj[i]['result']+' \\\\ ';
+        result += json_obj[i]['result'] + ' \\\\ ';
       }
       console.log(latex, result);
 
@@ -383,4 +383,66 @@ function clear() {
   dem('');
 }
 
-//---------------------COPY FUNC-------------------------------
+// //---------------------ADD IMAGE TO CANVAS FUNC-------------------------------
+// var element = $('#expression-block'); // global variable
+// var getCanvas; // global variable
+// var getImage;
+
+// $('#btnConvert').on('click', function () {
+//   console.log('converter');
+//   html2canvas(element, {
+//     allowTaint: true,
+//     logging: true,
+//     windowWidth: element.scrollWidth,
+//     windowHeight: element.scrollHeight,
+//     onrendered: function (canvas) {
+//       $('#container-canvas').append(canvas);
+//       console.log(canvas);
+//       getCanvas = canvas;
+//       getImage = getCanvas.toDataURL('image/png');
+//       console.log(getImage);
+//     },
+//   });
+// });
+
+// //make a konva shit
+
+// function addtokonvas() {
+//   var width = window.innerWidth;
+//   var height = window.innerHeight;
+
+//   function drawImage(imageObj) {
+//     var stage = new Konva.Stage({
+//       container: 'container',
+//       width: width,
+//       height: height,
+//     });
+
+//     var layer = new Konva.Layer();
+//     // darth vader
+//     var darthVaderImg = new Konva.Image({
+//       image: imageObj,
+//       x: stage.width() / 2 - 200 / 2,
+//       y: stage.height() / 2 - 137 / 2,
+//       width: 200,
+//       height: 137,
+//       draggable: true,
+//     });
+
+//     // add cursor styling
+//     darthVaderImg.on('mouseover', function () {
+//       document.body.style.cursor = 'pointer';
+//     });
+//     darthVaderImg.on('mouseout', function () {
+//       document.body.style.cursor = 'default';
+//     });
+
+//     layer.add(darthVaderImg);
+//     stage.add(layer);
+//   }
+//   var imageObj = new Image();
+//   imageObj.onload = function () {
+//     drawImage(this);
+//   };
+//   imageObj.src = getImage;
+// }
