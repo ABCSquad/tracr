@@ -133,6 +133,9 @@ def equation(image):
                 if prev_pred in special:
                     special_flag = True
                     arr.append('(')              
+                
+                if symbol(pred)=='neq':
+                    arr.append('\\')
 
                 # Appending prediction after prefix checks      
                 arr.append(str(symbol(pred)))
@@ -147,7 +150,7 @@ def equation(image):
                 # Optional value replacement for 'e'
                 # if str(symbol(pred))=='e':
                 #     arr.pop()
-                #     arr.append('2.718')   
+                #     arr.append('2.718')                   
 
                 #  Adding prediction to dataframe           
                 data[i].at[index,'pred'] = symbol(pred)
@@ -168,6 +171,7 @@ def equation(image):
         string_list.append(''.join(arr))
 
     print(data)
+    
 
     '''
     Looping through equations (strings)
@@ -216,7 +220,7 @@ def equation(image):
                 print('More than two variables not supported')
 
         #-------------------------------------------------------------- Case 2 - Equal not in equation --------------------------------------------------------------#
-        elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(graphing)))==0:
+        elif '=' not in list(string_list[i]) and len(list(set(string_list[i]) & set(graphing)))==0 and '\\neq' not in string_list[i]:
             #--------------------------------- Case 2.1 - No variables --------------------------------#
             if len(list(set(string_list[i]) & set(variables)))==0:
                 # Brining constant to LHS of a custom equation to find value
@@ -235,13 +239,17 @@ def equation(image):
                 latex_list.append(string_to_latex(string_list[i]))
 
         #----------------------------------------------------------- Case 2 - Graphing symbols in equation -----------------------------------------------------------#
-        elif len(list(set(string_list[i]) & set(graphing)))==1:
+        elif (len(list(set(string_list[i]) & set(graphing)))==1) or '\\neq' in string_list[i]:
             print('Graphing equation:', string_list[i])
             new_string = string_list[i]
             # Splitting string at the symbol
-            string_split = string_list[i].split(str(set(string_list[i]) & set(graphing)))
-            # Finding which symbol is in equation
-            op = ''.join(set(string_list[i]) & set(graphing))
+            if '\\neq' in string_list[i]:
+                string_split = string_list[i].split('\\neq')
+                op = '\\neq'
+            else:
+                string_split = string_list[i].split(str(set(string_list[i]) & set(graphing)))
+                # Finding which symbol is in equation
+                op = ''.join(set(string_list[i]) & set(graphing))
             string_split = string_list[i].split(op)
             res_list.append(new_string)
             latex_list.append(string_to_latex(string_split[0])+op+string_to_latex(string_split[1]))
