@@ -6,7 +6,7 @@ body {
   font-family: 'Patrick Hand', cursive;
   margin: 0px;
   padding: 0px;
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 #wrapper {
   position: relative;

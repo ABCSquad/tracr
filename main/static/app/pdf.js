@@ -40,6 +40,7 @@ let ideez = [];
 page = document.querySelector('#addpage');
 page.addEventListener('click', function () {
   console.log('adding page');
+
   console.log(pageNo);
 
   ideez.push(pageNo);
@@ -53,7 +54,6 @@ page.addEventListener('click', function () {
       </div>`;
 
   $('#pages').append(app);
-
   getImage(pageNo);
   console.log('this is arr', ideez);
   pageNo += 1;
@@ -111,9 +111,9 @@ function generatePDF() {
     html2canvas($(allsel), {
       onrendered: function (canvas) {
         calculatePDF_height_width('.pdf-canvas', i);
-        if (pdf==''){
+        if (pdf == '') {
           pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-        }else{
+        } else {
           pdf.addPage(PDF_Width, PDF_Height);
         }
         var pageData = canvas.toDataURL('image/png', 1.0);
@@ -128,46 +128,11 @@ function generatePDF() {
       },
     });
   }
+  let nameofpdf = getPdfName();
 
-  // html2canvas($('.pdf-canvas:eq(1)'), { allowTaint: true }).then(function (
-  //   canvas
-  // ) {
-  //   calculatePDF_height_width('.pdf-canvas', 1);
-
-  //   var imgData = canvas.toDataURL('image/png', 1.0);
-  //   pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-
-  //   pdf.addPage(PDF_Width, PDF_Height);
-  //   pdf.addImage(
-  //     imgData,
-  //     'JPG',
-  //     top_left_margin,
-  //     top_left_margin,
-  //     HTML_Width,
-  //     HTML_Height
-  //   );
-  // });
-
-  // html2canvas($('.print-wrap:eq(2)')[0], { allowTaint: true }).then(function (
-  //   canvas
-  // ) {
-  //   calculatePDF_height_width('.print-wrap', 2);
-
-  //   var imgData = canvas.toDataURL('image/png', 1.0);
-  //   pdf.addPage(PDF_Width, PDF_Height);
-  //   pdf.addImage(
-  //     imgData,
-  //     'JPG',
-  //     top_left_margin,
-  //     top_left_margin,
-  //     HTML_Width,
-  //     HTML_Height
-  //   );
-
-  //console.log((page_section.length-1)+"==="+index);
   setTimeout(function () {
     //Save PDF Doc
-    pdf.save('HTML-Document.pdf');
+    pdf.save(nameofpdf);
 
     //Generate BLOB object
     var blob = pdf.output('blob');
@@ -175,21 +140,24 @@ function generatePDF() {
     //Getting URL of blob object
     var blobURL = URL.createObjectURL(blob);
 
-    //Showing PDF generated in iFrame element
-    var iframe = document.getElementById('sample-pdf');
-    iframe.src = blobURL;
-
     //Setting download link
     var downloadLink = document.getElementById('pdf-download-link');
     downloadLink.href = blobURL;
 
     $('#sample-pdf').slideDown();
 
-    $('#downloadbtn').show();
     $('#genmsg').hide();
+    $('#downloadbtn').show();
   }, 0);
 }
 
+function getPdfName() {
+  let today = new Date().toISOString().slice(0, 10);
+  let defval = 'Notebook_' + today;
+  let pdfname = prompt('Please enter PDF name', defval);
+  return pdfname;
+}
 //TO DO
-//1) MAKE AN ALERT
-//2) COMPLETE PDF
+//1) MAKE AN ALERT---done
+//3)MAKE DRAW LINES ADJUSTABLE
+//2) COMPLETE PDF-----done
