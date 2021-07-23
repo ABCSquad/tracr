@@ -25,16 +25,16 @@ const video = document.getElementById('video');
 function onResults(results) {
   ctx.save();
   ctx.clearRect(0, 0, cam.width, cam.height);
-  ctx.drawImage(results.image, 0, 0, cam.width, cam.height);
+  ctx.drawImage(
+      results.image, 0, 0, cam.width, cam.height);
   if (results.multiHandLandmarks) {
     for (const landmarks of results.multiHandLandmarks) {
-      drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {
-        color: '#00FF00',
-        lineWidth: 5,
-      });
-      drawLandmarks(ctx, landmarks, { color: '#FF0000', lineWidth: 2 });
+      drawConnectors(ctx, landmarks, HAND_CONNECTIONS,
+                     {color: '#00FF00', lineWidth: 5});
+      drawLandmarks(ctx, landmarks, {color: '#FF0000', lineWidth: 2});
     }
   }
+
   if (results.multiHandLandmarks != undefined) {
     let x1 = results.multiHandLandmarks[0][8]['x'];
     let x2 = results.multiHandLandmarks[0][12]['x'];
@@ -54,30 +54,27 @@ function onResults(results) {
   } else {
     is_drawing = false;
   }
+  
   ctx.restore();
 }
 
-//Using mediapipe hands (CDN)
-const hands = new Hands({
-  locateFile: (file) => {
-    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.1/${file}`;
-  },
-});
+const hands = new Hands({locateFile: (file) => {
+  return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+}});
 hands.setOptions({
   selfieMode: true,
   maxNumHands: 1,
-  minDetectionConfidence: 0.7,
-  minTrackingConfidence: 0.5,
+  minDetectionConfidence: 0.5,
+  minTrackingConfidence: 0.5
 });
 hands.onResults(onResults);
 
-//Instantiating camera to video element
 const camera = new Camera(video, {
   onFrame: async () => {
-    await hands.send({ image: video });
+    await hands.send({image: video});
   },
   width: 1280,
-  height: 720,
+  height: 720
 });
 
 /*
