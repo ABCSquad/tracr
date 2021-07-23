@@ -25,13 +25,14 @@ const video = document.getElementById('video');
 function onResults(results) {
   ctx.save();
   ctx.clearRect(0, 0, cam.width, cam.height);
-  ctx.drawImage(
-      results.image, 0, 0, cam.width, cam.height);
+  ctx.drawImage(results.image, 0, 0, cam.width, cam.height);
   if (results.multiHandLandmarks) {
     for (const landmarks of results.multiHandLandmarks) {
-      drawConnectors(ctx, landmarks, HAND_CONNECTIONS,
-                     {color: '#00FF00', lineWidth: 5});
-      drawLandmarks(ctx, landmarks, {color: '#FF0000', lineWidth: 2});
+      drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {
+        color: '#00FF00',
+        lineWidth: 5,
+      });
+      drawLandmarks(ctx, landmarks, { color: '#FF0000', lineWidth: 2 });
     }
   }
 
@@ -54,27 +55,29 @@ function onResults(results) {
   } else {
     is_drawing = false;
   }
-  
+
   ctx.restore();
 }
 
-const hands = new Hands({locateFile: (file) => {
-  return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
-}});
+const hands = new Hands({
+  locateFile: (file) => {
+    return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+  },
+});
 hands.setOptions({
   selfieMode: true,
   maxNumHands: 1,
   minDetectionConfidence: 0.5,
-  minTrackingConfidence: 0.5
+  minTrackingConfidence: 0.5,
 });
 hands.onResults(onResults);
 
 const camera = new Camera(video, {
   onFrame: async () => {
-    await hands.send({image: video});
+    await hands.send({ image: video });
   },
   width: 1280,
-  height: 720
+  height: 720,
 });
 
 /*
@@ -112,14 +115,14 @@ function change_color(elmnt, clr) {
   draw_color = clr;
 }
 
-cam.addEventListener('touchstart', start_mouse, false); //touchstart event occurs when the user touches an element
-cam.addEventListener('touchmove', draw_mouse, false); //touchmove occurs when the user moves the finger across the screen
-cam.addEventListener('mousedown', start_mouse, false); //mousedown event occurs when a user presses a mouse button over an element
-cam.addEventListener('mousemove', draw_mouse, false); //mousemove event occurs when the pointer is moving while it is over an element
+canvas.addEventListener('touchstart', start_mouse, false); //touchstart event occurs when the user touches an element
+canvas.addEventListener('touchmove', draw_mouse, false); //touchmove occurs when the user moves the finger across the screen
+canvas.addEventListener('mousedown', start_mouse, false); //mousedown event occurs when a user presses a mouse button over an element
+canvas.addEventListener('mousemove', draw_mouse, false); //mousemove event occurs when the pointer is moving while it is over an element
 
-cam.addEventListener('touchend', stop_mouse, false); //touchend occurs when the user removes the finger from an element
-cam.addEventListener('mouseup', stop_mouse, false); //mouseup event occurs when a user releases a mouse button over an element
-cam.addEventListener('mouseout', stop_mouse, false); //mouseout event occurs when the mouse pointer is moved out of an element
+canvas.addEventListener('touchend', stop_mouse, false); //touchend occurs when the user removes the finger from an element
+canvas.addEventListener('mouseup', stop_mouse, false); //mouseup event occurs when a user releases a mouse button over an element
+canvas.addEventListener('mouseout', stop_mouse, false); //mouseout event occurs when the mouse pointer is moved out of an element
 
 /*
 Mousedown => Index only
@@ -172,27 +175,27 @@ function draw_hand(results, x1, y1) {
     is_drawing = true;
     context.beginPath();
     context.moveTo(
-      Math.abs(x1 * cam.width - cam.offsetLeft),
-      Math.abs(y1 * cam.height - cam.offsetTop)
+      Math.abs(x1 * canvas.width - canvas.offsetLeft),
+      Math.abs(y1 * canvas.height - canvas.offsetTop)
     );
     console.log(
       'Move to ' +
-        Math.abs(x1 * cam.width - cam.offsetLeft) +
+        Math.abs(x1 * canvas.width - canvas.offsetLeft) +
         ' ' +
-        Math.abs(y1 * cam.height - cam.offsetTop)
+        Math.abs(y1 * canvas.height - canvas.offsetTop)
     );
   }
 
   if (is_drawing) {
     context.lineTo(
-      Math.abs(x1 * cam.width - cam.offsetLeft),
-      Math.abs(y1 * cam.height - cam.offsetTop)
+      Math.abs(x1 * canvas.width - canvas.offsetLeft),
+      Math.abs(y1 * canvas.height - canvas.offsetTop)
     );
     console.log(
       'Line to ' +
-        Math.abs(x1 * cam.width - cam.offsetLeft) +
+        Math.abs(x1 * canvas.width - canvas.offsetLeft) +
         ' ' +
-        Math.abs(y1 * cam.height - cam.offsetTop)
+        Math.abs(y1 * canvas.height - canvas.offsetTop)
     );
     context.strokeStyle = draw_color;
     context.lineWidth = draw_width;
@@ -210,7 +213,7 @@ function stop_hand(results, x1, y1) {
   }
 
   //if (results.multiHandLandmarks != undefined) {
-  restore_array.push(context.getImageData(0, 0, cam.width, cam.height));
+  restore_array.push(context.getImageData(0, 0, canvas.width, canvas.height));
   index += 1;
   //console.log(restore_array);
   //}
