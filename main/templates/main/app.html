@@ -62,32 +62,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 
     <style>
-      .parent{
-        position: relative;
-      }
-      .parent .del-button{
-        cursor: pointer;
-        display: inline-block;
-        border-radius: 50%;
-        background-color: #9e6a6a;
-        color: #fff;
-        font-size: 20px;
-        position: absolute;
-        width: 35px;
-        height: 35px;
-        top: 15px;
-        left: 450px;
-        z-index: 999;
-        transition: color, background-color 0.2s;
-        
-      }
-      .parent .del-button:hover{
-        color: rgb(230, 53, 53);
-        background-color: #9e6a6a;
-      }
-      .parent canvas:hover{
-        box-shadow: yellow;
-      }
+
     </style>
   </head>
   <body>
@@ -110,7 +85,6 @@
               </a>
             </div>
             <div class="navbar-nav">
-              <a href="#" class="btn btn-outline-warning">Export as PDF</a>
               <a href="{% url 'home' %}" class="btn btn-outline-warning"
                 >Home</a
               >
@@ -203,24 +177,10 @@
             <span class="pt-2" style="text-align: center; font-size: large"
               ><i class="fa fas fa-paint-brush"></i
             ></span>
-            <div class="row " style="flex-direction: column;">
-          <button style=" text-align: center; color: blueviolet" id="btnConvert">
-        HELLo
-      </button>
-        </div>
-        <button style="margin-left:20px" id="addpage" >Add page</button>
+            
+        
           </div>
-          <div class="pdf-download">
-      <a
-      class='btn btn-primary'
-      id='downloadbtn'
-      onclick='generatePDF()'
-      style='color:#ffffff'
-      >
-      <b>Create &amp; Download PDF</b>
-      </a>
-      <span id="genmsg" style="display:none;"><b>Generating PDF ...</b></span>
-    </div>
+          
         </div>
         <!-- end of tools -->
 
@@ -258,6 +218,14 @@
                 <p id="right-arrow" class="pr-3 align-item-center"></p>
                 <p id="get-result"></p>
               </div>
+              <div class="btn-wrapper">
+                <button onclick="myAlertTop()"   class="btn btn-warning" style="margin-left:20px" id="addpage"  >Add page <i class="fa fas fa-file-upload"></i></button>
+                <div class="myAlert-top alert alert-primary" role="alert">
+                  <p style="text-align: center;">Page added successfully</p>
+                </div>
+                <button id="see-button" class="btn btn-warning" href="#page-"><i class="fa far fa-eye"></i></button>
+              </div>  
+
             </div>
           </div>
 
@@ -304,7 +272,7 @@
               <button
                 id="copy-button"
                 data-clipboard-target="#get-latex"
-                style="position: absolute; top: 67px; right: 6px"
+                style="position: absolute; top: 78px; right: 6px"
               >
                 <img
                   src="{% static 'main/copy.svg' %}"
@@ -334,11 +302,28 @@
       </div>
 
       <!-- ----------------------------PDF maker----------------- -->
-      <section class="pdf-maker">
-        
+      <section class='pdf-section' style="height: auto;" class="pdf-maker">
+        <div class="pdfcontrol">
+          <div style="color:#ffc107 ;background-color: var(--davys); border-top: 2px solid #ccc;" class="row">
+            <div class="container">
+              <p style="text-align:center; padding-top: 20px;" id='metadata'>Notebook_<script> document.write(new Date().toISOString().slice(0, 10)); </script></p>
+              <div class="d-flex justify-content-center pdf-download pb-2">
+                <a
+                class='btn btn-primary'
+                id='downloadbtn'
+                onclick='generatePDF()'
+                style='color:#ffffff'
+                >
+                <b>Create &amp; Download PDF</b>
+                </a>
+                <span id="genmsg" style="display:none;"><b>Generating PDF ...</b></span>
+              </div>
+            </div>
+          </div>
+        </div>
      
-    <div  >
-      <div id="pages" class="row"</div>
+    <div style="margin: 20px;" >
+      <div id="pages" class="row"></div>
     </div>
     
       <!-- <canvas style="margin-left:200px; border: 1px solid;" id="canvas-pdf" width="1280px" height="720px"></canvas> -->
@@ -347,6 +332,10 @@
   
 
     <!------------------------EXTRAAAAAAAAAAA-------------------->
+    <footer>
+  <!-- Scroll to top button -->
+  <button class="scrollToTopBtn"><i class="fa fas fa-chevron-up"></i></button>
+  </footer>
   </body>
   <!-- Main import -->
   <script src="{% static 'app/app.js' %}"></script>
@@ -373,5 +362,36 @@
     clipboard.on('error', function (e) {
       console.log(e);
     });
+  </script>
+  <script>
+    var scrollToTopBtn = document.querySelector(".scrollToTopBtn")
+    var rootElement = document.documentElement
+
+    function handleScroll() {
+      // Do something on scroll
+      var scrollTotal = rootElement.scrollHeight - rootElement.clientHeight
+      if ((rootElement.scrollTop / scrollTotal ) > 0.80) {
+        // Show button
+        scrollToTopBtn.classList.add("showBtn")
+      } else {
+        // Hide button
+        scrollToTopBtn.classList.remove("showBtn")
+      }
+    }
+
+    function scrollToTop() {
+      // Scroll to top logic
+      rootElement.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    }
+    scrollToTopBtn.addEventListener("click", scrollToTop)
+    document.addEventListener("scroll", handleScroll)
+
+
+    $("#see-button").click(function() {
+      document.querySelector(".pdf-canvas").scrollIntoView();
+});
   </script>
 </html>

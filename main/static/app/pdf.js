@@ -1,6 +1,8 @@
 // //---------------------ADD IMAGE TO CANVAS FUNC-------------------------------
 
 function getImage(id) {
+  $('html,body').scrollTop(0);
+
   //var testdiv = document.getElementById("testdiv");
   let myImage;
   html2canvas($('#all-canvas'), {
@@ -40,6 +42,7 @@ let ideez = [];
 page = document.querySelector('#addpage');
 page.addEventListener('click', function () {
   console.log('adding page');
+
   console.log(pageNo);
 
   ideez.push(pageNo);
@@ -47,13 +50,12 @@ page.addEventListener('click', function () {
   var app = `<div class="col-md-3 parent" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
         <span class='span-class' id='${pageNo}'>Page - ${
     ideez.indexOf(pageNo) + 1
-  }</span>
+  } > </span>
         <button class='del-button' name ='${pageNo}' id='remove-${pageNo}' onclick="removeDiv(this)"><i class="fa far fa-trash-alt"></i></button>
-        <canvas class='pdf-canvas' id='page-${pageNo}' style="border: 1px solid" width="400" height="300"></canvas>
+        <canvas class='pdf-canvas' id='page-${pageNo}' style="border: 1px solid; margin-bottom:20px" width="400" height="300"></canvas>
       </div>`;
 
   $('#pages').append(app);
-
   getImage(pageNo);
   console.log('this is arr', ideez);
   pageNo += 1;
@@ -111,9 +113,9 @@ function generatePDF() {
     html2canvas($(allsel), {
       onrendered: function (canvas) {
         calculatePDF_height_width('.pdf-canvas', i);
-        if (pdf==''){
+        if (pdf == '') {
           pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-        }else{
+        } else {
           pdf.addPage(PDF_Width, PDF_Height);
         }
         var pageData = canvas.toDataURL('image/png', 1.0);
@@ -128,46 +130,11 @@ function generatePDF() {
       },
     });
   }
+  let nameofpdf = getPdfName();
 
-  // html2canvas($('.pdf-canvas:eq(1)'), { allowTaint: true }).then(function (
-  //   canvas
-  // ) {
-  //   calculatePDF_height_width('.pdf-canvas', 1);
-
-  //   var imgData = canvas.toDataURL('image/png', 1.0);
-  //   pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-
-  //   pdf.addPage(PDF_Width, PDF_Height);
-  //   pdf.addImage(
-  //     imgData,
-  //     'JPG',
-  //     top_left_margin,
-  //     top_left_margin,
-  //     HTML_Width,
-  //     HTML_Height
-  //   );
-  // });
-
-  // html2canvas($('.print-wrap:eq(2)')[0], { allowTaint: true }).then(function (
-  //   canvas
-  // ) {
-  //   calculatePDF_height_width('.print-wrap', 2);
-
-  //   var imgData = canvas.toDataURL('image/png', 1.0);
-  //   pdf.addPage(PDF_Width, PDF_Height);
-  //   pdf.addImage(
-  //     imgData,
-  //     'JPG',
-  //     top_left_margin,
-  //     top_left_margin,
-  //     HTML_Width,
-  //     HTML_Height
-  //   );
-
-  //console.log((page_section.length-1)+"==="+index);
   setTimeout(function () {
     //Save PDF Doc
-    pdf.save('HTML-Document.pdf');
+    pdf.save(nameofpdf);
 
     //Generate BLOB object
     var blob = pdf.output('blob');
@@ -175,21 +142,23 @@ function generatePDF() {
     //Getting URL of blob object
     var blobURL = URL.createObjectURL(blob);
 
-    //Showing PDF generated in iFrame element
-    var iframe = document.getElementById('sample-pdf');
-    iframe.src = blobURL;
-
     //Setting download link
     var downloadLink = document.getElementById('pdf-download-link');
     downloadLink.href = blobURL;
 
     $('#sample-pdf').slideDown();
-
-    $('#downloadbtn').show();
-    $('#genmsg').hide();
   }, 0);
+  $('#genmsg').hide();
+  $('#downloadbtn').show();
 }
 
+function getPdfName() {
+  let today = new Date().toISOString().slice(0, 10);
+  let defval = 'Notebook_' + today;
+  let pdfname = prompt('Please enter PDF name', defval);
+  return pdfname;
+}
 //TO DO
-//1) MAKE AN ALERT
-//2) COMPLETE PDF
+//1) MAKE AN ALERT---done
+//3)MAKE DRAW LINES ADJUSTABLE
+//2) COMPLETE PDF-----done
