@@ -11,7 +11,17 @@
       crossorigin="anonymous"
     />
     <title>Document</title>
+    <style>
+      .parent .del-button{
+        position: relative;
+        width: 30px;
+        height: 30px;
+        top: 10px;
+        left: 450px;
+      }
+    </style>
   </head>
+
   <body>
     <section id="toolbar">
       <button id="addpage">Add page</button>
@@ -29,20 +39,14 @@
   ></script>
   <script>
     var pageNo = 1;
-    var pageArr = [];
+
     var ideez = [];
-    var finalPage = []
     page = document.querySelector('#addpage');
     page.addEventListener('click', function () {
       console.log('adding page');
       console.log(pageNo);
 
-      if (pageArr.length == 0) {
-        pageArr.push(1);
-      }
-      else{
-        pageArr.push(pageArr[pageArr.length-1]+1);
-      }
+      
 
       ideez.push(pageNo);
 
@@ -51,7 +55,7 @@
       ).innerHTML += `<div class="col-md-3 parent" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
         <span class='span-class' id='${pageNo}'>Page - ${ideez.indexOf(pageNo)+1}</span>
         <button name ='${pageNo}' id='remove-${pageNo}' onclick="removeDiv(this)"></button>
-        <canvas style="border: 1px solid" width="400" height="300"></canvas>
+        <canvas id='${pageNo}' style="border: 1px solid" width="400" height="300"></canvas>
       </div>`;
 
       console.log('this is arr', ideez);
@@ -61,7 +65,6 @@
     function removeDiv(elem){
         $(elem).parent('div').remove();
         let i = 1;
-        let popped = pageArr.pop(elem.name);
         $('.span-class').each(function(index) {
           $(this).text(`Page - ${index+1}`);
         });
