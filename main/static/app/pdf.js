@@ -111,6 +111,11 @@ function generatePDF() {
     html2canvas($(allsel), {
       onrendered: function (canvas) {
         calculatePDF_height_width('.pdf-canvas', i);
+        if (pdf==''){
+          pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+        }else{
+          pdf.addPage(PDF_Width, PDF_Height);
+        }
         var pageData = canvas.toDataURL('image/png', 1.0);
         pdf.addImage(
           pageData,
