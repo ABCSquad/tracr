@@ -101,8 +101,11 @@
               </a>
             </div>
             <div class="navbar-nav">
-              <a href="{% url 'home' %}" class="btn btn-outline-warning"
+              <a href="{% url 'home' %}" class="btn btn-outline-warning mr-1"
                 >Home</a
+              >
+              <a href="#" id='modal-button' class="btn btn-outline-warning"
+                >Instructions</a
               >
             </div>
           </div>
@@ -418,7 +421,12 @@
    <script>
     $(document).ready(function(){
         $("#myModal").modal('show');
-    });</script>
+    });
+    
+    $('#modal-button').click(function(){
+      $('#myModal').modal('show');
+    })
+    </script>
 
     
 
