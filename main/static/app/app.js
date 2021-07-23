@@ -115,14 +115,14 @@ function change_color(elmnt, clr) {
   draw_color = clr;
 }
 
-canvas.addEventListener('touchstart', start_mouse, false); //touchstart event occurs when the user touches an element
-canvas.addEventListener('touchmove', draw_mouse, false); //touchmove occurs when the user moves the finger across the screen
-canvas.addEventListener('mousedown', start_mouse, false); //mousedown event occurs when a user presses a mouse button over an element
-canvas.addEventListener('mousemove', draw_mouse, false); //mousemove event occurs when the pointer is moving while it is over an element
+cam.addEventListener('touchstart', start_mouse, false); //touchstart event occurs when the user touches an element
+cam.addEventListener('touchmove', draw_mouse, false); //touchmove occurs when the user moves the finger across the screen
+cam.addEventListener('mousedown', start_mouse, false); //mousedown event occurs when a user presses a mouse button over an element
+cam.addEventListener('mousemove', draw_mouse, false); //mousemove event occurs when the pointer is moving while it is over an element
 
-canvas.addEventListener('touchend', stop_mouse, false); //touchend occurs when the user removes the finger from an element
-canvas.addEventListener('mouseup', stop_mouse, false); //mouseup event occurs when a user releases a mouse button over an element
-canvas.addEventListener('mouseout', stop_mouse, false); //mouseout event occurs when the mouse pointer is moved out of an element
+cam.addEventListener('touchend', stop_mouse, false); //touchend occurs when the user removes the finger from an element
+cam.addEventListener('mouseup', stop_mouse, false); //mouseup event occurs when a user releases a mouse button over an element
+cam.addEventListener('mouseout', stop_mouse, false); //mouseout event occurs when the mouse pointer is moved out of an element
 
 /*
 Mousedown => Index only
@@ -175,27 +175,27 @@ function draw_hand(results, x1, y1) {
     is_drawing = true;
     context.beginPath();
     context.moveTo(
-      Math.abs(x1 * canvas.width - canvas.offsetLeft),
-      Math.abs(y1 * canvas.height - canvas.offsetTop)
+      Math.abs(x1 * cam.width - cam.offsetLeft),
+      Math.abs(y1 * cam.height - cam.offsetTop)
     );
     console.log(
       'Move to ' +
-        Math.abs(x1 * canvas.width - canvas.offsetLeft) +
+        Math.abs(x1 * cam.width - cam.offsetLeft) +
         ' ' +
-        Math.abs(y1 * canvas.height - canvas.offsetTop)
+        Math.abs(y1 * cam.height - cam.offsetTop)
     );
   }
 
   if (is_drawing) {
     context.lineTo(
-      Math.abs(x1 * canvas.width - canvas.offsetLeft),
-      Math.abs(y1 * canvas.height - canvas.offsetTop)
+      Math.abs(x1 * cam.width - cam.offsetLeft),
+      Math.abs(y1 * cam.height - cam.offsetTop)
     );
     console.log(
       'Line to ' +
-        Math.abs(x1 * canvas.width - canvas.offsetLeft) +
+        Math.abs(x1 * cam.width - cam.offsetLeft) +
         ' ' +
-        Math.abs(y1 * canvas.height - canvas.offsetTop)
+        Math.abs(y1 * cam.height - cam.offsetTop)
     );
     context.strokeStyle = draw_color;
     context.lineWidth = draw_width;
@@ -213,7 +213,7 @@ function stop_hand(results, x1, y1) {
   }
 
   //if (results.multiHandLandmarks != undefined) {
-  restore_array.push(context.getImageData(0, 0, canvas.width, canvas.height));
+  restore_array.push(context.getImageData(0, 0, cam.width, cam.height));
   index += 1;
   //console.log(restore_array);
   //}
