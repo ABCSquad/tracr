@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&display=swap');
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -21,7 +20,7 @@
 
 body {
   background-color: #f1f1f1;
-  font-family: 'Patrick Hand', cursive;
+  font-family: 'Titillium Web', sans-serif;
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
