@@ -28,22 +28,10 @@
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
-      crossorigin="anonymous"
-    ></script>
+   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
     <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://unpkg.com/konva@8.1.1/konva.min.js"></script>
@@ -249,7 +237,7 @@
                     id="upload_image"
                     class="m-1 pr-1 btn btn-warning"
                     type="submit"
-                    value="Upload the image"
+                    value="Evaluate"
                   />
                 </div>
               </form>
@@ -302,19 +290,19 @@
       </div>
 
       <!-- ----------------------------PDF maker----------------- -->
-      <section class='pdf-section' style="height: auto;" class="pdf-maker">
+      <section class='pdf-section' style="margin:0; height:auto;" class="pdf-maker">
         <div class="pdfcontrol">
           <div style="color:#ffc107 ;background-color: var(--davys); border-top: 2px solid #ccc;" class="row">
             <div class="container">
               <p style="text-align:center; padding-top: 20px;" id='metadata'>Notebook_<script> document.write(new Date().toISOString().slice(0, 10)); </script></p>
               <div class="d-flex justify-content-center pdf-download pb-2">
                 <a
-                class='btn btn-primary'
+                class='btn btn-outline-warning'
                 id='downloadbtn'
                 onclick='generatePDF()'
                 style='color:#ffffff'
                 >
-                <b>Create &amp; Download PDF</b>
+                <b>Create &amp; Download PDF  <i style="padding-left: 10px;" class="fa far fa-file-pdf"></i></b>
                 </a>
                 <span id="genmsg" style="display:none;"><b>Generating PDF ...</b></span>
               </div>
@@ -323,7 +311,11 @@
         </div>
      
     <div style="margin: 20px;" >
-      <div id="pages" class="row"></div>
+      <div id="pages" class="row">
+        <div style="padding: 0;" class="show-png d-flex justify-content-center container ">
+          <img id="pngg"  src="{% static 'app/addtostart.png' %}" alt="click">
+        </div>
+      </div>
     </div>
     
       <!-- <canvas style="margin-left:200px; border: 1px solid;" id="canvas-pdf" width="1280px" height="720px"></canvas> -->
@@ -332,10 +324,58 @@
   
 
     <!------------------------EXTRAAAAAAAAAAA-------------------->
-    <footer>
-  <!-- Scroll to top button -->
+ 
+      <footer>
   <button class="scrollToTopBtn"><i class="fa fas fa-chevron-up"></i></button>
-  </footer>
+
+        <div class="davys-bg">
+          <div class="step-padding col-md-8 offset-md-2">
+            <div class="centered row">
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noreferrer"
+                ><img
+                  src="{% static 'main/facebook.svg' %}"
+                  class="social m-3"
+                  alt="facebook" /></a
+              ><a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noreferrer"
+                ><img
+                  src="{% static 'main/instagram.svg' %}"
+                  class="social m-3"
+                  alt="instagram" /></a
+              ><a href="https://twitter.com/" target="_blank" rel="noreferrer"
+                ><img
+                  src="{% static 'main/twitter.svg' %}"
+                  class="social m-3"
+                  alt="twitter" /></a
+              ><a
+                href="https://www.linkedin.com/"
+                target="_blank"
+                rel="noreferrer"
+                ><img
+                  src="{% static 'main/linkedin.svg' %}"
+                  class="social m-3"
+                  alt="linkedin" /></a
+              ><a
+                href="https://github.com/ABCSquad/tracr"
+                target="_blank"
+                rel="noreferrer"
+                ><img
+                  src="{% static 'main/github.svg' %}"
+                  class="social m-3"
+                  alt="github"
+              /></a>
+            </div>
+            <h6 class="text-center mb-md-4 gainsboro-color">
+              Copyright © 2021 CRAB Inclusive. All rights reserved.
+            </h6>
+          </div>
+        </div>
+      </footer>
   </body>
   <!-- Main import -->
   <script src="{% static 'app/app.js' %}"></script>
