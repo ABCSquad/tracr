@@ -42,7 +42,7 @@ let ideez = [];
 page = document.querySelector('#addpage');
 page.addEventListener('click', function () {
   console.log('adding page');
-
+  $('.show-png,.pngg').remove();
   console.log(pageNo);
 
   ideez.push(pageNo);
