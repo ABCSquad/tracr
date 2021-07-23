@@ -227,7 +227,7 @@ def text_segment(Y1,Y2,X1,X2,box_num,line_name, dict_clean = dict_clean_img,\
             continue
 
         # Checking for equal sign using contour properties
-        if(h<w/3):
+        if(h<w/4):
             if i+1 != len(contours_sorted):
                 x1,y1,w1,h1 = bounding_boxes[i+1]
                 if(h1<w1/3):
