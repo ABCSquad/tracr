@@ -1,24 +1,4 @@
 // //---------------------ADD IMAGE TO CANVAS FUNC-------------------------------
-// var element = $('#expression-block'); // global variable
-// var getCanvas; // global variable
-// var getImage;
-
-// $('#btnConvert').on('click', function () {
-//   console.log('converter');
-//   html2canvas(element, {
-//     allowTaint: true,
-//     logging: true,
-//     windowWidth: element.scrollWidth,
-//     windowHeight: element.scrollHeight,
-//     onrendered: function (canvas) {
-//       $('#container-canvas').append(canvas);
-//       console.log(canvas);
-//       getCanvas = canvas;
-//       getImage = getCanvas.toDataURL('image/png');
-//       console.log(getImage);
-//     },
-//   });
-// });
 
 function getImage(id) {
   //var testdiv = document.getElementById("testdiv");
@@ -54,13 +34,14 @@ function getImageToCanvas(id, image) {
 }
 
 let pageNo = 1;
+let ideez = [];
 let page = document.querySelector('#addpage');
 page.addEventListener('click', function () {
   console.log('adding page');
   console.log(pageNo);
-  var app = `<div class="col-md-3" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
-        <span>Page ${pageNo}</span>
-        
+  var app = `<div class="col-md-3 parent" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
+        <span>page ${pageNo}</span>
+        <button class='del-button' name ='${pageNo}' id='remove-${pageNo}' onclick="removeDiv(this)"><i class="fa fas fa-trash"></i></button>
         <canvas id='page-${pageNo}' style="border: 1px solid" width="400" height="300"></canvas>
       </div>`;
   $('#pages').append(app);
@@ -72,14 +53,13 @@ page.addEventListener('click', function () {
   //       <canvas id='page-${pageNo}' style="border: 1px solid" width="400" height="300"></canvas>
   //     </div>`;
   getImage(pageNo);
-  // getImageToCanvas(pageNo, image);
+  ideez.push(pageNo);
   pageNo += 1;
+  console.log('this is arr', ideez);
 });
 
-// let page = document.querySelector('.removepage');
-// let getId = document.querySelector('.removepage').id;
-// console.log('getting id of remove element', getId);
-// page.addEventListener('click', function () {
-//   console.log('removing page');
-//   $('#pages').removeChild(page);
-// });
+function removeDiv(elem) {
+  $(elem).parent('div').remove();
+  let popped = ideez.pop(elem.name);
+  pageNo -= 1;
+}

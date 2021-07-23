@@ -59,7 +59,34 @@
       async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
     ></script>
-    
+    <style>
+      .parent{
+        position: relative;
+      }
+      .parent .del-button{
+        cursor: pointer;
+        display: inline-block;
+        border-radius: 50%;
+        background-color: #9e6a6a;
+        color: #fff;
+        font-size: 20px;
+        position: absolute;
+        width: 35px;
+        height: 35px;
+        top: 15px;
+        left: 450px;
+        z-index: 999;
+        transition: all 0.2s;
+        
+      }
+      .parent .del-button:hover{
+        color: red;
+        background-color: #9e6a6a;
+      }
+      .parent canvas:hover{
+        box-shadow: yellow;
+      }
+    </style>
   </head>
   <body>
     <!-- header start -->
@@ -317,6 +344,7 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js" integrity="sha512-VKjwFVu/mmKGk0Z0BxgDzmn10e590qk3ou/jkmRugAkSTMSIRkd4nEnk+n7r5WBbJquusQEQjBidrBD3IQQISQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <script>
     $('#copy-button').click(function () {
