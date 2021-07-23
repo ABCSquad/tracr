@@ -59,6 +59,8 @@
       async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+
     <style>
       .parent{
         position: relative;
@@ -76,11 +78,11 @@
         top: 15px;
         left: 450px;
         z-index: 999;
-        transition: all 0.2s;
+        transition: color, background-color 0.2s;
         
       }
       .parent .del-button:hover{
-        color: red;
+        color: rgb(230, 53, 53);
         background-color: #9e6a6a;
       }
       .parent canvas:hover{
@@ -208,6 +210,17 @@
         </div>
         <button style="margin-left:20px" id="addpage" >Add page</button>
           </div>
+          <div class="pdf-download">
+      <a
+      class='btn btn-primary'
+      id='downloadbtn'
+      onclick='generatePDF()'
+      style='color:#ffffff'
+      >
+      <b>Create &amp; Download PDF</b>
+      </a>
+      <span id="genmsg" style="display:none;"><b>Generating PDF ...</b></span>
+    </div>
         </div>
         <!-- end of tools -->
 
@@ -327,6 +340,7 @@
     <div  >
       <div id="pages" class="row"</div>
     </div>
+    
       <!-- <canvas style="margin-left:200px; border: 1px solid;" id="canvas-pdf" width="1280px" height="720px"></canvas> -->
       </section>
       
@@ -344,7 +358,7 @@
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js" integrity="sha512-VKjwFVu/mmKGk0Z0BxgDzmn10e590qk3ou/jkmRugAkSTMSIRkd4nEnk+n7r5WBbJquusQEQjBidrBD3IQQISQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
   <script>
     $('#copy-button').click(function () {
