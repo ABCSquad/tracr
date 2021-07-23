@@ -7,6 +7,7 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 #wrapper {
   position: relative;
@@ -259,4 +260,92 @@ whiteChalk_button {
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
   right: 0px;
   background-color: #34a7c1;
+}
+
+.pdf-section {
+  background-color: #aaaaaa;
+}
+
+.parent {
+  position: relative;
+}
+.parent .del-button {
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: #9e6a6a;
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 15px;
+  left: 430px;
+  z-index: 999;
+  transition: color, background-color 0.2s;
+}
+.parent .del-button:hover {
+  color: rgb(230, 53, 53);
+  background-color: #9e6a6a;
+}
+.parent canvas:hover {
+  box-shadow: yellow;
+}
+
+#pdf-heading {
+  padding-top: 20px;
+}
+
+.expression {
+  position: relative;
+}
+
+.btn-wrapper {
+  width: auto;
+  height: 40px;
+  z-index: 999;
+  position: absolute;
+  right: 30px;
+  margin: 20px 10px 0 0;
+}
+
+.scrollToTopBtn {
+  background-color: var(--davys);
+  border: 1px solid #ffc107;
+  border-radius: 50%;
+  color: #ffc107;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 48px;
+  width: 48px;
+
+  /* place it at the bottom right corner */
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  /* keep it at the top of everything else */
+  z-index: 100;
+  /* hide with opacity */
+  opacity: 0;
+  /* also add a translate effect */
+  transform: translateY(100px);
+  /* and a transition */
+  transition: all 0.5s ease;
+}
+
+.showBtn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.myAlert-top {
+  position: fixed;
+  top: 25px;
+  left: 35%;
+  width: 25%;
+  height: 60px;
+  z-index: 999;
+}
+.alert {
+  display: none;
 }

@@ -1,6 +1,8 @@
 // //---------------------ADD IMAGE TO CANVAS FUNC-------------------------------
 
 function getImage(id) {
+  $('html,body').scrollTop(0);
+
   //var testdiv = document.getElementById("testdiv");
   let myImage;
   html2canvas($('#all-canvas'), {
@@ -48,9 +50,9 @@ page.addEventListener('click', function () {
   var app = `<div class="col-md-3 parent" style="float:center; padding-left: 10px; display: flex; flex-direction: column">
         <span class='span-class' id='${pageNo}'>Page - ${
     ideez.indexOf(pageNo) + 1
-  }</span>
+  } > </span>
         <button class='del-button' name ='${pageNo}' id='remove-${pageNo}' onclick="removeDiv(this)"><i class="fa far fa-trash-alt"></i></button>
-        <canvas class='pdf-canvas' id='page-${pageNo}' style="border: 1px solid" width="400" height="300"></canvas>
+        <canvas class='pdf-canvas' id='page-${pageNo}' style="border: 1px solid; margin-bottom:20px" width="400" height="300"></canvas>
       </div>`;
 
   $('#pages').append(app);
@@ -145,10 +147,9 @@ function generatePDF() {
     downloadLink.href = blobURL;
 
     $('#sample-pdf').slideDown();
-
-    $('#genmsg').hide();
-    $('#downloadbtn').show();
   }, 0);
+  $('#genmsg').hide();
+  $('#downloadbtn').show();
 }
 
 function getPdfName() {
