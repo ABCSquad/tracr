@@ -36,15 +36,15 @@ def app(request):
         success= 'received image'
         # bg.show()
         bg_opencv = convert_from_image_to_cv2(bg)
-        # try:
-        res_img, equation_dict_list = equation.equation(bg_opencv)  
-        # except Exception as e:
-        #     print("Unsuccessful calling of main func:", e)
-        #     equation_dict_list = [{
-        #         'equation': 'Invalid',
-        #         'result': 'Invalid',
-        #         'latex': 'Invalid'
-        #     }]
+        try:
+            res_img, equation_dict_list = equation.equation(bg_opencv)  
+        except Exception as e:
+            print("Unsuccessful calling of main func:", e)
+            equation_dict_list = [{
+                'equation': 'Invalid',
+                'result': 'Invalid',
+                'latex': 'Invalid'
+            }]
         return HttpResponse(json.dumps(equation_dict_list))     
 
     return render(request, 'main/app.html')
