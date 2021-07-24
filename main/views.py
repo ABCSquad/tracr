@@ -11,7 +11,7 @@ import json
 
 
 # Create your views here.
-#----------------------------- HOME ------------------------------------#
+#----------------------------- HOME ------------------------------------# 
 
 def convert_from_image_to_cv2(img: Image) -> np.ndarray:
     # return cv2.cvtColor(numpy.array(img), cv2.COLOR_RGB2BGR)
