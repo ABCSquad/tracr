@@ -1,8 +1,7 @@
 # tracr
+tracr is a math centric handwriting recognition app that can solve and graph equations simultaneously. 
 \
 &nbsp;
-
-tracr is a math centric handwriting recognition app that can solve and graph equations simultaneously. 
 \
 &nbsp;
 ![tracr gif](tracr-gif.gif)
