@@ -114,7 +114,9 @@ def equation(image):
                 # Adding special functions' closing bracket
                 if prev_pred in special:
                     special_flag = True
-                    arr.append('(')    
+                    arr.append('(')
+                if prev_pred in variables:
+                    arr.append('*')    
                 arr.append('1')
 
             #---------------------------------------------------------------- exp = 0 ----------------------------------------------------------------#    
