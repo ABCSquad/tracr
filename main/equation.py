@@ -224,7 +224,7 @@ def equation(image):
             #--------------------------------- Case 2.1 - No variables --------------------------------#
             if len(list(set(string_list[i]) & set(variables)))==0:
                 # Brining constant to LHS of a custom equation to find value
-                new_string = 'x-'+string_list[i]
+                new_string = 'x-('+string_list[i]+')'
                 # Calling function
                 res = no_variables(new_string)
                 print('Equation predicted:', string_list[i])
