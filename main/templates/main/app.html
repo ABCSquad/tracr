@@ -33,22 +33,7 @@
       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
       crossorigin="anonymous"
     ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
-      crossorigin="anonymous"
-    ></script>
+
     <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://unpkg.com/konva@8.1.1/konva.min.js"></script>
@@ -128,12 +113,12 @@
     </header>
     <!-- end of header -->
     <div
-      class="d-flex flex-row bd-highlight"
+      class="d-flex flex-row flex-wrap"
       style="height: auto; border: 2px solid #ccc"
     >
       <!-- tools section -->
-      <div class="p-3 bd-highlight all-tools" style="border: 1px solid #ccc">
-        <div class="tools">
+      <div class="p-3 all-tools" style="border: 1px solid #ccc">
+        <div class="tools flex-fill">
           <button onclick="undo_last()" type="button" class="button">
             <i class="fa fa-solid fa-undo"></i>
           </button>
@@ -200,10 +185,10 @@
       <!-- end of tools -->
 
       <!-- canvas section -->
-      <div class="d-flex flex-column bd-highlight">
+      <div class="d-flex flex-column">
         <div
           class="p-1 expression"
-          style="width: 1282px; height: 14vh; border: 1px solid #ccc"
+          style="height: 14vh; border: 1px solid #ccc"
         >
           <h4 class="pt-1 pl-1 expression">Expression:</h4>
 
@@ -292,7 +277,7 @@
       <!-- end of canvas -->
 
       <!-- graph section -->
-      <div class="d-flex flex-column bd-highlight">
+      <div class="d-flex flex-column flex-fill">
         <div
           class="p-1 expression"
           style="height: 14vh; border: 1px solid #ccc"
@@ -313,10 +298,7 @@
               />
             </button>
           </div>
-          <p
-            style="width: 23vw; display: flex; justify-content: center"
-            id="get-latex"
-          >
+          <p style="display: flex; justify-content: center" id="get-latex">
             <i id="deLatex" class="text-muted">Latex of expression</i>
           </p>
         </div>

@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&display=swap');
 
+* {
+  box-sizing: border-box;
+}
 ::-webkit-scrollbar {
   width: 10px;
   height: 6px;
@@ -56,12 +59,23 @@ body {
 
 .tools {
   display: flex;
-  justify-self: center;
+  align-items: center;
   flex-direction: column;
   margin-top: 85px;
+  align-self: center;
+}
+
+@media (max-width: 1500px) {
+  .tools {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    flex-basis: 100%;
+  }
 }
 
 .graph {
+  width: auto;
   height: 100vh;
 }
 
@@ -254,9 +268,7 @@ whiteChalk_button {
   display: block;
   width: 40px;
   margin: 1.5px;
-  background: #a1a1a1;
-  position: absolute;
-  top: 0;
+  right: 0;
   bottom: 0;
   right: 71px;
   border: 2px solid #ffffff;
@@ -286,18 +298,18 @@ whiteChalk_button {
 .parent {
   position: relative;
 }
+
 .parent .del-button {
   cursor: pointer;
   display: inline-block;
-  border-radius: 50%;
   background-color: #9e6a6a;
   color: #fff;
   font-size: 20px;
-  position: absolute;
+  position: sticky;
   width: 35px;
   height: 35px;
-  top: 15px;
-  left: 430px;
+  top: 20px;
+  align-self: flex-end;
   z-index: 999;
   transition: color, background-color 0.2s;
 }
