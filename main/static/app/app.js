@@ -133,20 +133,16 @@ Mousemove => Obviously hand move
 
 function start_mouse(event) {
   is_drawing = true;
+  var BB = canvas.getBoundingClientRect();
   context.beginPath();
-  context.moveTo(
-    event.clientX - canvas.offsetLeft,
-    event.clientY - canvas.offsetTop
-  );
+  context.moveTo(event.clientX - BB.left, event.clientY - BB.top);
   event.preventDefault();
 }
 
 function draw_mouse(event) {
   if (is_drawing) {
-    context.lineTo(
-      event.clientX - canvas.offsetLeft,
-      event.clientY - canvas.offsetTop
-    );
+    var BB = canvas.getBoundingClientRect();
+    context.lineTo(event.clientX - BB.left, event.clientY - BB.top);
     context.strokeStyle = draw_color;
     context.lineWidth = draw_width;
     context.lineCap = 'round';
@@ -235,49 +231,6 @@ function undo_last() {
     restore_array.pop();
     context.putImageData(restore_array[index], 0, 0);
   }
-}
-
-////////////////////CAM ON/OFF + FORM PART///////////////////////////////
-
-document.addEventListener('DOMContentLoaded', function () {
-  var checkbox = document.querySelector('input[type="checkbox"]');
-
-  checkbox.addEventListener('change', function () {
-    if (checkbox.checked) {
-      // do this
-      camon();
-      console.log('Checked');
-    } else {
-      // do that
-      camoff();
-      console.log('Not checked');
-    }
-  });
-});
-
-//Turn off the camera
-function camoff() {
-  console.log('helloo');
-  const video = document.querySelector('#video');
-  const mediaStream = video.srcObject;
-  const tracks = mediaStream.getTracks();
-  tracks[0].stop();
-  tracks.forEach((track) => track.stop());
-  document.getElementById('canvas').style.opacity = '0';
-}
-
-//Turn on the camera
-function camon() {
-  console.log('bye');
-  const camera = new Camera(video, {
-    onFrame: async () => {
-      await hands.send({ image: video });
-    },
-    width: 1280,
-    height: 720,
-  });
-  camera.start();
-  document.getElementById('canvas').style.opacity = '1';
 }
 
 // Submit post on submit
