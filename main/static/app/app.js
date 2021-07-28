@@ -248,12 +248,16 @@ $(document).on('submit', '#form1', function (e) {
       dataURL: $('#captured_image').val(),
       csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
     },
+    beforeSend: function () {
+      $('#process-alert').show();
+    },
+    complete: function () {
+      $('#process-alert').hide();
+    },
     success: function (json) {
+      fetch(json);
       console.log(json); // log the returned json to the console
       json_obj = JSON.parse(json);
-      //desmos function
-      // dem(json_obj[0]['latex']);
-      //expression function
 
       let latex = '';
       let result = '';
@@ -278,7 +282,7 @@ $(document).on('submit', '#form1', function (e) {
 
     // handle a non-successful response
     error: function (xhr, errmsg, err) {
-      console.log('errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrror', errmsg); // provide a bit more info about the error to the console
+      console.log('error', errmsg); // provide a bit more info about the error to the console
     },
   });
 });
@@ -337,8 +341,8 @@ function clear() {
 }
 
 function myAlertTop() {
-  $('.myAlert-top').show();
+  $('#page-alert').show();
   setTimeout(function () {
-    $('.myAlert-top').hide();
+    $('#page-alert').hide();
   }, 2000);
 }
