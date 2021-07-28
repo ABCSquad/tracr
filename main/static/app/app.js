@@ -9,6 +9,12 @@ canvas.width = 1280;
 canvas.height = 720;
 const context = canvas.getContext('2d');
 
+//Camera canvas initialization
+const cam = document.getElementById('canvas');
+cam.width = 1280;
+cam.height = 720;
+const ctx = cam.getContext('2d');
+
 /*
 -----------------Drawing section start-----------------
 */
