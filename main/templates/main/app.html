@@ -33,22 +33,6 @@
       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
       crossorigin="anonymous"
     ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
-      crossorigin="anonymous"
-    ></script>
     <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://unpkg.com/konva@8.1.1/konva.min.js"></script>
@@ -251,27 +235,27 @@
             </div>
           </div>
         </div>
-
+        
         <div class="bd-highlight">
+          <!-- Canvas post form -->
+          <form id="form1">
+            {% csrf_token %}
+            <input type="hidden" id="captured_image" name="captured_image" />
+            <div class="submit-button">
+              <input
+                id="upload_image"
+                class="m-1 pr-1 btn btn-warning"
+                type="submit"
+                value="Evaluate"
+              />
+            </div>
+          </form>
           <div class="wrapper">
             <div id="all-canvas">
               <canvas id="draw"></canvas>
               <canvas id="draw-lines" width="1280" height="720"></canvas>
               <canvas id="canvas"></canvas>
             </div>
-            <!-- Canvas post form -->
-            <form id="form1">
-              {% csrf_token %}
-              <input type="hidden" id="captured_image" name="captured_image" />
-              <div class="submit-button">
-                <input
-                  id="upload_image"
-                  class="m-1 pr-1 btn btn-warning"
-                  type="submit"
-                  value="Evaluate"
-                />
-              </div>
-            </form>
           </div>
           <div class="streamer">
             <video id="video" width="100%"></video>
