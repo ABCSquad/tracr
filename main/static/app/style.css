@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600&display=swap');
 
+* {
+  box-sizing: border-box;
+}
 ::-webkit-scrollbar {
   width: 10px;
   height: 6px;
@@ -56,12 +59,23 @@ body {
 
 .tools {
   display: flex;
-  justify-self: center;
+  align-items: center;
   flex-direction: column;
   margin-top: 85px;
+  align-self: center;
+}
+
+@media (max-width: 1500px) {
+  .tools {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    flex-basis: 100%;
+  }
 }
 
 .graph {
+  width: auto;
   height: 100vh;
 }
 
@@ -194,91 +208,6 @@ whiteChalk_button {
   margin: 0 17px 0 10px;
 }
 
-/* ------------------------------BUTTON TOGGLE----------------- */
-.onoffswitch {
-  transform: scale(0.8);
-  position: relative;
-  margin-left: 25px;
-  width: 100px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-}
-.onoffswitch-checkbox {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-.onoffswitch-label {
-  display: block;
-  overflow: hidden;
-  cursor: pointer;
-  border: 2px solid #ffffff;
-  border-radius: 50px;
-}
-.onoffswitch-inner {
-  display: block;
-  width: 200%;
-  margin-left: -100%;
-  transition: margin 0.3s ease-in 0s;
-}
-.onoffswitch-inner:before,
-.onoffswitch-inner:after {
-  display: block;
-  float: left;
-  width: 50%;
-  height: 41px;
-  padding: 0;
-  line-height: 41px;
-  font-size: 25px;
-  color: white;
-  font-family: Trebuchet, Arial, sans-serif;
-  font-weight: bold;
-  box-sizing: border-box;
-}
-.onoffswitch-inner:before {
-  content: 'ON';
-  padding-left: 14px;
-  background-color: #eeeeee;
-  color: #34a7c1;
-}
-
-.onoffswitch-inner:after {
-  content: 'OFF';
-  padding-right: 14px;
-  background-color: #eeeeee;
-  color: #999999;
-  text-align: right;
-}
-.onoffswitch-switch {
-  display: block;
-  width: 40px;
-  margin: 1.5px;
-  background: #a1a1a1;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 71px;
-  border: 2px solid #ffffff;
-  border-radius: 50px;
-  transition: all 0.3s ease-in 0s;
-}
-
-.toggle-icon {
-  display: inline-block;
-  /* float:left;  remove */
-  margin: 5px 5px 0 0;
-  padding: 5px 9px;
-}
-
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
-  margin-left: 0;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-  right: 0px;
-  background-color: #34a7c1;
-}
-
 .pdf-section {
   background-color: #aaaaaa;
 }
@@ -286,18 +215,18 @@ whiteChalk_button {
 .parent {
   position: relative;
 }
+
 .parent .del-button {
   cursor: pointer;
   display: inline-block;
-  border-radius: 50%;
   background-color: #9e6a6a;
   color: #fff;
   font-size: 20px;
-  position: absolute;
+  position: sticky;
   width: 35px;
   height: 35px;
-  top: 15px;
-  left: 430px;
+  top: 20px;
+  align-self: flex-end;
   z-index: 999;
   transition: color, background-color 0.2s;
 }
@@ -324,6 +253,10 @@ whiteChalk_button {
   position: absolute;
   right: 30px;
   margin: 20px 10px 0 0;
+}
+
+.add {
+  position: sticky;
 }
 
 .scrollToTopBtn {

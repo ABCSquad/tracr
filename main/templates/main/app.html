@@ -112,12 +112,12 @@
     </header>
     <!-- end of header -->
     <div
-      class="d-flex flex-row bd-highlight"
+      class="d-flex flex-row flex-wrap"
       style="height: auto; border: 2px solid #ccc"
     >
       <!-- tools section -->
-      <div class="p-3 bd-highlight all-tools" style="border: 1px solid #ccc">
-        <div class="tools">
+      <div class="p-3 all-tools" style="border: 1px solid #ccc">
+        <div class="tools flex-fill">
           <button onclick="undo_last()" type="button" class="button">
             <i class="fa fa-solid fa-undo"></i>
           </button>
@@ -184,10 +184,10 @@
       <!-- end of tools -->
 
       <!-- canvas section -->
-      <div class="d-flex flex-column bd-highlight">
+      <div class="d-flex flex-column">
         <div
           class="p-1 expression"
-          style="width: 1282px; height: 14vh; border: 1px solid #ccc"
+          style="height: 14vh; border: 1px solid #ccc"
         >
           <h4 class="pt-1 pl-1 expression">Expression:</h4>
 
@@ -227,7 +227,7 @@
             <div class="btn-wrapper">
               <button
                 onclick="myAlertTop()"
-                class="btn btn-warning"
+                class="btn btn-warning add"
                 style="margin-left: 20px"
                 id="addpage"
               >
@@ -249,19 +249,19 @@
         
         <div class="bd-highlight">
           <div class="wrapper">
-          <!-- Canvas post form -->
-          <form id="form1">
-            {% csrf_token %}
-            <input type="hidden" id="captured_image" name="captured_image" />
-            <div class="submit-button">
-              <input
-                id="upload_image"
-                class="m-1 pr-1 btn btn-warning"
-                type="submit"
-                value="Evaluate"
-              />
-            </div>
-          </form>
+            <!-- Canvas post form -->
+            <form id="form1">
+              {% csrf_token %}
+              <input type="hidden" id="captured_image" name="captured_image" />
+              <div class="submit-button">
+                <input
+                  id="upload_image"
+                  class="m-1 pr-1 btn btn-warning"
+                  type="submit"
+                  value="Evaluate"
+                />
+              </div>
+            </form>
             <div id="all-canvas">
               <canvas id="draw"></canvas>
               <canvas id="draw-lines" width="1280" height="720"></canvas>
@@ -276,7 +276,7 @@
       <!-- end of canvas -->
 
       <!-- graph section -->
-      <div class="d-flex flex-column bd-highlight">
+      <div class="d-flex flex-column flex-fill">
         <div
           class="p-1 expression"
           style="height: 14vh; border: 1px solid #ccc"
@@ -297,17 +297,14 @@
               />
             </button>
           </div>
-          <p
-            style="width: 23vw; display: flex; justify-content: center"
-            id="get-latex"
-          >
+          <p style="display: flex; justify-content: center" id="get-latex">
             <i id="deLatex" class="text-muted">Latex of expression</i>
           </p>
         </div>
         <div class="bd-highlight grapher">
           <div
             id="calculator"
-            style="height: 79vh; border: 1px solid #ccc"
+            style="height: 81vh; border: 1px solid #ccc"
           ></div>
         </div>
       </div>

@@ -66,7 +66,7 @@ function removeDiv(elem) {
   $(elem).parent('div').remove();
   let i = 1;
   $('.span-class').each(function (index) {
-    $(this).text(`Page - ${index + 1}`);
+    $(this).text(`Page - ${index + 1} >`);
   });
   let index = ideez.indexOf(parseInt(elem.name));
   if (index !== -1) {
