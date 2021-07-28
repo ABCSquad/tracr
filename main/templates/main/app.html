@@ -265,11 +265,6 @@
 
         <div class="bd-highlight">
           <div class="wrapper">
-            <div id="all-canvas">
-              <canvas id="draw"></canvas>
-              <canvas id="draw-lines" width="1280" height="720"></canvas>
-              <canvas id="canvas"></canvas>
-            </div>
             <!-- Canvas post form -->
             <form id="form1">
               {% csrf_token %}
@@ -283,6 +278,11 @@
                 />
               </div>
             </form>
+            <div id="all-canvas">
+              <canvas id="draw"></canvas>
+              <canvas id="draw-lines" width="1280" height="720"></canvas>
+              <canvas id="canvas"></canvas>
+            </div>
           </div>
           <div class="streamer">
             <video id="video" width="100%"></video>
