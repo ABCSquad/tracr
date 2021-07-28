@@ -59,6 +59,7 @@ page.addEventListener('click', function () {
   getImage(pageNo);
   console.log('this is arr', ideez);
   pageNo += 1;
+
   console.log('lengyth', ideez.length);
 });
 
@@ -72,6 +73,7 @@ function removeDiv(elem) {
   if (index !== -1) {
     ideez.splice(index, 1);
   }
+
   console.log('lengyth', ideez.length);
 }
 

@@ -76,6 +76,18 @@
               <li><b>Graphing</b> = >, <, neq</li>
             </ul>
           </div>
+          <div class="modal-footer">
+            <p>This site is still in <b>&beta;</b> phase</p>
+            <p style="font-size: 16px">
+              if you encounter bugs, report em'
+              <a
+                target="_blank"
+                href="https://github.com/ABCSquad/tracr/issues/new"
+              >
+                here</a
+              >
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -100,11 +112,15 @@
               </a>
             </div>
             <div class="navbar-nav">
-              <a href="{% url 'home' %}" class="btn btn-outline-warning mr-1"
-                >Home</a
-              >
-              <a href="#" id="modal-button" class="btn btn-outline-warning"
+              <a href="#" id="modal-button" class="btn btn-outline-warning mr-1"
                 >Instructions</a
+              >
+              <a
+                href="https://github.com/ABCSquad/tracr/issues/new"
+                target="_blank"
+                id="bug-button"
+                class="btn btn-outline-warning"
+                >Report bugs</a
               >
             </div>
           </div>
