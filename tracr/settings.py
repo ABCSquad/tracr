@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q*9eiu#s+zet$0t9^@(9km7ny-a*y#*k9zam*!17sa))ahc@nf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["scribblesolve.onrender.com"]
 
 
 # Application definition
